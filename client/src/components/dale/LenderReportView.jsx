@@ -1,12 +1,17 @@
 import { BRAND } from "../../constants/brand";
-import DaleDisclaimer from "./DaleDisclaimer";
+import {
+  formatReportList,
+  formatReportParagraph
+} from "../../utils/reportContent";
 
 export default function LenderReportView({ report, onClose }) {
   if (!report) return null;
 
-  const findings = Array.isArray(report.key_findings) ? report.key_findings : [];
-  const risks = Array.isArray(report.risk_flags) ? report.risk_flags : [];
-  const recommendations = Array.isArray(report.recommendations) ? report.recommendations : [];
+  const summary = formatReportParagraph(report.summary);
+  const narrative = formatReportParagraph(report.lender_narrative);
+  const findings = formatReportList(report.key_findings);
+  const risks = formatReportList(report.risk_flags);
+  const recommendations = formatReportList(report.recommendations);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-fm-gray-dark/50 p-4 print:relative print:bg-white print:p-0">
@@ -33,10 +38,10 @@ export default function LenderReportView({ report, onClose }) {
         </header>
 
         <div className="space-y-6 px-6 py-5 text-base leading-relaxed text-fm-charcoal print:text-black">
-          {report.summary && (
+          {summary && (
             <section>
               <h3 className="font-display mb-2 font-semibold">Executive Summary</h3>
-              <p>{report.summary}</p>
+              <p>{summary}</p>
             </section>
           )}
 
@@ -45,7 +50,7 @@ export default function LenderReportView({ report, onClose }) {
               <h3 className="font-display mb-2 font-semibold">Key Findings</h3>
               <ul className="list-inside list-disc space-y-1">
                 {findings.map((item, i) => (
-                  <li key={i}>{typeof item === "string" ? item : JSON.stringify(item)}</li>
+                  <li key={i}>{item}</li>
                 ))}
               </ul>
             </section>
@@ -56,7 +61,7 @@ export default function LenderReportView({ report, onClose }) {
               <h3 className="font-display mb-2 font-semibold">Key Risk Flags</h3>
               <ul className="list-inside list-disc space-y-1">
                 {risks.map((item, i) => (
-                  <li key={i}>{typeof item === "string" ? item : JSON.stringify(item)}</li>
+                  <li key={i}>{item}</li>
                 ))}
               </ul>
             </section>
@@ -67,22 +72,21 @@ export default function LenderReportView({ report, onClose }) {
               <h3 className="font-display mb-2 font-semibold">Recommendations</h3>
               <ul className="list-inside list-disc space-y-1">
                 {recommendations.map((item, i) => (
-                  <li key={i}>{typeof item === "string" ? item : JSON.stringify(item)}</li>
+                  <li key={i}>{item}</li>
                 ))}
               </ul>
             </section>
           )}
 
-          {report.lender_narrative && (
+          {narrative && (
             <section>
               <h3 className="font-display mb-2 font-semibold">Full Narrative</h3>
-              <p className="whitespace-pre-wrap">{report.lender_narrative}</p>
+              <p className="whitespace-pre-wrap">{narrative}</p>
             </section>
           )}
 
-          <footer className="space-y-3 border-t border-fm-gray-light pt-4">
-            <p className="text-xs text-fm-gray-medium">{BRAND.attribution.benchmark}</p>
-            <DaleDisclaimer />
+          <footer className="border-t border-fm-gray-light pt-4">
+            <p className="text-xs text-fm-gray-medium">{BRAND.attribution.report}</p>
           </footer>
         </div>
 

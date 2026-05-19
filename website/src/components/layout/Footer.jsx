@@ -6,6 +6,7 @@ const FOOTER_LINKS = {
   Product: [
     { label: "Solutions", href: "#solutions" },
     { label: "How It Works", href: "#how-it-works" },
+    { label: "Pricing", href: "#pricing" },
     { label: "Analyst", href: "#dale" },
     { label: "Sign Up", href: appPath("/register") }
   ],
@@ -23,7 +24,6 @@ export default function Footer() {
           <div className="md:col-span-2">
             <Logo size="sm" onDark />
             <p className="mt-4 max-w-sm text-sm">{BRAND.tagline}</p>
-            <p className="mt-4 max-w-md text-xs text-white/50">{BRAND.attribution.benchmark}</p>
           </div>
           {Object.entries(FOOTER_LINKS).map(([heading, links]) => (
             <div key={heading}>

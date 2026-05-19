@@ -1,0 +1,41 @@
+en:
+  emails:
+    password_reset:
+      subject: "Reset your Fieldmark password"
+      preheader: "Use this link to choose a new password. It expires in 6 hours."
+      headline: "Reset your password"
+      intro: "Hi %{first_name}, we received a request to reset the password for your Fieldmark account."
+      cta: "Choose a new password"
+      footer: "If you did not request this, you can ignore this email. Your password will not change."
+      updated: "Your password has been updated. You can sign in with your new password."
+    invitation:
+      subject: "%{inviter_name} invited you to Fieldmark"
+      preheader: "Join Fieldmark to know your margins before March."
+      headline: "You are invited to Fieldmark"
+      intro: "%{inviter_name} invited you to join Fieldmark — independent margin planning for corn and soybean farms."
+      personal_message: "Message from %{inviter_name}:"
+      cta: "Create your account"
+      footer: "This invite expires on %{expires_on}. Use %{email} when you sign up."
+    welcome:
+      subject: "Welcome to Fieldmark"
+      preheader: "Know your margins before March."
+      headline: "Welcome to Fieldmark"
+      intro: "Hi %{first_name}, your account is ready. Fieldmark helps you compare input costs to regional benchmarks, run scenarios, and walk into March commitments with confidence."
+      cta: "Go to your dashboard"
+      footer: "Questions? Reply to this email or contact us at contact@fieldmark.app."
+    report_ready:
+      subject: "Your lender report for %{farm_name} is ready"
+      preheader: "Dale finished your lender report."
+      headline: "Your lender report is ready"
+      intro: "Hi %{first_name}, Dale finished the lender report for %{farm_name} (%{scenario_name})."
+      cta: "View full report"
+      footer: "For planning purposes only — not financial advice."
+    report_copy:
+      subject: "Your Fieldmark lender report — %{farm_name}"
+      preheader: "Executive summary and key findings from your report."
+      headline: "Your lender report"
+      intro: "Hi %{first_name}, here is a copy of your lender report for %{farm_name} (%{scenario_name}), generated %{generated_on}."
+      summary_heading: "Executive summary"
+      findings_heading: "Key findings"
+      cta: "View full report on Fieldmark"
+      footer: "For planning purposes only — not financial advice. Sign in to Fieldmark to view the full narrative and regenerate."

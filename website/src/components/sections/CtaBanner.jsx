@@ -2,7 +2,7 @@ import { CheckCircle } from "lucide-react";
 import { appPath } from "../../lib/links";
 import Button from "../ui/Button";
 
-const PERKS = ["30-day free trial", "MU Extension benchmarks included", "No credit card required"];
+const PERKS = ["30-day free trial", "Cost comparison tools included", "No credit card required"];
 
 export default function CtaBanner() {
   return (

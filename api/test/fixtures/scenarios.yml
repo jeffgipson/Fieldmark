@@ -1,0 +1,105 @@
+base_case:
+  farm: henderson
+  name: Base Case
+  commodity_price: 4.33
+  yield_assumption: 176
+  downside_commodity_price: 3.80
+  downside_yield: 160
+  results:
+    base_case:
+      margin_per_acre: 130.0
+      revenue_per_acre: 762.08
+      operating_cost_per_acre: 415.5
+    downside_case:
+      margin_per_acre: 75.0
+
+peer_two_scenario:
+  farm: peer_two_farm
+  name: Base Case
+  commodity_price: 4.33
+  yield_assumption: 176
+  downside_commodity_price: 3.80
+  downside_yield: 160
+  results:
+    base_case:
+      margin_per_acre: 145.0
+    downside_case:
+      margin_per_acre: 88.0
+
+peer_three_scenario:
+  farm: peer_three_farm
+  name: Base Case
+  commodity_price: 4.33
+  yield_assumption: 176
+  downside_commodity_price: 3.80
+  downside_yield: 160
+  results:
+    base_case:
+      margin_per_acre: 138.0
+    downside_case:
+      margin_per_acre: 82.0
+
+peer_four_scenario:
+  farm: peer_four_farm
+  name: Base Case
+  commodity_price: 4.33
+  yield_assumption: 176
+  downside_commodity_price: 3.80
+  downside_yield: 160
+  results:
+    base_case:
+      margin_per_acre: 150.0
+    downside_case:
+      margin_per_acre: 90.0
+
+peer_five_scenario:
+  farm: peer_five_farm
+  name: Base Case
+  commodity_price: 4.33
+  yield_assumption: 176
+  downside_commodity_price: 3.80
+  downside_yield: 160
+  results:
+    base_case:
+      margin_per_acre: 125.0
+    downside_case:
+      margin_per_acre: 70.0
+
+peer_six_scenario:
+  farm: peer_six_farm
+  name: Base Case
+  commodity_price: 4.33
+  yield_assumption: 176
+  downside_commodity_price: 3.80
+  downside_yield: 160
+  results:
+    base_case:
+      margin_per_acre: 142.0
+    downside_case:
+      margin_per_acre: 85.0
+
+peer_seven_scenario:
+  farm: peer_seven_farm
+  name: Base Case
+  commodity_price: 4.33
+  yield_assumption: 176
+  downside_commodity_price: 3.80
+  downside_yield: 160
+  results:
+    base_case:
+      margin_per_acre: 136.0
+    downside_case:
+      margin_per_acre: 80.0
+
+peer_eight_scenario:
+  farm: peer_eight_farm
+  name: Base Case
+  commodity_price: 4.33
+  yield_assumption: 176
+  downside_commodity_price: 3.80
+  downside_yield: 160
+  results:
+    base_case:
+      margin_per_acre: 148.0
+    downside_case:
+      margin_per_acre: 87.0

@@ -25,12 +25,19 @@ export async function deleteScenario(farmId, scenarioId) {
   return unwrap(res);
 }
 
-export async function calculateScenario(farmId, scenarioId) {
-  const res = await http.post(`/api/v1/farms/${farmId}/scenarios/${scenarioId}/calculate`);
+export async function calculateScenario(farmId, scenarioId, { applyMacro = false } = {}) {
+  const res = await http.post(`/api/v1/farms/${farmId}/scenarios/${scenarioId}/calculate`, null, {
+    params: applyMacro ? { apply_macro: true } : {}
+  });
   return unwrap(res);
 }
 
 export async function compareScenario(farmId, scenarioId) {
   const res = await http.post(`/api/v1/farms/${farmId}/scenarios/${scenarioId}/compare`);
+  return unwrap(res);
+}
+
+export async function getScenarioForecast(farmId, scenarioId) {
+  const res = await http.get(`/api/v1/farms/${farmId}/scenarios/${scenarioId}/forecast`);
   return unwrap(res);
 }

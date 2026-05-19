@@ -1,0 +1,4 @@
+henderson_decision:
+  scenario: base_case
+  decision_type: 0
+  decided_at: 2026-03-15 10:00:00

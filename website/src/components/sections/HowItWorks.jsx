@@ -13,7 +13,7 @@ const STEPS = [
   {
     num: "02",
     title: "Compare to peers",
-    summary: "See your numbers against MU Extension regional benchmarks.",
+    summary: "See how your per-acre costs stack up line by line.",
     detail:
       "Line-by-line flags show where you are below, at, or above average. No guesswork, no co-op spin."
   },
@@ -29,7 +29,7 @@ const STEPS = [
     title: "Walk in with ammunition",
     summary: "Get plain-language analysis and a lender-ready report.",
     detail:
-      "Ask your independent analyst questions in plain language. Export a structured summary you can share with your banker — backed by your data and MU Extension benchmarks."
+      "Ask your independent analyst questions in plain language. Export a structured summary you can share with your banker — backed by your data."
   }
 ];
 

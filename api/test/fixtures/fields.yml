@@ -1,0 +1,55 @@
+north_80:
+  farm: henderson
+  name: North 80
+  acres: 80
+  soil_type: Silt loam
+  primary_commodity: 0
+
+peer_two_field:
+  farm: peer_two_farm
+  name: East 40
+  acres: 40
+  soil_type: Silt loam
+  primary_commodity: 0
+
+peer_three_field:
+  farm: peer_three_farm
+  name: South 60
+  acres: 60
+  soil_type: Silt loam
+  primary_commodity: 0
+
+peer_four_field:
+  farm: peer_four_farm
+  name: West 50
+  acres: 50
+  soil_type: Silt loam
+  primary_commodity: 0
+
+peer_five_field:
+  farm: peer_five_farm
+  name: Home 70
+  acres: 70
+  soil_type: Silt loam
+  primary_commodity: 0
+
+peer_six_field:
+  farm: peer_six_farm
+  name: Creek 45
+  acres: 45
+  soil_type: Silt loam
+  primary_commodity: 0
+
+peer_seven_field:
+  farm: peer_seven_farm
+  name: Ridge 55
+  acres: 55
+  soil_type: Silt loam
+  primary_commodity: 0
+
+peer_eight_field:
+  farm: peer_eight_farm
+  name: Bottom 65
+  acres: 65
+  soil_type: Silt loam
+  primary_commodity: 0

@@ -39,6 +39,23 @@ function saveLayout(userId, widgetIds) {
   }
 }
 
+function insertWidget(prev, id) {
+  if (prev.includes(id)) return prev;
+  const quickIdx = prev.indexOf("quick-actions");
+  if (quickIdx >= 0) {
+    const next = [...prev];
+    next.splice(quickIdx, 0, id);
+    return next;
+  }
+  const prioritiesIdx = prev.indexOf("farm-priorities");
+  if (prioritiesIdx >= 0) {
+    const next = [...prev];
+    next.splice(prioritiesIdx + 1, 0, id);
+    return next;
+  }
+  return [...prev, id];
+}
+
 export default function useDashboardLayout(userId, defaults, dataReady = true) {
   const [widgetIds, setWidgetIds] = useState(() => {
     const saved = loadLayout(userId);
@@ -68,6 +85,12 @@ export default function useDashboardLayout(userId, defaults, dataReady = true) {
 
   useEffect(() => {
     if (!dataReady) return;
+    if (!defaults.hasMetrics) return;
+    setWidgetIds((prev) => prev.filter((id) => id !== "setup-prompt"));
+  }, [dataReady, defaults.hasMetrics]);
+
+  useEffect(() => {
+    if (!dataReady) return;
     saveLayout(userId, widgetIds);
   }, [userId, widgetIds, dataReady]);
 
@@ -84,10 +107,14 @@ export default function useDashboardLayout(userId, defaults, dataReady = true) {
     });
   }, []);
 
-  const addWidget = useCallback((id) => {
-    if (!DASHBOARD_WIDGETS[id]) return;
-    setWidgetIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
-  }, []);
+  const addWidget = useCallback(
+    (id) => {
+      if (!DASHBOARD_WIDGETS[id]) return;
+      if (id === "setup-prompt" && defaults.hasMetrics) return;
+      setWidgetIds((prev) => insertWidget(prev, id));
+    },
+    [defaults.hasMetrics]
+  );
 
   const removeWidget = useCallback((id) => {
     setWidgetIds((prev) => prev.filter((w) => w !== id));
@@ -98,8 +125,13 @@ export default function useDashboardLayout(userId, defaults, dataReady = true) {
   }, [defaults.hasFields, defaults.hasFindings, defaults.hasMetrics]);
 
   const availableToAdd = useMemo(
-    () => ALL_WIDGET_IDS.filter((id) => !widgetIds.includes(id)),
-    [widgetIds]
+    () =>
+      ALL_WIDGET_IDS.filter((id) => {
+        if (widgetIds.includes(id)) return false;
+        if (id === "setup-prompt" && defaults.hasMetrics) return false;
+        return true;
+      }),
+    [widgetIds, defaults.hasMetrics]
   );
 
   return {

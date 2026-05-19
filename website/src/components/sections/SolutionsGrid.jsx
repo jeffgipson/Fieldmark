@@ -5,9 +5,9 @@ import Button from "../ui/Button";
 const SOLUTIONS = [
   {
     Icon: BarChart2,
-    title: "Peer Benchmarking",
+    title: "Cost Comparison",
     description:
-      "Enter your per-field input costs and see how seed, fertilizer, and chemicals stack up against regional averages — line by line, per acre.",
+      "Enter your per-field input costs and see how seed, fertilizer, and chemicals stack up — line by line, per acre.",
     href: "#how-it-works"
   },
   {
@@ -28,7 +28,7 @@ const SOLUTIONS = [
     Icon: TrendingDown,
     title: "Lender Reports",
     description:
-      "Generate a structured report with your benchmarks, scenarios, and risk summary — something you can hand your banker, not just gut feel.",
+      "Generate a structured report with your costs, scenarios, and risk summary — something you can hand your banker, not just gut feel.",
     href: appPath("/register")
   }
 ];

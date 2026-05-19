@@ -5,10 +5,10 @@ import Button from "../components/ui/Button";
 import Logo from "../components/ui/Logo";
 import DaleAvatar from "../components/dale/DaleAvatar";
 
-const STATS = [
-  { label: "Corn operating (MU 2026)", value: "$600", unit: "/ac" },
-  { label: "Soy operating (MU 2026)", value: "$388", unit: "/ac" },
-  { label: "Planning season", value: "2026", unit: "" }
+const HIGHLIGHTS = [
+  { label: "Per-acre costs", text: "Enter seed, fertilizer, and chemicals by field" },
+  { label: "Scenarios", text: "Model base case and downside before March" },
+  { label: "Lender report", text: "Export a summary backed by your numbers" }
 ];
 
 export default function LandingPage() {
@@ -31,7 +31,7 @@ export default function LandingPage() {
           </h1>
           <p className="mt-6 text-lg leading-relaxed text-fm-charcoal">
             Mid-scale farmers commit $50,000–$100,000 in input costs without independent data.
-            Fieldmark shows where you stand against regional peers before March.
+            Fieldmark helps you see margins and scenarios before March.
           </p>
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <Link to="/register">
@@ -45,22 +45,16 @@ export default function LandingPage() {
 
         <div className="fm-panel p-8">
           <p className="text-xs font-bold uppercase tracking-wider text-fm-gray-medium">
-            Regional reference (MU Extension)
+            What you get
           </p>
-          <dl className="mt-6 grid gap-6 sm:grid-cols-3">
-            {STATS.map((stat) => (
-              <div key={stat.label}>
-                <dt className="text-sm text-fm-charcoal">{stat.label}</dt>
-                <dd className="fm-stat mt-1 text-2xl font-bold text-fm-teal">
-                  {stat.value}
-                  <span className="text-base font-semibold text-fm-gray-medium">{stat.unit}</span>
-                </dd>
-              </div>
+          <ul className="mt-6 space-y-5">
+            {HIGHLIGHTS.map((item) => (
+              <li key={item.label}>
+                <p className="font-display font-semibold text-fm-teal">{item.label}</p>
+                <p className="mt-1 text-sm text-fm-charcoal">{item.text}</p>
+              </li>
             ))}
-          </dl>
-          <p className="mt-6 border-t border-fm-gray-light pt-4 text-sm text-fm-gray-medium">
-            {BRAND.attribution.benchmark}
-          </p>
+          </ul>
         </div>
       </section>
 
@@ -72,8 +66,8 @@ export default function LandingPage() {
           {[
             {
               Icon: BarChart2,
-              title: "Peer benchmarking",
-              text: "Compare your per-acre costs to similar farms in your region.",
+              title: "Cost comparison",
+              text: "See how your per-acre costs stack up line by line.",
               showDale: false
             },
             {

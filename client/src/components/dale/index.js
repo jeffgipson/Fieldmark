@@ -1,11 +1,11 @@
 export { default as DaleAvatar } from "./DaleAvatar";
 export { default as DaleDisclaimer } from "./DaleDisclaimer";
 export { default as DaleBriefingCard } from "./DaleBriefingCard";
-export { default as DaleChat } from "./DaleChat";
 export { default as DaleChatBubble } from "./DaleChatBubble";
 export { default as DaleChatWidget } from "./DaleChatWidget";
 export { default as DaleChatPopover } from "./DaleChatPopover";
 export { default as DaleEmptyState } from "./DaleEmptyState";
 export { default as DaleWelcome } from "./DaleWelcome";
 export { default as GenerateReportButton } from "./GenerateReportButton";
+export { default as ReportGeneratingState } from "./ReportGeneratingState";
 export { default as LenderReportView } from "./LenderReportView";

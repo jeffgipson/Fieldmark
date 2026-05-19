@@ -16,7 +16,7 @@ export default function LocationInsights({ insights, loading, error }) {
       label: "County",
       value: `${insights.county}${insights.state_code ? `, ${insights.state_code}` : ""}`
     },
-    insights.region && { label: "MU benchmark region", value: formatRegion(insights.region) },
+    insights.region && { label: "Region", value: formatRegion(insights.region) },
     insights.acres != null && {
       label: "Calculated acres",
       value: `${Number(insights.acres).toLocaleString(undefined, { maximumFractionDigits: 1 })} ac`
@@ -35,7 +35,7 @@ export default function LocationInsights({ insights, loading, error }) {
       <p className="fm-eyebrow">From this location</p>
       {!insights.in_missouri && (
         <p className="mt-2 text-sm text-fm-gold">
-          This point looks outside Missouri — benchmarks are tuned for MO farms.
+          This point looks outside Missouri — planning tools are tuned for MO farms.
         </p>
       )}
       <dl className="mt-3 grid gap-2 sm:grid-cols-2">

@@ -43,7 +43,7 @@ const tools = [
   {
     name: "fieldmark_benchmarks",
     description:
-      "Get MU Extension regional benchmark costs. Requires region (northern|central|southwest) and commodity (corn|soybean).",
+      "Get Extension regional benchmark costs. Requires region (northern|central|southwest) and commodity (corn|soybean).",
     inputSchema: {
       type: "object",
       properties: {

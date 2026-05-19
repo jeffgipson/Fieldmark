@@ -21,8 +21,18 @@ export function AuthProvider({ children }) {
     setAuthToken(session.token);
   }, []);
 
+  const setUserFromProfile = useCallback((profile) => {
+    setUser((prev) => (prev ? { ...prev, ...profile } : profile));
+  }, []);
+
   const login = useCallback(async (email, password) => {
     const data = await authApi.login(email, password);
+    applySession(data);
+    return data;
+  }, [applySession]);
+
+  const loginDemo = useCallback(async () => {
+    const data = await authApi.loginDemo();
     applySession(data);
     return data;
   }, [applySession]);
@@ -52,10 +62,12 @@ export function AuthProvider({ children }) {
       welcomeFlash,
       clearWelcomeFlash: () => setWelcomeFlash(false),
       login,
+      loginDemo,
       register,
-      logout
+      logout,
+      setUserFromProfile
     }),
-    [user, token, welcomeFlash, login, register, logout]
+    [user, token, welcomeFlash, login, loginDemo, register, logout, setUserFromProfile]
   );
 
   useEffect(() => {

@@ -2,7 +2,7 @@ import { useState } from "react";
 
 const GREETING = {
   text:
-    "Hi — I'm Dale. I help visitors learn how Fieldmark works. Ask about benchmarks, scenarios, pricing, or how to get started.",
+    "Hi — I'm Dale. I help visitors learn how Fieldmark works. Ask about costs, scenarios, pricing, or how to get started.",
   isUser: false
 };
 
@@ -17,13 +17,13 @@ const RESPONSES = [
   {
     match: (t) => /what is|about fieldmark|tell me about/i.test(t),
     text:
-      "Fieldmark is financial planning software for farm and ranch operations. You enter your costs, compare against peer benchmarks, run downside scenarios, and export reports for lenders and partners.",
+      "Fieldmark is financial planning software for farm and ranch operations. You enter your costs, compare line by line, run downside scenarios, and export reports for lenders and partners.",
     cta: { label: "See how it works", href: "#how-it-works" }
   },
   {
     match: (t) => /benchmark|peer|compare/i.test(t),
     text:
-      "You enter per-field input costs and see how they stack up against aggregated regional benchmarks — line by line, per acre. That is the ammunition most operators never had before signing.",
+      "You enter per-field input costs and see how they stack up — line by line, per acre. That is the ammunition most operators never had before signing.",
     cta: { label: "Explore solutions", href: "#solutions" }
   },
   {
@@ -35,7 +35,7 @@ const RESPONSES = [
   {
     match: (t) => /pric|cost|trial|free/i.test(t),
     text:
-      "You can start with a 30-day free trial — no credit card required. Full benchmark and scenario tools are included so you can see value on your own operation.",
+      "You can start with a 30-day free trial — no credit card required. Full cost comparison and scenario tools are included so you can see value on your own operation.",
     cta: { label: "Create account", href: "/register", external: true }
   },
   {
@@ -47,12 +47,12 @@ const RESPONSES = [
   {
     match: (t) => /dale|analyst|chat|ai/i.test(t),
     text:
-      "The Dale you meet after sign-up analyzes your numbers and benchmarks — not generic farm advice. This chat is for learning about Fieldmark; personalized analysis starts in the app.",
+      "The Dale you meet after sign-up analyzes your numbers — not generic farm advice. This chat is for learning about Fieldmark; personalized analysis starts in the app.",
     cta: { label: "Start free trial", href: "/register", external: true }
   },
   {
     match: (t) => /start|sign up|register|demo|get started/i.test(t),
-    text: "Great — set up takes a few minutes. Add a farm, enter costs, and you will see benchmarks and scenarios right away.",
+    text: "Great — set up takes a few minutes. Add a farm, enter costs, and you will see comparisons and scenarios right away.",
     cta: { label: "Get started free", href: "/register", external: true }
   }
 ];

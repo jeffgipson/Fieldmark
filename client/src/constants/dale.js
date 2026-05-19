@@ -30,7 +30,7 @@ export const DALE_COPY = {
   welcome: {
     title: "Meet Dale",
     message:
-      "I'm Dale — your independent analyst. I've already looked at how Missouri farms your size plan for March inputs. Once you enter your costs, I'll show you where you stand against regional benchmarks and what your margin looks like in a downside year."
+      "I'm Dale — your independent analyst. I've already looked at how Missouri farms your size plan for March inputs. Once you enter your costs, I'll show you where you stand on costs and what your margin looks like in a downside year."
   },
   loading: "Looking at your numbers...",
   briefingCard: {
@@ -39,8 +39,27 @@ export const DALE_COPY = {
   },
   report: {
     generating: "Putting together your lender report...",
-    ready: "Your lender report is ready"
+    ready: "Your lender report is ready",
+    steps: {
+      pending: "Request queued — waiting for Dale to start…",
+      processing: "Dale is drafting your lender narrative…",
+      comparing: "Comparing your costs…",
+      finishing: "Polishing the executive summary…"
+    },
+    sidekiqHint:
+      "Still waiting? Start the background worker in another terminal: cd api && bin/jobs"
   },
   error:
-    "I'm having trouble pulling your analysis right now. Give it a minute and try again."
+    "I'm having trouble pulling your analysis right now. Give it a minute and try again.",
+  decisionHelp: {
+    button: "I need help",
+    prompt:
+      "I'm on the decision log for this scenario and I'm not sure what to record. Walk me through whether to proceed, wait, modify my plan, or pass — using my base and downside margins, benchmarks, and peer comparison. Ask me one question at a time until we agree on what fits, then tell me exactly what to select in the form.",
+    suggestions: [
+      "What does my downside margin say about locking in now?",
+      "When would waiting make sense for my numbers?",
+      "How do my costs compare to peers for this call?",
+      "What should I tell my lender either way?"
+    ]
+  }
 };

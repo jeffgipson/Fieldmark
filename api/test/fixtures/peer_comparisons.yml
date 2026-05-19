@@ -1,0 +1,8 @@
+henderson_base:
+  scenario: base_case
+  benchmark_region: central_corn
+  seed_percentile: 50
+  fertilizer_percentile: 50
+  chemicals_percentile: 50
+  total_cost_percentile: 50
+  summary: {}

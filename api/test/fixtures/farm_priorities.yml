@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  farm: one
+  category: 1
+  note: MyText
+  season_year: 1
+  status: 1
+  source: 1
+  position: 1
+
+two:
+  farm: two
+  category: 1
+  note: MyText
+  season_year: 1
+  status: 1
+  source: 1
+  position: 1

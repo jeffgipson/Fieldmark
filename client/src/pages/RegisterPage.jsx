@@ -1,5 +1,5 @@
-import { useCallback, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import * as farmsApi from "../api/farms";
 import DaleAvatar from "../components/dale/DaleAvatar";
 import LocationMapPicker from "../components/map/LocationMapPicker";
@@ -16,13 +16,15 @@ export default function RegisterPage() {
   const { register } = useAuth();
   const { refresh } = useFarm();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const inviteToken = searchParams.get("invite");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [locationMeta, setLocationMeta] = useState(null);
   const [form, setForm] = useState({
     first_name: "",
     last_name: "",
-    email: "",
+    email: searchParams.get("email") || "",
     password: "",
     farm_name: "",
     total_acres: "",
@@ -33,6 +35,11 @@ export default function RegisterPage() {
     longitude: null,
     boundary: null
   });
+
+  useEffect(() => {
+    const email = searchParams.get("email");
+    if (email) setForm((prev) => ({ ...prev, email }));
+  }, [searchParams]);
 
   function setField(key, value) {
     setForm((prev) => ({ ...prev, [key]: value }));
@@ -57,7 +64,8 @@ export default function RegisterPage() {
         last_name: form.last_name,
         email: form.email,
         password: form.password,
-        password_confirmation: form.password
+        password_confirmation: form.password,
+        ...(inviteToken ? { invite_token: inviteToken } : {})
       });
       await farmsApi.createFarm({
         name: form.farm_name,
@@ -70,7 +78,7 @@ export default function RegisterPage() {
         location_meta: locationMeta || {}
       });
       await refresh();
-      navigate("/dashboard");
+      navigate("/dashboard", { state: { setupPriorities: true } });
     } catch (err) {
       setError(friendlyError(err));
     } finally {
@@ -84,6 +92,11 @@ export default function RegisterPage() {
         <div className="mb-6 flex flex-col items-center text-center">
           <DaleAvatar variant="waving" size="lg" />
           <h1 className="font-display mt-4 text-2xl font-bold">Create your account</h1>
+          {inviteToken && (
+            <p className="mt-2 text-sm text-fm-charcoal/80">
+              You were invited to join Fieldmark. Use the same email address from your invitation.
+            </p>
+          )}
         </div>
         <form onSubmit={handleSubmit} className="grid gap-4 sm:grid-cols-2">
           <div>

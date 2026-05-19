@@ -1,0 +1,269 @@
+[
+  {
+    "source": "Extension 2026 - g651",
+    "url": "https://extension.missouri.edu/media/wysiwyg/Extensiondata/Pub/pdf/agguides/agecon/g00651.pdf",
+    "retrieved_date": "2026-05-18",
+    "commodity": "corn",
+    "irrigation": "dryland",
+    "regions": [
+      "northern",
+      "central",
+      "southwest"
+    ],
+    "season_year": 2026,
+    "assumed_yield_bu_per_acre": 176,
+    "assumed_price_per_bu": 4.33,
+    "costs_per_acre": {
+      "seed": 99.38,
+      "fertilizer": 187.01,
+      "chemicals": 104.0,
+      "labor": 22.6,
+      "custom_hire": 19.97,
+      "drying": 26.4,
+      "supplies_storage_marketing": 8.5,
+      "consulting_insurance": 18.0,
+      "machinery_fuel": 21.76,
+      "machinery_repairs": 32.11,
+      "management": 39.35,
+      "operating_interest": 20.99,
+      "total_operating": 600.07,
+      "farm_overhead": 23.61,
+      "machinery_ownership": 93.78,
+      "real_estate": 185.0,
+      "total_ownership": 302.4,
+      "total_costs": 902.47
+    },
+    "income_per_acre": {
+      "grain_sales": 762.08,
+      "government_payments": 25.0,
+      "total_income": 787.08
+    },
+    "margins_per_acre": {
+      "income_over_operating": 187.01,
+      "income_over_total": -115.39,
+      "return_to_land_and_management": 108.97
+    }
+  },
+  {
+    "source": "Extension 2026 - g654",
+    "url": "https://extension.missouri.edu/media/wysiwyg/Extensiondata/Pub/pdf/agguides/agecon/g00654.pdf",
+    "retrieved_date": "2026-05-18",
+    "commodity": "soybean",
+    "irrigation": "dryland",
+    "regions": [
+      "northern",
+      "central",
+      "southwest"
+    ],
+    "season_year": 2026,
+    "assumed_yield_bu_per_acre": 57,
+    "assumed_price_per_bu": 10.43,
+    "costs_per_acre": {
+      "seed": 75.0,
+      "fertilizer": 91.28,
+      "chemicals": 113.25,
+      "labor": 11.52,
+      "custom_hire": 7.37,
+      "supplies_storage_marketing": 8.0,
+      "consulting_insurance": 19.0,
+      "machinery_fuel": 10.3,
+      "machinery_repairs": 19.82,
+      "management": 18.59,
+      "operating_interest": 13.56,
+      "total_operating": 387.69,
+      "farm_overhead": 18.59,
+      "machinery_ownership": 51.29,
+      "real_estate": 185.0,
+      "total_ownership": 254.87,
+      "total_costs": 642.57
+    },
+    "income_per_acre": {
+      "grain_sales": 594.51,
+      "government_payments": 25.0,
+      "total_income": 619.51
+    },
+    "margins_per_acre": {
+      "income_over_operating": 231.82,
+      "income_over_total": -23.06,
+      "return_to_land_and_management": 180.53
+    }
+  },
+  {
+    "source": "Extension 2025 planning budget (estimated from 2026 trend)",
+    "url": "https://extension.missouri.edu/media/wysiwyg/Extensiondata/Pub/pdf/agguides/agecon/g00651.pdf",
+    "retrieved_date": "2026-05-19",
+    "commodity": "corn",
+    "irrigation": "dryland",
+    "regions": [
+      "northern",
+      "central",
+      "southwest"
+    ],
+    "season_year": 2025,
+    "assumed_yield_bu_per_acre": 174,
+    "assumed_price_per_bu": 4.55,
+    "costs_per_acre": {
+      "seed": 96.4,
+      "fertilizer": 181.4,
+      "chemicals": 100.88,
+      "labor": 21.92,
+      "custom_hire": 19.37,
+      "drying": 25.61,
+      "supplies_storage_marketing": 8.25,
+      "consulting_insurance": 17.46,
+      "machinery_fuel": 21.11,
+      "machinery_repairs": 31.15,
+      "management": 38.17,
+      "operating_interest": 20.36,
+      "total_operating": 582.07,
+      "farm_overhead": 22.9,
+      "machinery_ownership": 90.97,
+      "real_estate": 179.45,
+      "total_ownership": 293.33,
+      "total_costs": 875.4
+    },
+    "income_per_acre": {
+      "grain_sales": 762.08,
+      "government_payments": 25.0,
+      "total_income": 787.08
+    },
+    "margins_per_acre": {
+      "income_over_operating": 187.01,
+      "income_over_total": -115.39,
+      "return_to_land_and_management": 108.97
+    }
+  },
+  {
+    "source": "Extension 2025 planning budget (estimated from 2026 trend)",
+    "url": "https://extension.missouri.edu/media/wysiwyg/Extensiondata/Pub/pdf/agguides/agecon/g00654.pdf",
+    "retrieved_date": "2026-05-19",
+    "commodity": "soybean",
+    "irrigation": "dryland",
+    "regions": [
+      "northern",
+      "central",
+      "southwest"
+    ],
+    "season_year": 2025,
+    "assumed_yield_bu_per_acre": 56,
+    "assumed_price_per_bu": 10.95,
+    "costs_per_acre": {
+      "seed": 72.75,
+      "fertilizer": 88.54,
+      "chemicals": 109.85,
+      "labor": 11.17,
+      "custom_hire": 7.15,
+      "supplies_storage_marketing": 7.76,
+      "consulting_insurance": 18.43,
+      "machinery_fuel": 9.99,
+      "machinery_repairs": 19.23,
+      "management": 18.03,
+      "operating_interest": 13.15,
+      "total_operating": 376.06,
+      "farm_overhead": 18.03,
+      "machinery_ownership": 49.75,
+      "real_estate": 179.45,
+      "total_ownership": 247.22,
+      "total_costs": 623.29
+    },
+    "income_per_acre": {
+      "grain_sales": 594.51,
+      "government_payments": 25.0,
+      "total_income": 619.51
+    },
+    "margins_per_acre": {
+      "income_over_operating": 231.82,
+      "income_over_total": -23.06,
+      "return_to_land_and_management": 180.53
+    }
+  },
+  {
+    "source": "Extension 2024 planning budget (estimated from 2026 trend)",
+    "url": "https://extension.missouri.edu/media/wysiwyg/Extensiondata/Pub/pdf/agguides/agecon/g00651.pdf",
+    "retrieved_date": "2026-05-19",
+    "commodity": "corn",
+    "irrigation": "dryland",
+    "regions": [
+      "northern",
+      "central",
+      "southwest"
+    ],
+    "season_year": 2024,
+    "assumed_yield_bu_per_acre": 172,
+    "assumed_price_per_bu": 4.76,
+    "costs_per_acre": {
+      "seed": 93.42,
+      "fertilizer": 175.79,
+      "chemicals": 97.76,
+      "labor": 21.24,
+      "custom_hire": 18.77,
+      "drying": 24.82,
+      "supplies_storage_marketing": 7.99,
+      "consulting_insurance": 16.92,
+      "machinery_fuel": 20.45,
+      "machinery_repairs": 30.18,
+      "management": 36.99,
+      "operating_interest": 19.73,
+      "total_operating": 564.07,
+      "farm_overhead": 22.19,
+      "machinery_ownership": 88.15,
+      "real_estate": 173.9,
+      "total_ownership": 284.26,
+      "total_costs": 848.32
+    },
+    "income_per_acre": {
+      "grain_sales": 762.08,
+      "government_payments": 25.0,
+      "total_income": 787.08
+    },
+    "margins_per_acre": {
+      "income_over_operating": 187.01,
+      "income_over_total": -115.39,
+      "return_to_land_and_management": 108.97
+    }
+  },
+  {
+    "source": "Extension 2024 planning budget (estimated from 2026 trend)",
+    "url": "https://extension.missouri.edu/media/wysiwyg/Extensiondata/Pub/pdf/agguides/agecon/g00654.pdf",
+    "retrieved_date": "2026-05-19",
+    "commodity": "soybean",
+    "irrigation": "dryland",
+    "regions": [
+      "northern",
+      "central",
+      "southwest"
+    ],
+    "season_year": 2024,
+    "assumed_yield_bu_per_acre": 56,
+    "assumed_price_per_bu": 11.47,
+    "costs_per_acre": {
+      "seed": 70.5,
+      "fertilizer": 85.8,
+      "chemicals": 106.46,
+      "labor": 10.83,
+      "custom_hire": 6.93,
+      "supplies_storage_marketing": 7.52,
+      "consulting_insurance": 17.86,
+      "machinery_fuel": 9.68,
+      "machinery_repairs": 18.63,
+      "management": 17.47,
+      "operating_interest": 12.75,
+      "total_operating": 364.43,
+      "farm_overhead": 17.47,
+      "machinery_ownership": 48.21,
+      "real_estate": 173.9,
+      "total_ownership": 239.58,
+      "total_costs": 604.02
+    },
+    "income_per_acre": {
+      "grain_sales": 594.51,
+      "government_payments": 25.0,
+      "total_income": 619.51
+    },
+    "margins_per_acre": {
+      "income_over_operating": 231.82,
+      "income_over_total": -23.06,
+      "return_to_land_and_management": 180.53
+    }
+  }
+]

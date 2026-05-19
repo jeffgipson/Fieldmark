@@ -6,15 +6,18 @@ export default function BenchmarkBar({
   label,
   farmCost,
   benchmarkCost,
+  peerCost,
   status = "at_average",
   delayMs = 0
 }) {
   const [width, setWidth] = useState(0);
   const farm = Number(farmCost) || 0;
-  const bench = Number(benchmarkCost) || 1;
-  const max = Math.max(farm, bench, 1) * 1.15;
+  const bench = Number(benchmarkCost) || 0;
+  const peer = peerCost != null ? Number(peerCost) : null;
+  const max = Math.max(farm, bench, peer || 0, 1) * 1.15;
   const farmPct = (farm / max) * 100;
-  const benchPct = (bench / max) * 100;
+  const benchPct = bench ? (bench / max) * 100 : 0;
+  const peerPct = peer != null ? (peer / max) * 100 : 0;
   const barClass = (COST_STATUS[status] || COST_STATUS.at_average).barClass;
 
   useEffect(() => {
@@ -22,19 +25,31 @@ export default function BenchmarkBar({
     return () => clearTimeout(timer);
   }, [farmPct, delayMs]);
 
+  const labelParts = [`You ${formatPerAcre(farm)}`];
+  if (peer != null) labelParts.push(`Peers ${formatPerAcre(peer)}`);
+  if (bench) labelParts.push(`Benchmark ${formatPerAcre(bench)}`);
+
   return (
     <div className="space-y-2">
-      <div className="flex justify-between text-sm">
+      <div className="flex justify-between gap-2 text-sm">
         <span className="font-bold text-fm-charcoal">{label}</span>
-        <span className="text-fm-gray-medium">
-          You {formatPerAcre(farm)} · Avg {formatPerAcre(bench)}
-        </span>
+        <span className="text-right text-fm-gray-medium">{labelParts.join(" · ")}</span>
       </div>
       <div className="relative h-2 overflow-hidden rounded bg-fm-gray-light">
-        <div
-          className="absolute top-0 h-2 rounded bg-fm-gray-medium/40 transition-all duration-600 ease-out"
-          style={{ width: `${benchPct}%` }}
-        />
+        {bench > 0 && (
+          <div
+            className="absolute top-0 h-2 rounded bg-fm-gray-medium/40 transition-all duration-600 ease-out"
+            style={{ width: `${benchPct}%` }}
+            title={`Extension ${formatPerAcre(bench)}`}
+          />
+        )}
+        {peer != null && (
+          <div
+            className="absolute top-0 h-2 rounded bg-fm-teal/30 transition-all duration-600 ease-out"
+            style={{ width: `${peerPct}%` }}
+            title={`Peer median ${formatPerAcre(peer)}`}
+          />
+        )}
         <div
           className={`absolute top-0 h-2 rounded transition-all duration-600 ease-out ${barClass}`}
           style={{ width: `${width}%` }}

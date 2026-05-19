@@ -1,0 +1,80 @@
+henderson:
+  user: one
+  name: Henderson Family Farm
+  total_acres: 1200
+  county: Cape Girardeau
+  region: 1
+  primary_commodity: 0
+  benchmark_cohort: false
+
+peer_two_farm:
+  user: peer_two
+  name: Peer Two Farm
+  total_acres: 800
+  county: Cape Girardeau
+  region: 1
+  primary_commodity: 0
+  benchmark_cohort: false
+
+peer_three_farm:
+  user: peer_three
+  name: Peer Three Farm
+  total_acres: 900
+  county: Cape Girardeau
+  region: 1
+  primary_commodity: 0
+  benchmark_cohort: false
+
+peer_four_farm:
+  user: peer_four
+  name: Peer Four Farm
+  total_acres: 750
+  county: Cape Girardeau
+  region: 1
+  primary_commodity: 0
+  benchmark_cohort: false
+
+peer_five_farm:
+  user: peer_five
+  name: Peer Five Farm
+  total_acres: 1100
+  county: Cape Girardeau
+  region: 1
+  primary_commodity: 0
+  benchmark_cohort: false
+
+peer_six_farm:
+  user: peer_six
+  name: Peer Six Farm
+  total_acres: 650
+  county: Cape Girardeau
+  region: 1
+  primary_commodity: 0
+  benchmark_cohort: false
+
+peer_seven_farm:
+  user: peer_seven
+  name: Peer Seven Farm
+  total_acres: 950
+  county: Cape Girardeau
+  region: 1
+  primary_commodity: 0
+  benchmark_cohort: false
+
+peer_eight_farm:
+  user: peer_eight
+  name: Peer Eight Farm
+  total_acres: 700
+  county: Cape Girardeau
+  region: 1
+  primary_commodity: 0
+  benchmark_cohort: false
+
+northern_farm:
+  user: two
+  name: Northern Farm
+  total_acres: 500
+  county: Boone
+  region: 0
+  primary_commodity: 0
+  benchmark_cohort: false

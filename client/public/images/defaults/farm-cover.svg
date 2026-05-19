@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" role="img" aria-label="Midwest farmland">
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#c8e8e8"/>
+      <stop offset="100%" style="stop-color:#f5f3f0"/>
+    </linearGradient>
+    <linearGradient id="field" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3d8b5c"/>
+      <stop offset="50%" style="stop-color:#5a9e4a"/>
+      <stop offset="100%" style="stop-color:#8b9e3d"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="400" fill="url(#sky)"/>
+  <ellipse cx="900" cy="80" rx="120" ry="40" fill="#fff" opacity="0.7"/>
+  <ellipse cx="980" cy="90" rx="90" ry="35" fill="#fff" opacity="0.5"/>
+  <path d="M0 220 Q300 180 600 200 T1200 190 L1200 400 L0 400 Z" fill="url(#field)"/>
+  <path d="M0 260 Q400 230 800 250 T1200 240 L1200 400 L0 400 Z" fill="#2d6b4a" opacity="0.85"/>
+  <path d="M0 300 L1200 300 L1200 400 L0 400 Z" fill="#1f4d38"/>
+</svg>

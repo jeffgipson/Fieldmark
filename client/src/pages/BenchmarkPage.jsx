@@ -1,25 +1,42 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import Button from "../components/ui/Button";
 import { useDaleChat } from "../contexts/DaleChatContext";
 import * as scenariosApi from "../api/scenarios";
 import BenchmarkBar from "../components/charts/BenchmarkBar";
+import { BenchmarkGroupedBar } from "../components/charts/BenchmarkGroupedBar";
+import { MarginRangeChart } from "../components/charts/MarginRangeChart";
+import { TrendStrip } from "../components/charts/TrendStrip";
 import DaleAvatar from "../components/dale/DaleAvatar";
 import Card from "../components/ui/Card";
 import CostStatusBadge from "../components/ui/CostStatusBadge";
 import LoadingDale from "../components/ui/LoadingDale";
 import PageHeader from "../components/ui/PageHeader";
-import { BRAND } from "../constants/brand";
 import { useFarm } from "../contexts/FarmContext";
-import { diffLabel } from "../utils/benchmark";
-import { formatCommodity, formatPerAcre, formatRegion } from "../utils/format";
+import {
+  cohortSizeLabel,
+  diffLabel,
+  peerStatusFromRow,
+  primaryCategoryDiff,
+  rowStatus
+} from "../utils/benchmark";
+import {
+  acreageReconciliation,
+  formatAcres,
+  formatCategory,
+  formatCommodity,
+  formatMarginPercentile,
+  formatPerAcre,
+  formatRegion
+} from "../utils/format";
 import { friendlyError } from "../utils/errors";
+import RecommendationsPanel from "../components/vendors/RecommendationsPanel";
 
 const ROWS = ["seed", "fertilizer", "chemicals", "labor", "total"];
 
 export default function BenchmarkPage() {
   const { id: scenarioId } = useParams();
-  const { farm } = useFarm();
+  const { farm, fields, mergeScenarioPeerComparison } = useFarm();
   const { openChat } = useDaleChat();
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -32,7 +49,10 @@ export default function BenchmarkPage() {
       setLoading(true);
       try {
         const result = await scenariosApi.compareScenario(farm.id, scenarioId);
-        if (!cancelled) setData(result);
+        if (!cancelled) {
+          setData(result);
+          mergeScenarioPeerComparison(result);
+        }
       } catch (err) {
         if (!cancelled) setError(friendlyError(err));
       } finally {
@@ -40,32 +60,83 @@ export default function BenchmarkPage() {
       }
     })();
     return () => { cancelled = true; };
-  }, [farm, scenarioId]);
+  }, [farm, scenarioId, mergeScenarioPeerComparison]);
 
-  if (loading) return <LoadingDale message="Comparing your costs to regional peers..." />;
+  const acreage = useMemo(
+    () => acreageReconciliation(fields, farm?.total_acres),
+    [fields, farm?.total_acres]
+  );
+
+  if (loading) return <LoadingDale message="Comparing your costs to regional peers and benchmarks..." />;
   if (error) return <p className="text-fm-alert">{error}</p>;
 
-  const categories = data?.peer_comparison?.summary?.categories || {};
-  const acres = data?.peer_comparison?.summary?.total_acres || farm?.total_acres || 0;
+  const summary = data?.peer_comparison?.summary || {};
+  const categories = summary.categories || {};
+  const cohort = summary.cohort;
+  const cohortAvailable = cohort?.available;
+  const mappedAcres = summary.total_acres || acreage.mappedAcres || 0;
+  const margin = summary.margin_comparison;
+  const costTrends = summary.cost_trends;
+  const fieldComparisons = summary.field_comparisons || [];
+
   const worst = Object.entries(categories)
     .filter(([k]) => k !== "total")
-    .sort((a, b) => (b[1]?.difference_per_acre || 0) - (a[1]?.difference_per_acre || 0))[0];
+    .sort((a, b) => {
+      const diffA = primaryCategoryDiff(a[1], cohortAvailable)?.diff || 0;
+      const diffB = primaryCategoryDiff(b[1], cohortAvailable)?.diff || 0;
+      return diffB - diffA;
+    })[0];
+
+  const worstDiff = worst ? primaryCategoryDiff(worst[1], cohortAvailable) : null;
+  const cohortLabel = cohortSizeLabel(cohort);
 
   return (
     <div>
       <PageHeader
         title="Your Cost Position"
-        subtitle={`${formatRegion(farm?.region)} Missouri | ${formatCommodity(farm?.primary_commodity)} | 2026`}
+        subtitle={`${formatRegion(farm?.region)} Missouri | ${formatCommodity(farm?.primary_commodity)} | 2026${cohortLabel ? ` | ${cohortLabel}` : ""}`}
       />
-      <p className="mb-6 text-sm text-fm-gray-medium">{BRAND.attribution.benchmark}</p>
 
-      <Card className="overflow-x-auto">
+      {!cohortAvailable && (
+        <Card variant="alert" className="mb-6">
+          <p className="text-sm text-fm-charcoal">
+            Not enough peer farms in your region yet for anonymized comparison — showing Extension benchmarks only.
+          </p>
+        </Card>
+      )}
+
+      {!acreage.reconciled && (
+        <Card variant="alert" className="mb-6">
+          <p className="text-sm text-fm-charcoal">
+            Dollar totals below use <strong>{formatAcres(mappedAcres)}</strong> (fields with boundaries). Your
+            profile lists {formatAcres(acreage.profileAcres)} — add remaining fields or update your profile so
+            farm-wide numbers match.
+          </p>
+        </Card>
+      )}
+
+      <BenchmarkGroupedBar categories={categories} cohortAvailable={cohortAvailable} />
+
+      {costTrends?.years?.length > 0 && (
+        <div className="mt-6">
+          <TrendStrip trends={costTrends} />
+        </div>
+      )}
+
+      {margin?.available && (
+        <div className="mt-6">
+          <MarginRangeChart margin={margin} />
+        </div>
+      )}
+
+      <Card className="mt-6 overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b text-left text-xs font-bold uppercase text-fm-gray-medium">
               <th className="py-2">Category</th>
               <th className="py-2">Your Farm</th>
-              <th className="py-2">Regional Avg</th>
+              {cohortAvailable && <th className="py-2">Peer Median</th>}
+              <th className="py-2">Extension</th>
               <th className="py-2">Difference</th>
               <th className="py-2">Status</th>
             </tr>
@@ -74,13 +145,19 @@ export default function BenchmarkPage() {
             {ROWS.map((key) => {
               const row = categories[key];
               if (!row) return null;
+              const primary = primaryCategoryDiff(row, cohortAvailable);
               return (
                 <tr key={key} className="border-b border-fm-gray-light">
-                  <td className="py-3 capitalize font-medium">{key}</td>
+                  <td className="py-3 capitalize font-medium">{formatCategory(key)}</td>
                   <td className="py-3">{formatPerAcre(row.user_per_acre)}</td>
+                  {cohortAvailable && (
+                    <td className="py-3">{formatPerAcre(row.peer_median_per_acre)}</td>
+                  )}
                   <td className="py-3">{formatPerAcre(row.benchmark_per_acre)}</td>
-                  <td className="py-3">{diffLabel(row.difference_per_acre)}</td>
-                  <td className="py-3"><CostStatusBadge status={row.flag} /></td>
+                  <td className="py-3">{diffLabel(primary?.diff)}</td>
+                  <td className="py-3">
+                    <CostStatusBadge status={rowStatus(row, primary)} />
+                  </td>
                 </tr>
               );
             })}
@@ -88,26 +165,100 @@ export default function BenchmarkPage() {
         </table>
       </Card>
 
-      {worst && worst[1]?.difference_per_acre > 0 && (
+      {worst && worstDiff && worstDiff.diff > 0 && (
         <Card variant="alert" className="mt-6">
           <p className="font-bold text-fm-charcoal">
             {worst[0].charAt(0).toUpperCase() + worst[0].slice(1)} stands out
           </p>
           <p className="mt-2 text-fm-charcoal">
-            At {acres} acres, your {worst[0]} cost is $
-            {Math.abs(worst[1].total_farm_dollar_impact).toLocaleString()} above regional average.
+            At {formatAcres(mappedAcres)}, your {formatCategory(worst[0]).toLowerCase()} cost is $
+            {Math.abs(worstDiff.impact || 0).toLocaleString()} above the {worstDiff.reference}.
           </p>
         </Card>
       )}
+
+      {margin?.available && (
+        <Card className="mt-6">
+          <p className="fm-eyebrow">Margin position</p>
+          <p className="font-display mt-1 text-lg font-semibold text-fm-ink">Base case vs peer farms</p>
+          <p className="mt-3 text-fm-charcoal">
+            Your base margin {formatPerAcre(margin.user_base_margin_per_acre)} vs peer median{" "}
+            {formatPerAcre(margin.peer_median_base_margin_per_acre)}
+            {margin.base_margin_peer_percentile != null && (
+              <> ({formatMarginPercentile(margin.base_margin_peer_percentile)} among {margin.cohort_size} farms)</>
+            )}
+            .
+          </p>
+          {margin.base_margin_peer_percentile != null && margin.base_margin_peer_percentile <= 10 && (
+            <p className="mt-3 rounded-lg border border-fm-teal/20 bg-fm-teal-subtle/30 px-3 py-2 text-sm text-fm-charcoal">
+              A low percentile usually means higher costs, conservative yield assumptions, or incomplete field
+              data — not a judgment on your operation. Review your highest cost category, rerun your downside
+              scenario, and confirm all fields have costs entered.
+            </p>
+          )}
+          {margin.user_downside_margin_per_acre != null && (
+            <p className="mt-2 text-sm text-fm-gray-medium">
+              Downside: {formatPerAcre(margin.user_downside_margin_per_acre)} vs peer median{" "}
+              {formatPerAcre(margin.peer_median_downside_margin_per_acre)}
+            </p>
+          )}
+        </Card>
+      )}
+
+      {(fieldComparisons.length > 0 || fields.length > 0) && (
+        <Card className="mt-6 overflow-x-auto">
+          <p className="fm-eyebrow">Field breakdown</p>
+          <p className="font-display mt-1 text-lg font-semibold text-fm-ink">Per-field vs peer fields</p>
+          <table className="mt-4 w-full text-sm">
+            <thead>
+              <tr className="border-b text-left text-xs font-bold uppercase text-fm-gray-medium">
+                <th className="py-2">Field</th>
+                <th className="py-2">Category</th>
+                <th className="py-2">Your cost</th>
+                <th className="py-2">Peer median</th>
+                <th className="py-2">Percentile</th>
+              </tr>
+            </thead>
+            <tbody>
+              {fieldComparisons.flatMap((field) => {
+                if (field.excluded_reason === "no_cost_data") {
+                  return (
+                    <tr key={field.field_id} className="border-b border-fm-gray-light">
+                      <td className="py-2 font-medium">{field.field_name}</td>
+                      <td colSpan={4} className="py-2 italic text-fm-gray-medium">
+                        No cost data entered — add costs to include this field in peer comparison.
+                      </td>
+                    </tr>
+                  );
+                }
+                return Object.entries(field.categories || {}).map(([category, row]) => (
+                  <tr key={`${field.field_id}-${category}`} className="border-b border-fm-gray-light">
+                    <td className="py-2 font-medium">{field.field_name}</td>
+                    <td className="py-2">{formatCategory(category)}</td>
+                    <td className="py-2">{formatPerAcre(row.user_per_acre)}</td>
+                    <td className="py-2">{formatPerAcre(row.peer_median_per_acre)}</td>
+                    <td className="py-2">
+                      {row.peer_percentile != null ? `${Math.round(row.peer_percentile)}th` : "—"}
+                    </td>
+                  </tr>
+                ));
+              })}
+            </tbody>
+          </table>
+        </Card>
+      )}
+
+      <RecommendationsPanel farmId={farm?.id} scenarioId={scenarioId} county={farm?.county} />
 
       <div className="mt-8 space-y-4">
         {ROWS.filter((k) => categories[k]).map((key, i) => (
           <BenchmarkBar
             key={key}
-            label={key.charAt(0).toUpperCase() + key.slice(1)}
+            label={formatCategory(key)}
             farmCost={categories[key].user_per_acre}
             benchmarkCost={categories[key].benchmark_per_acre}
-            status={categories[key].flag}
+            peerCost={cohortAvailable ? categories[key].peer_median_per_acre : null}
+            status={peerStatusFromRow(categories[key])}
             delayMs={i * 100}
           />
         ))}
@@ -117,9 +268,9 @@ export default function BenchmarkPage() {
         <DaleAvatar variant="analyzing" size="md" />
         <div className="flex-1">
           <p className="text-fm-charcoal">
-            {worst
-              ? `Your ${worst[0]} spend is the biggest gap vs MU Extension — worth a conversation before March.`
-              : "You're in a solid position relative to regional benchmarks on operating costs."}
+            {worst && worstDiff && worstDiff.diff > 0
+              ? `Your ${worst[0]} spend is the biggest gap vs ${worstDiff.reference} — worth a conversation before March.`
+              : "You're in a solid position on operating costs relative to peers and benchmarks."}
           </p>
           <Button variant="secondary" className="mt-3 !py-2" onClick={openChat}>
             Talk to Dale →

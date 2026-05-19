@@ -1,0 +1,16 @@
+<%= @headline %>
+
+<% @paragraphs.each do |paragraph| %>
+<%= paragraph %>
+
+<% end %>
+<% if @list_heading.present? && @list_items.present? %>
+<%= @list_heading %>
+
+<% @list_items.each do |item| %>
+- <%= item %>
+<% end %>
+<% end %>
+<% if @cta.present? %>
+<%= @cta[:label] %>: <%= @cta[:url] %>
+<% end %>

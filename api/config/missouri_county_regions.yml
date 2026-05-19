@@ -1,0 +1,108 @@
+# Extension 2026 benchmark regions (northern / central / southwest)
+# Counties not listed default to central when geocoded in Missouri.
+northern:
+  - Adair
+  - Andrew
+  - Atchison
+  - Audrain
+  - Boone
+  - Caldwell
+  - Carroll
+  - Chariton
+  - Clark
+  - Clinton
+  - Daviess
+  - DeKalb
+  - Gentry
+  - Grundy
+  - Harrison
+  - Henry
+  - Holt
+  - Howard
+  - Johnson
+  - Knox
+  - Lafayette
+  - Lewis
+  - Linn
+  - Livingston
+  - Macon
+  - Marion
+  - Mercer
+  - Moniteau
+  - Monroe
+  - Nodaway
+  - Pettis
+  - Putnam
+  - Ralls
+  - Randolph
+  - Ray
+  - Saline
+  - Schuyler
+  - Scotland
+  - Shelby
+  - Sullivan
+  - Worth
+central:
+  - Bollinger
+  - Butler
+  - Callaway
+  - Cape Girardeau
+  - Cole
+  - Cooper
+  - Crawford
+  - Franklin
+  - Gasconade
+  - Iron
+  - Jefferson
+  - Lincoln
+  - Madison
+  - Mississippi
+  - Montgomery
+  - New Madrid
+  - Osage
+  - Perry
+  - Phelps
+  - Pike
+  - Platte
+  - Reynolds
+  - Ripley
+  - Scott
+  - St. Charles
+  - St. Francois
+  - St. Louis
+  - Ste. Genevieve
+  - Stoddard
+  - Warren
+  - Washington
+southwest:
+  - Barry
+  - Barton
+  - Benton
+  - Camden
+  - Carter
+  - Cedar
+  - Christian
+  - Dade
+  - Dallas
+  - Douglas
+  - Greene
+  - Hickory
+  - Howell
+  - Jasper
+  - Laclede
+  - Lawrence
+  - McDonald
+  - Miller
+  - Morgan
+  - Newton
+  - Oregon
+  - Ozark
+  - Polk
+  - Pulaski
+  - Shannon
+  - Stone
+  - Taney
+  - Texas
+  - Vernon
+  - Webster
+  - Wright

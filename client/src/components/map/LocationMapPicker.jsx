@@ -1,14 +1,20 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import GoogleAddressInput from "./GoogleAddressInput";
 import { GeoJSON, MapContainer, Marker, TileLayer, useMap, useMapEvents } from "react-leaflet";
 import BoundaryOverlay from "./BoundaryOverlay";
+import QuickFieldBox from "./QuickFieldBox";
+import RegridDemoMap from "./RegridDemoMap";
 import "leaflet-draw";
 import { Search } from "lucide-react";
 import * as locationsApi from "../../api/locations";
+import { fetchMapConfig } from "../../api/mapConfig";
+import { useAuth } from "../../contexts/AuthContext";
 import useLocationLookup from "../../hooks/useLocationLookup";
 import Input from "../ui/Input";
 import { configureDrawLocale, configureLeafletIcons, L } from "./leafletSetup";
 import LocationInsights from "./LocationInsights";
 import { acresFromBoundary, formatAcres } from "../../utils/polygonAcres";
+import { mapDebug } from "../../utils/mapDebug";
 import "./locationMap.css";
 
 configureLeafletIcons();
@@ -23,7 +29,9 @@ const FIELD_SHAPE_OPTIONS = {
 
 const DEFAULT_CENTER = [37.3059, -89.5181];
 const DEFAULT_ZOOM = 8;
-
+/** Parcel / field scale — search and fly-to use this for drawing boundaries. */
+const FIELD_PROPERTY_ZOOM = 19;
+const FARM_POINT_ZOOM = 12;
 const BASEMAPS = {
   street: {
     url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -35,42 +43,18 @@ const BASEMAPS = {
   }
 };
 
-function centroidFromBoundary(geometry) {
-  const ring = geometry?.coordinates?.[0];
-  if (!ring?.length) return null;
-  const lngs = ring.map((c) => c[0]);
-  const lats = ring.map((c) => c[1]);
-  return {
-    lat: lats.reduce((a, b) => a + b, 0) / lats.length,
-    lng: lngs.reduce((a, b) => a + b, 0) / lngs.length
-  };
-}
-
-function MapClickSelect({ enabled, onCandidates }) {
-  useMapEvents({
-    async click(e) {
-      if (!enabled) return;
-      try {
-        const list = await locationsApi.fetchBoundariesAtPoint(e.latlng.lat, e.latlng.lng);
-        onCandidates(Array.isArray(list) ? list : [], e.latlng);
-      } catch {
-        onCandidates([], e.latlng);
-      }
-    }
-  });
-  return null;
-}
-
-function MapController({ center, zoom, flyToKey }) {
+function MapController({ center, zoom, syncKey }) {
   const map = useMap();
-  const lastKey = useRef(null);
+  const lastSync = useRef(null);
 
   useEffect(() => {
-    if (!center || flyToKey == null) return;
-    if (lastKey.current === flyToKey) return;
-    lastKey.current = flyToKey;
-    map.setView(center, zoom ?? map.getZoom());
-  }, [center, zoom, map, flyToKey]);
+    if (!center || zoom == null || syncKey == null) return;
+    const token = `${syncKey}@${zoom}`;
+    if (lastSync.current === token) return;
+    lastSync.current = token;
+    mapDebug("map:fly_to", { syncKey, center, zoom });
+    map.setView(center, zoom, { animate: false });
+  }, [center, zoom, syncKey, map]);
 
   return null;
 }
@@ -185,12 +169,66 @@ export default function LocationMapPicker({
 }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [searchAttempted, setSearchAttempted] = useState(false);
   const [searching, setSearching] = useState(false);
-  const [fieldInputMode, setFieldInputMode] = useState("select");
+  const [searchFlyNonce, setSearchFlyNonce] = useState(0);
+  const [googleApiKey, setGoogleApiKey] = useState(
+    () => import.meta.env.VITE_GOOGLE_MAPS_API_KEY?.trim() || ""
+  );
+  const googleSearch = Boolean(googleApiKey);
+  const [fieldInputMode, setFieldInputMode] = useState("box");
+  const prevFieldInputMode = useRef(fieldInputMode);
+  const [mapFocusNonce, setMapFocusNonce] = useState(0);
+  const [regridAppUrl, setRegridAppUrl] = useState(null);
   const [basemap, setBasemap] = useState("satellite");
-  const [selectedBoundaryId, setSelectedBoundaryId] = useState(null);
-  const [pickList, setPickList] = useState([]);
 
+  const showRegridDemoMap = mode === "polygon" && fieldInputMode === "select";
+
+  // Re-apply property zoom when switching Mark field / Draw shape / Auto outlines.
+  useEffect(() => {
+    if (mode !== "polygon" || latitude == null || longitude == null) return;
+    if (prevFieldInputMode.current === fieldInputMode) return;
+    prevFieldInputMode.current = fieldInputMode;
+    setMapFocusNonce((n) => n + 1);
+  }, [fieldInputMode, mode, latitude, longitude]);
+
+  const { token } = useAuth();
+  const [mapConfigLoaded, setMapConfigLoaded] = useState(false);
+  const [mapConfigError, setMapConfigError] = useState(null);
+  const [mapConfigHasGoogleKey, setMapConfigHasGoogleKey] = useState(false);
+
+  useEffect(() => {
+    if (!token) return;
+
+    let cancelled = false;
+    setMapConfigLoaded(false);
+    setMapConfigError(null);
+    setMapConfigHasGoogleKey(false);
+
+    fetchMapConfig()
+      .then((cfg) => {
+        if (cancelled) return;
+        if (cfg?.regrid_property_app_url) setRegridAppUrl(cfg.regrid_property_app_url);
+        const key = cfg?.google_maps_api_key?.trim();
+        if (key) {
+          setGoogleApiKey(key);
+          setMapConfigHasGoogleKey(true);
+        }
+        mapDebug("map_config:ok", { google: Boolean(key) });
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        setMapConfigError(err?.message || "map_config failed");
+        mapDebug("map_config:error", err?.message);
+      })
+      .finally(() => {
+        if (!cancelled) setMapConfigLoaded(true);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [token]);
   const position = useMemo(() => {
     if (latitude != null && longitude != null) return [Number(latitude), Number(longitude)];
     return DEFAULT_CENTER;
@@ -232,49 +270,66 @@ export default function LocationMapPicker({
   const onBoundaryRef = useRef(handleBoundary);
   onBoundaryRef.current = handleBoundary;
 
-  const applyCandidate = useCallback(
-    (candidate) => {
-      const center = centroidFromBoundary(candidate.boundary);
-      const acres = candidate.acres ?? acresFromBoundary(candidate.boundary);
-      setSelectedBoundaryId(candidate.id);
-      setPickList([]);
-      onLocationChange?.({
-        latitude: center?.lat,
-        longitude: center?.lng,
-        boundary: candidate.boundary,
-        acres
-      });
+  const applyBoxBoundary = useCallback(
+    (geometry, center) => {
+      handleBoundary(geometry, center);
     },
-    [onLocationChange]
+    [handleBoundary]
   );
 
-  const mapFlyKey = useMemo(() => {
+  const mapSyncKey = useMemo(() => {
     if (latitude == null || longitude == null) return null;
-    return `${Number(latitude).toFixed(4)},${Number(longitude).toFixed(4)}`;
-  }, [latitude, longitude]);
+    return [
+      Number(latitude).toFixed(5),
+      Number(longitude).toFixed(5),
+      searchFlyNonce,
+      mapFocusNonce,
+      mode,
+      mode === "polygon" ? fieldInputMode : "point"
+    ].join(":");
+  }, [latitude, longitude, searchFlyNonce, mapFocusNonce, mode, fieldInputMode]);
+
+  const mapTargetZoom = useMemo(() => {
+    if (latitude == null || longitude == null) return DEFAULT_ZOOM;
+    return mode === "polygon" ? FIELD_PROPERTY_ZOOM : FARM_POINT_ZOOM;
+  }, [latitude, longitude, mode]);
+
+  const mapInitialZoom = latitude != null && longitude != null ? mapTargetZoom : DEFAULT_ZOOM;
+
+  const applySearchPlace = useCallback(
+    (hit) => {
+      setSearchResults([]);
+      setSearchAttempted(false);
+      setSearchQuery(hit.display_name);
+      setSearchFlyNonce((n) => n + 1);
+      mapDebug("search:select", {
+        lat: hit.latitude,
+        lng: hit.longitude,
+        name: hit.display_name,
+        zoom: mode === "polygon" ? FIELD_PROPERTY_ZOOM : FARM_POINT_ZOOM
+      });
+      onLocationChange?.({
+        latitude: hit.latitude,
+        longitude: hit.longitude,
+        boundary: mode === "polygon" ? boundary : null
+      });
+    },
+    [onLocationChange, mode, boundary]
+  );
 
   async function runSearch() {
-    const q = searchQuery.trim();
+    const q = String(searchQuery ?? "").trim();
     if (q.length < 3) return;
     setSearching(true);
+    setSearchAttempted(true);
     try {
       const results = await locationsApi.searchLocations(q);
-      setSearchResults(results);
+      setSearchResults(Array.isArray(results) ? results : []);
     } catch {
       setSearchResults([]);
     } finally {
       setSearching(false);
     }
-  }
-
-  function selectSearchResult(hit) {
-    setSearchResults([]);
-    setSearchQuery(hit.display_name);
-    onLocationChange?.({
-      latitude: hit.latitude,
-      longitude: hit.longitude,
-      boundary: mode === "polygon" ? boundary : null
-    });
   }
 
   return (
@@ -285,32 +340,79 @@ export default function LocationMapPicker({
             className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-fm-gray-medium"
             size={18}
           />
-          <Input
-            className="!pl-10"
-            placeholder="Search town or address in Missouri"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), runSearch())}
-          />
+          {googleSearch ? (
+            <GoogleAddressInput
+              apiKey={googleApiKey}
+              className="!pl-10"
+              placeholder="Search address…"
+              initialValue={searchQuery}
+              onInputChange={(value) => {
+                setSearchQuery(value);
+                setSearchAttempted(false);
+              }}
+              onPlaceSelect={applySearchPlace}
+            />
+          ) : (
+            <Input
+              className="!pl-10"
+              placeholder="Search town or address"
+              value={searchQuery}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setSearchAttempted(false);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  void runSearch();
+                }
+              }}
+              autoComplete="street-address"
+            />
+          )}
         </div>
-        <button
-          type="button"
-          onClick={runSearch}
-          disabled={searching}
-          className="shrink-0 rounded-xl border border-fm-teal/30 bg-fm-surface px-4 py-2 text-sm font-bold text-fm-teal hover:bg-fm-teal-subtle"
-        >
-          {searching ? "…" : "Search"}
-        </button>
+        {!googleSearch && (
+          <button
+            type="button"
+            onClick={() => void runSearch()}
+            disabled={searching}
+            className="shrink-0 rounded-xl border border-fm-teal/30 bg-fm-surface px-4 py-2 text-sm font-bold text-fm-teal hover:bg-fm-teal-subtle"
+          >
+            {searching ? "…" : "Search"}
+          </button>
+        )}
       </div>
 
-      {searchResults.length > 0 && (
+      {googleSearch && (
+        <p className="mb-2 text-xs text-fm-gray-medium">
+          Start typing an address, then choose a suggestion from the list.
+        </p>
+      )}
+      {mapConfigLoaded && !googleSearch && (
+        <p className="mb-2 text-xs text-fm-gray-medium">
+          {mapConfigError ? (
+            <>
+              Could not load map settings ({mapConfigError}). Stop and restart the API (
+              <code className="text-fm-teal">cd api && bin/dev</code>), then refresh.
+            </>
+          ) : mapConfigHasGoogleKey ? null : (
+            <>
+              If <code className="text-fm-teal">GOOGLE_MAPS_API_KEY</code> is already in{" "}
+              <code className="text-fm-teal">api/.env</code>, restart the API server so it picks up
+              the file — then hard-refresh this page.
+            </>
+          )}
+        </p>
+      )}
+
+      {!googleSearch && searchResults.length > 0 && (
         <ul className="fm-location-search-results mb-3 rounded-xl border border-fm-gray-light bg-fm-surface">
           {searchResults.map((hit) => (
             <li key={hit.place_id}>
               <button
                 type="button"
                 className="w-full px-4 py-2.5 text-left text-sm hover:bg-fm-teal-subtle"
-                onClick={() => selectSearchResult(hit)}
+                onClick={() => applySearchPlace(hit)}
               >
                 {hit.display_name}
               </button>
@@ -319,36 +421,57 @@ export default function LocationMapPicker({
         </ul>
       )}
 
+      {!googleSearch && searchAttempted && !searching && searchResults.length === 0 && (
+        <p className="mb-3 text-sm text-fm-gray-medium">
+          No places found. Try a city and state, or a Missouri town name.
+        </p>
+      )}
+
       {mode === "polygon" && (
         <div className="fm-field-mode-toggle">
           <button
             type="button"
-            className={fieldInputMode === "select" ? "active" : ""}
-            onClick={() => setFieldInputMode("select")}
+            className={fieldInputMode === "box" ? "active" : ""}
+            onClick={() => {
+              mapDebug("field:mode_box");
+              setFieldInputMode("box");
+            }}
           >
-            Select from map
+            Mark field
           </button>
           <button
             type="button"
             className={fieldInputMode === "draw" ? "active" : ""}
-            onClick={() => setFieldInputMode("draw")}
+            onClick={() => {
+              mapDebug("field:mode_draw");
+              setFieldInputMode("draw");
+            }}
           >
-            Draw manually
+            Draw shape
+          </button>
+          <button
+            type="button"
+            className={fieldInputMode === "select" ? "active" : ""}
+            onClick={() => {
+              mapDebug("field:mode_select");
+              setFieldInputMode("select");
+            }}
+          >
+            Auto outlines
           </button>
         </div>
       )}
 
       <p className="mb-2 text-sm text-fm-gray-medium">
         {mode === "point" && "Click the map to set your farm location."}
-        {mode === "polygon" && fieldInputMode === "select" && (
-          <>
-            Zoom in on the <strong>satellite</strong> view until you see field edges. Click a teal
-            outline to select that field, or click inside a field to find a match. Lines on the
-            image are not clickable by themselves — we use mapped field and parcel data underneath.
-          </>
+        {mode === "polygon" && fieldInputMode === "box" && (
+          <>On <strong>satellite</strong>, click one corner of your field, then the opposite corner.</>
         )}
         {mode === "polygon" && fieldInputMode === "draw" && (
-          "Draw your boundary with the polygon or rectangle tools (top right). Acres calculate when you finish."
+          "Use the polygon or rectangle tools (top right). Acres calculate when you finish."
+        )}
+        {mode === "polygon" && fieldInputMode === "select" && (
+          <>Click a <strong>parcel boundary</strong> on the map to select your field.</>
         )}
       </p>
 
@@ -358,37 +481,32 @@ export default function LocationMapPicker({
         </p>
       )}
 
-      {pickList.length > 1 && (
-        <ul className="mb-2 rounded-xl border border-fm-teal/30 bg-fm-surface">
-          <li className="px-3 py-2 text-xs font-bold uppercase text-fm-gray-medium">
-            Multiple fields here — pick one:
-          </li>
-          {pickList.map((c) => (
-            <li key={c.id}>
-              <button
-                type="button"
-                className="w-full border-t border-fm-gray-light px-3 py-2.5 text-left text-sm hover:bg-fm-teal-subtle"
-                onClick={() => applyCandidate(c)}
-              >
-                {c.label}
-                {c.acres != null ? ` · ${formatAcres(c.acres)}` : ""}
-                <span className="ml-2 text-xs text-fm-gray-medium">({c.source})</span>
-              </button>
-            </li>
-          ))}
-        </ul>
+      {mode === "polygon" && !showRegridDemoMap && regridAppUrl && latitude != null && longitude != null && (
+        <p className="mb-2 text-sm">
+          <a
+            href={`${regridAppUrl}?lat=${latitude}&lon=${longitude}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold text-fm-teal hover:underline"
+          >
+            Open this area in Regrid&apos;s full map
+          </a>
+        </p>
       )}
 
-      <div className="fm-location-map-wrap">
-        <div className="fm-basemap-toggle">
-          <button
-            type="button"
-            className={basemap === "street" ? "active" : ""}
-            onClick={() => setBasemap("street")}
-          >
-            Map
-          </button>
-          <button
+      {showRegridDemoMap ? (
+        <RegridDemoMap />
+      ) : (
+        <div className="fm-location-map-wrap">
+          <div className="fm-basemap-toggle">
+            <button
+              type="button"
+              className={basemap === "street" ? "active" : ""}
+              onClick={() => setBasemap("street")}
+            >
+              Map
+            </button>
+            <button
             type="button"
             className={basemap === "satellite" ? "active" : ""}
             onClick={() => setBasemap("satellite")}
@@ -397,49 +515,25 @@ export default function LocationMapPicker({
           </button>
         </div>
 
-        <MapContainer center={position} zoom={DEFAULT_ZOOM} className="fm-location-map" scrollWheelZoom>
+        <MapContainer center={position} zoom={mapInitialZoom} className="fm-location-map" scrollWheelZoom>
           <TileLayer
             key={basemap}
             attribution={BASEMAPS[basemap].attribution}
             url={BASEMAPS[basemap].url}
           />
-          <MapController
-            center={position}
-            zoom={latitude != null ? 13 : DEFAULT_ZOOM}
-            flyToKey={mapFlyKey}
-          />
+          <MapController center={position} zoom={mapTargetZoom} syncKey={mapSyncKey} />
           {mode === "point" ? (
             <>
               <PointSelector onSelect={handlePoint} />
               {latitude != null && <Marker position={position} />}
             </>
-          ) : fieldInputMode === "select" ? (
+          ) : fieldInputMode === "box" ? (
             <>
-              <BoundaryOverlay
-                enabled
-                selectedId={selectedBoundaryId}
-                onSelect={applyCandidate}
-              />
-              <MapClickSelect
-                enabled
-                onCandidates={(list, latlng) => {
-                  if (list.length === 1) applyCandidate(list[0]);
-                  else if (list.length > 1) setPickList(list);
-                  else {
-                    setPickList([]);
-                    onLocationChange?.({
-                      latitude: latlng.lat,
-                      longitude: latlng.lng,
-                      boundary: null,
-                      acres: null
-                    });
-                  }
-                }}
-              />
+              <QuickFieldBox active onComplete={applyBoxBoundary} />
               {boundary && (
                 <GeoJSON
                   data={{ type: "Feature", geometry: boundary }}
-                  style={{ color: "#0a7474", weight: 3, fillOpacity: 0.2 }}
+                  style={{ color: "#0a7474", weight: 3, fillOpacity: 0.25 }}
                 />
               )}
             </>
@@ -449,8 +543,9 @@ export default function LocationMapPicker({
               {latitude != null && <Marker position={position} />}
             </>
           )}
-        </MapContainer>
-      </div>
+          </MapContainer>
+        </div>
+      )}
 
       <LocationInsights insights={insights} loading={loading} error={error} />
     </div>

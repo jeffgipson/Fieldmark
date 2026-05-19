@@ -1,5 +1,6 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import DaleWelcome from "../components/dale/DaleWelcome";
+import PrioritiesOnboarding from "../components/priorities/PrioritiesOnboarding";
 import DashboardCustomizeBar from "../components/dashboard/DashboardCustomizeBar";
 import DashboardWidgetGrid from "../components/dashboard/DashboardWidgetGrid";
 import LoadingDale from "../components/ui/LoadingDale";
@@ -14,7 +15,19 @@ import { daysUntilMarch1 } from "../utils/format";
 export default function DashboardPage() {
   const { openChat } = useDaleChat();
   const { user, welcomeFlash, clearWelcomeFlash } = useAuth();
-  const { farm, fields, primaryScenario, loading, refresh } = useFarm();
+  const {
+    farm,
+    fields,
+    primaryScenario,
+    loading,
+    refresh,
+    needsPrioritiesCapture,
+    syncPriorities,
+    skipPrioritiesOnboarding,
+    priorities,
+    setPriorities
+  } = useFarm();
+  const [prioritiesSaving, setPrioritiesSaving] = useState(false);
   const days = daysUntilMarch1();
   const hasData = fields.length > 0 && primaryScenario?.results;
   const findings = buildDashboardFindings(primaryScenario);
@@ -23,9 +36,10 @@ export default function DashboardPage() {
     () => ({
       hasFields: fields.length > 0,
       hasFindings: findings.length > 0,
-      hasMetrics: Boolean(hasData)
+      hasMetrics: Boolean(hasData),
+      hasPriorities: !needsPrioritiesCapture
     }),
-    [fields.length, findings.length, hasData]
+    [fields.length, findings.length, hasData, needsPrioritiesCapture]
   );
 
   const {
@@ -45,6 +59,27 @@ export default function DashboardPage() {
 
   if (loading) return <LoadingDale />;
 
+  async function completePrioritiesOnboarding(items) {
+    setPrioritiesSaving(true);
+    try {
+      await syncPriorities(items);
+    } finally {
+      setPrioritiesSaving(false);
+    }
+  }
+
+  const showPrioritiesOnboarding = needsPrioritiesCapture;
+
+  if (showPrioritiesOnboarding) {
+    return (
+      <PrioritiesOnboarding
+        saving={prioritiesSaving}
+        onComplete={completePrioritiesOnboarding}
+        onSkip={skipPrioritiesOnboarding}
+      />
+    );
+  }
+
   const results = primaryScenario?.results;
   const base = results?.base_case;
   const down = results?.downside_case;
@@ -54,6 +89,7 @@ export default function DashboardPage() {
 
   const contentProps = {
     farm,
+    fields,
     primaryScenario,
     findings,
     hasData,
@@ -61,7 +97,10 @@ export default function DashboardPage() {
     base,
     down,
     onTalkToDale: openChat,
-    onRefresh: refresh
+    onRefresh: refresh,
+    priorities,
+    onPrioritiesChange: setPriorities,
+    farmId: farm?.id
   };
 
   return (

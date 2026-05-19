@@ -1,0 +1,16 @@
+pending_invite:
+  inviter: one
+  email: invitee@fieldmark.test
+  message: Join me on Fieldmark
+  token: pending-invite-token-abc
+  status: 0
+  expires_at: <%= 7.days.from_now %>
+
+accepted_invite:
+  inviter: one
+  email: accepted@fieldmark.test
+  message: Welcome
+  token: accepted-invite-token
+  status: 1
+  expires_at: <%= 7.days.from_now %>
+  accepted_user: two

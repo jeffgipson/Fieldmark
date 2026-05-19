@@ -14,14 +14,16 @@ export default function MetricCard({
   sentiment = "neutral",
   animate = true
 }) {
-  const numeric = Number(value) || 0;
-  const animated = useCountUp(numeric, { enabled: animate });
+  const numeric = unit === "text" ? 0 : Number(value) || 0;
+  const animated = useCountUp(numeric, { enabled: animate && unit !== "text" });
   const display =
     unit === "perAcre"
       ? formatPerAcre(animated)
       : unit === "number"
         ? Math.round(animated).toLocaleString()
-        : formatCurrency(animated);
+        : unit === "text"
+          ? value
+          : formatCurrency(animated);
   const styles = SENTIMENT_STYLES[sentiment] || SENTIMENT_STYLES.neutral;
 
   return (

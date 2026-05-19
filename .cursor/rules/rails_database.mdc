@@ -13,3 +13,16 @@ alwaysApply: false
 - Connection pool: set in database.yml, default 5 is fine for dev
 - Always run: rails db:create db:migrate db:seed in that order
 - Seeds: use find_or_create_by to make seeds idempotent
+
+## Local databases
+
+| Environment | Database name |
+|-------------|----------------|
+| development | `fieldmark_development` |
+| test | `fieldmark_test` |
+
+## DATABASE_URL (critical)
+
+- **Do not set `DATABASE_URL` in `api/.env` for local dev.** Rails applies it to every environment, including test. `bin/rails test` uses `DatabaseCleaner` truncation — if tests connect to `fieldmark_development`, all dev data is wiped.
+- Use `config/database.yml` locally. Production/CI may set `DATABASE_URL` or `TEST_DATABASE_URL`.
+- `api/test/test_helper.rb` strips a dev `DATABASE_URL` before boot and aborts if the connected DB is not `*_test`.

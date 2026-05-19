@@ -1,4 +1,5 @@
 import area from "@turf/area";
+import { formatAcres as formatAcresFromUtil } from "./format";
 
 const SQ_METERS_PER_ACRE = 4046.8564224;
 
@@ -23,7 +24,6 @@ export function acresFromBoundary(geometry) {
   }
 }
 
-export function formatAcres(acres) {
-  if (acres == null || Number.isNaN(Number(acres))) return "—";
-  return `${Number(acres).toLocaleString(undefined, { maximumFractionDigits: 1 })} ac`;
+export function formatAcres(value, options) {
+  return formatAcresFromUtil(value, options);
 }

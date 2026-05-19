@@ -9,7 +9,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { friendlyError } from "../utils/errors";
 
 export default function LoginPage() {
-  const { login } = useAuth();
+  const { login, loginDemo } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -36,7 +36,7 @@ export default function LoginPage() {
     setLoading(true);
     setError(null);
     try {
-      await login(DEMO_CREDENTIALS.email, DEMO_CREDENTIALS.password);
+      await loginDemo();
       navigate("/dashboard");
     } catch (err) {
       setError(friendlyError(err));
@@ -59,7 +59,12 @@ export default function LoginPage() {
             <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
           <div>
-            <Label htmlFor="password">Password</Label>
+            <div className="mb-1 flex items-center justify-between">
+              <Label htmlFor="password">Password</Label>
+              <Link to="/forgot-password" className="text-xs font-bold text-fm-teal hover:underline">
+                Forgot password?
+              </Link>
+            </div>
             <Input id="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
           {error && <p className="rounded-lg bg-[#FFF5F5] px-3 py-2 text-sm text-fm-alert">{error}</p>}

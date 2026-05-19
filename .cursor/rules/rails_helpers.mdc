@@ -166,20 +166,24 @@ const { data } = await client.getReport(scenarioId); // poll until completed
 
 ---
 
-## `DemoSeed` — demo account
+## `DemoSeed` / `CapeGirardeauSampleSeed` — demo + Cape Girardeau test data
 
 ```bash
 cd api
-bin/rails demo:seed    # idempotent: demo user + Henderson farm + scenario + calculate/compare
-bin/rails demo:reset   # destroys demo user's farms, then re-seeds
+bin/rails demo:seed           # demo@fieldmark.app only (from cape_girardeau_sample.json)
+bin/rails demo:reset
+bin/rails sample_data:seed    # 8 farmers, ~33 fields in Cape Girardeau County
+bin/rails sample_data:reset   # drops @cape.fieldmark.app users, re-seeds all
 ```
+
+Edit farmers/fields in `api/db/seeds/cape_girardeau_sample.json`. `db:seed` in development runs full sample unless `SKIP_CAPE_SAMPLE=1`.
 
 | ENV | Default |
 |-----|---------|
 | `DEMO_EMAIL` | `demo@fieldmark.app` |
 | `DEMO_PASSWORD` | `password123` |
 
-Creates: central MO corn farm, North 80 field, seed/fertilizer/chemical costs, Base Case scenario with calculated results and peer comparison. Ensures MU benchmarks exist (`db:seed` if needed).
+Each farmer: farm (lat/lng in county), multiple fields with boundaries, input costs, Base Case scenario + peer comparison. Benchmarks loaded if missing.
 
 ---
 

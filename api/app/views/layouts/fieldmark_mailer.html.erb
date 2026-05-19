@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fieldmark</title>
+  </head>
+  <body style="margin:0;padding:0;background-color:#F5F3F0;font-family:'Lato',Helvetica,Arial,sans-serif;color:#4A4A4A;">
+    <% if @preheader.present? %>
+      <span style="display:none;font-size:1px;color:#F5F3F0;line-height:1px;max-height:0;max-width:0;opacity:0;overflow:hidden;">
+        <%= @preheader %>
+      </span>
+    <% end %>
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color:#F5F3F0;padding:32px 16px;">
+      <tr>
+        <td align="center">
+          <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background-color:#FFFFFF;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+            <tr>
+              <td style="background-color:#0D8B8B;padding:24px 32px;text-align:center;">
+                <img src="<%= AppConfig.frontend_url.chomp('/') %>/images/fieldmark-logo.png" alt="Fieldmark" width="160" style="display:block;margin:0 auto;max-width:160px;height:auto;">
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:32px;">
+                <%= yield %>
+              </td>
+            </tr>
+            <tr>
+              <td style="padding:0 32px 32px;font-size:12px;line-height:1.5;color:#9B9B9B;text-align:center;border-top:1px solid #F0EEEB;">
+                <p style="margin:16px 0 8px;">Fieldmark · Know your margins before March.</p>
+                <p style="margin:0;">
+                  <a href="mailto:contact@fieldmark.app" style="color:#0D8B8B;text-decoration:none;">contact@fieldmark.app</a>
+                </p>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

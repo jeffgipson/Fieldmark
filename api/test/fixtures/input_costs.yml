@@ -1,0 +1,143 @@
+henderson_seed:
+  field: north_80
+  season_year: 2026
+  category: 0
+  amount_per_acre: 105.5
+
+henderson_fertilizer:
+  field: north_80
+  season_year: 2026
+  category: 1
+  amount_per_acre: 198.0
+
+henderson_chemicals:
+  field: north_80
+  season_year: 2026
+  category: 2
+  amount_per_acre: 112.0
+
+peer_two_seed:
+  field: peer_two_field
+  season_year: 2026
+  category: 0
+  amount_per_acre: 98.0
+
+peer_two_fertilizer:
+  field: peer_two_field
+  season_year: 2026
+  category: 1
+  amount_per_acre: 180.0
+
+peer_two_chemicals:
+  field: peer_two_field
+  season_year: 2026
+  category: 2
+  amount_per_acre: 100.0
+
+peer_three_seed:
+  field: peer_three_field
+  season_year: 2026
+  category: 0
+  amount_per_acre: 102.0
+
+peer_three_fertilizer:
+  field: peer_three_field
+  season_year: 2026
+  category: 1
+  amount_per_acre: 190.0
+
+peer_three_chemicals:
+  field: peer_three_field
+  season_year: 2026
+  category: 2
+  amount_per_acre: 105.0
+
+peer_four_seed:
+  field: peer_four_field
+  season_year: 2026
+  category: 0
+  amount_per_acre: 95.0
+
+peer_four_fertilizer:
+  field: peer_four_field
+  season_year: 2026
+  category: 1
+  amount_per_acre: 175.0
+
+peer_four_chemicals:
+  field: peer_four_field
+  season_year: 2026
+  category: 2
+  amount_per_acre: 98.0
+
+peer_five_seed:
+  field: peer_five_field
+  season_year: 2026
+  category: 0
+  amount_per_acre: 110.0
+
+peer_five_fertilizer:
+  field: peer_five_field
+  season_year: 2026
+  category: 1
+  amount_per_acre: 200.0
+
+peer_five_chemicals:
+  field: peer_five_field
+  season_year: 2026
+  category: 2
+  amount_per_acre: 115.0
+
+peer_six_seed:
+  field: peer_six_field
+  season_year: 2026
+  category: 0
+  amount_per_acre: 100.0
+
+peer_six_fertilizer:
+  field: peer_six_field
+  season_year: 2026
+  category: 1
+  amount_per_acre: 185.0
+
+peer_six_chemicals:
+  field: peer_six_field
+  season_year: 2026
+  category: 2
+  amount_per_acre: 102.0
+
+peer_seven_seed:
+  field: peer_seven_field
+  season_year: 2026
+  category: 0
+  amount_per_acre: 104.0
+
+peer_seven_fertilizer:
+  field: peer_seven_field
+  season_year: 2026
+  category: 1
+  amount_per_acre: 192.0
+
+peer_seven_chemicals:
+  field: peer_seven_field
+  season_year: 2026
+  category: 2
+  amount_per_acre: 108.0
+
+peer_eight_seed:
+  field: peer_eight_field
+  season_year: 2026
+  category: 0
+  amount_per_acre: 97.0
+
+peer_eight_fertilizer:
+  field: peer_eight_field
+  season_year: 2026
+  category: 1
+  amount_per_acre: 178.0
+
+peer_eight_chemicals:
+  field: peer_eight_field
+  season_year: 2026
+  category: 2
+  amount_per_acre: 99.0

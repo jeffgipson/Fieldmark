@@ -1,4 +1,10 @@
 export const DASHBOARD_WIDGETS = {
+  "farm-priorities": {
+    id: "farm-priorities",
+    label: "Season priorities",
+    description: "What you are working on this season",
+    span: "full"
+  },
   "setup-prompt": {
     id: "setup-prompt",
     label: "Getting started",
@@ -69,8 +75,9 @@ export const DASHBOARD_WIDGETS = {
 
 export const ALL_WIDGET_IDS = Object.keys(DASHBOARD_WIDGETS);
 
-export function defaultWidgetOrder({ hasFields, hasFindings, hasMetrics }) {
+export function defaultWidgetOrder({ hasFields, hasFindings, hasMetrics, hasPriorities }) {
   const order = [];
+  order.push("farm-priorities");
   if (hasFindings) order.push("dale-briefing");
   else if (!hasFields) order.push("setup-prompt");
   if (hasMetrics) {

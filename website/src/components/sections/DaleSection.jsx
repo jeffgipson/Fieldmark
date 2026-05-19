@@ -13,7 +13,7 @@ export default function DaleSection() {
           </h2>
           <p className="mt-6 text-lg text-white/80">
             Dale is the analyst you talk to once your costs and scenarios are in Fieldmark. He reads
-            your numbers and MU Extension benchmarks, flags high-cost areas, explains downside risk in
+            your numbers, flags high-cost areas, explains downside risk in
             plain language, and never recommends a specific product or dealer.
           </p>
           <ul className="mt-8 space-y-4">
@@ -33,8 +33,8 @@ export default function DaleSection() {
             <Button href={appPath("/register")}>Start Free — meet Dale in the app</Button>
           </div>
           <p className="mt-6 text-xs text-white/50">
-            Dale&apos;s analysis is generated using your farm data and MU Extension benchmarks. For
-            planning purposes only. Not financial advice.
+            Dale&apos;s analysis is generated using your farm data. For planning purposes only. Not
+            financial advice.
           </p>
         </div>
         <div className="relative flex justify-center">

@@ -1,0 +1,6851 @@
+{
+  "description": "Sample farmers in Cape Girardeau County, MO (100 accounts). Password: DEMO_PASSWORD.",
+  "generated_at": "2026-05-19T16:44:10Z",
+  "farmer_count": 100,
+  "farmers": [
+    {
+      "demo_account": true,
+      "first_name": "Mike",
+      "last_name": "Henderson",
+      "email": "demo@fieldmark.app",
+      "farm": {
+        "name": "Henderson Family Farm",
+        "total_acres": 305,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.3059,
+        "longitude": -89.5181,
+        "fields": [
+          {
+            "name": "North 80",
+            "acres": 80,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.312,
+            "longitude": -89.524,
+            "costs": {
+              "seed": 105.5,
+              "fertilizer": 198,
+              "chemicals": 112
+            }
+          },
+          {
+            "name": "River bottom 120",
+            "acres": 120,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.298,
+            "longitude": -89.512,
+            "risk_profile": {
+              "flood_events_last_5_years": 3,
+              "drainage": "poor",
+              "bottomland": true,
+              "risk_notes": "Flooded in 2022 and 2024 — watch spring planting window."
+            },
+            "costs": {
+              "seed": 99,
+              "fertilizer": 205,
+              "chemicals": 108
+            }
+          },
+          {
+            "name": "Home place 40",
+            "acres": 40,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.304,
+            "longitude": -89.521,
+            "costs": {
+              "seed": 78,
+              "fertilizer": 94,
+              "chemicals": 72
+            }
+          },
+          {
+            "name": "East 65",
+            "acres": 65,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.308,
+            "longitude": -89.505,
+            "costs": {
+              "seed": 110,
+              "fertilizer": 192,
+              "chemicals": 115
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.33,
+          "yield_assumption": 176,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Daniel",
+      "last_name": "Pouros",
+      "email": "daniel.pouros@cape.fieldmark.app",
+      "farm": {
+        "name": "Pouros Farm",
+        "total_acres": 72,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.178985,
+        "longitude": -89.625228,
+        "fields": [
+          {
+            "name": "North 32",
+            "acres": 32,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.174966,
+            "longitude": -89.628653,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "South 40",
+            "acres": 40,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.180884,
+            "longitude": -89.624507,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.33,
+          "yield_assumption": 176,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Trenton",
+      "last_name": "Roberts",
+      "email": "trenton.roberts@cape.fieldmark.app",
+      "farm": {
+        "name": "Roberts Farms",
+        "total_acres": 180,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.375867,
+        "longitude": -89.469557,
+        "fields": [
+          {
+            "name": "South 55",
+            "acres": 55,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.376239,
+            "longitude": -89.469823,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          },
+          {
+            "name": "East 60",
+            "acres": 60,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.377294,
+            "longitude": -89.472682,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "West 65",
+            "acres": 65,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.372628,
+            "longitude": -89.474088,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.22,
+          "yield_assumption": 53,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Coy",
+      "last_name": "Zulauf",
+      "email": "coy.zulauf@cape.fieldmark.app",
+      "farm": {
+        "name": "Zulauf Place",
+        "total_acres": 335,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.227359,
+        "longitude": -89.480146,
+        "fields": [
+          {
+            "name": "East 72",
+            "acres": 72,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.224192,
+            "longitude": -89.473876,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "West 80",
+            "acres": 80,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.228303,
+            "longitude": -89.483845,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          },
+          {
+            "name": "Home 88",
+            "acres": 88,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.227858,
+            "longitude": -89.488868,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "River 95",
+            "acres": 95,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.229708,
+            "longitude": -89.477411,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.37,
+          "yield_assumption": 178,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Amos",
+      "last_name": "Stehr",
+      "email": "amos.stehr@cape.fieldmark.app",
+      "farm": {
+        "name": "Stehr Acres",
+        "total_acres": 565,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.250966,
+        "longitude": -89.497264,
+        "fields": [
+          {
+            "name": "West 95",
+            "acres": 95,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.246002,
+            "longitude": -89.493882,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          },
+          {
+            "name": "Home 100",
+            "acres": 100,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.256872,
+            "longitude": -89.501539,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "River 110",
+            "acres": 110,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.24871,
+            "longitude": -89.501054,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          },
+          {
+            "name": "Hill 120",
+            "acres": 120,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.248225,
+            "longitude": -89.490696,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "Creek 140",
+            "acres": 140,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.247249,
+            "longitude": -89.506012,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.39,
+          "yield_assumption": 179,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Gabrielle",
+      "last_name": "Price",
+      "email": "gabrielle.price@cape.fieldmark.app",
+      "farm": {
+        "name": "Price Home",
+        "total_acres": 260,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.404818,
+        "longitude": -89.519593,
+        "fields": [
+          {
+            "name": "Home 120",
+            "acres": 120,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.405526,
+            "longitude": -89.52672,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "River 140",
+            "acres": 140,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.410097,
+            "longitude": -89.514442,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.28,
+          "yield_assumption": 52,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Robert",
+      "last_name": "Rolfson",
+      "email": "robert.rolfson@cape.fieldmark.app",
+      "farm": {
+        "name": "Rolfson Farm",
+        "total_acres": 117,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.227437,
+        "longitude": -89.578686,
+        "fields": [
+          {
+            "name": "River 32",
+            "acres": 32,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.225713,
+            "longitude": -89.571642,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          },
+          {
+            "name": "Hill 40",
+            "acres": 40,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.233253,
+            "longitude": -89.582912,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "Creek 45",
+            "acres": 45,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.231197,
+            "longitude": -89.583223,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.33,
+          "yield_assumption": 177,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Guy",
+      "last_name": "Jast",
+      "email": "guy.jast@cape.fieldmark.app",
+      "farm": {
+        "name": "Jast Farm",
+        "total_acres": 252,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.265277,
+        "longitude": -89.700479,
+        "fields": [
+          {
+            "name": "Hill 55",
+            "acres": 55,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.259823,
+            "longitude": -89.708395,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "Creek 60",
+            "acres": 60,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.268068,
+            "longitude": -89.695243,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          },
+          {
+            "name": "Bottom 65",
+            "acres": 65,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.268107,
+            "longitude": -89.703264,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "Tract 72",
+            "acres": 72,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.264184,
+            "longitude": -89.708783,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.35,
+          "yield_assumption": 178,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Minda",
+      "last_name": "Rolfson",
+      "email": "minda.rolfson@cape.fieldmark.app",
+      "farm": {
+        "name": "Rolfson Farms",
+        "total_acres": 435,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.457624,
+        "longitude": -89.49468,
+        "fields": [
+          {
+            "name": "Creek 72",
+            "acres": 72,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.459737,
+            "longitude": -89.500629,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          },
+          {
+            "name": "Bottom 80",
+            "acres": 80,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.462823,
+            "longitude": -89.492455,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "Tract 88",
+            "acres": 88,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.453891,
+            "longitude": -89.488954,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          },
+          {
+            "name": "North 95",
+            "acres": 95,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.459134,
+            "longitude": -89.491454,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "South 100",
+            "acres": 100,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.461222,
+            "longitude": -89.494287,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.24,
+          "yield_assumption": 55,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Merissa",
+      "last_name": "Casper",
+      "email": "merissa.casper@cape.fieldmark.app",
+      "farm": {
+        "name": "Casper Place",
+        "total_acres": 195,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.369873,
+        "longitude": -89.602754,
+        "fields": [
+          {
+            "name": "Bottom 95",
+            "acres": 95,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.365127,
+            "longitude": -89.609422,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "Tract 100",
+            "acres": 100,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.371853,
+            "longitude": -89.600439,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.39,
+          "yield_assumption": 176,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Dwain",
+      "last_name": "Lesch",
+      "email": "dwain.lesch@cape.fieldmark.app",
+      "farm": {
+        "name": "Lesch Acres",
+        "total_acres": 420,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.395073,
+        "longitude": -89.524906,
+        "fields": [
+          {
+            "name": "Tract 120",
+            "acres": 120,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.394976,
+            "longitude": -89.525731,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          },
+          {
+            "name": "North 140",
+            "acres": 140,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.389309,
+            "longitude": -89.522014,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "South 160",
+            "acres": 160,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.392548,
+            "longitude": -89.527513,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.41,
+          "yield_assumption": 177,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Brigid",
+      "last_name": "Huels",
+      "email": "brigid.huels@cape.fieldmark.app",
+      "farm": {
+        "name": "Huels Home",
+        "total_acres": 172,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.091651,
+        "longitude": -89.522991,
+        "fields": [
+          {
+            "name": "North 32",
+            "acres": 32,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.08653,
+            "longitude": -89.526023,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "South 40",
+            "acres": 40,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.092188,
+            "longitude": -89.527942,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          },
+          {
+            "name": "East 45",
+            "acres": 45,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.094161,
+            "longitude": -89.519827,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "West 55",
+            "acres": 55,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.091384,
+            "longitude": -89.52235,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.2,
+          "yield_assumption": 54,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Stevie",
+      "last_name": "Huels",
+      "email": "stevie.huels@cape.fieldmark.app",
+      "farm": {
+        "name": "Huels Farm",
+        "total_acres": 332,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.15389,
+        "longitude": -89.471982,
+        "fields": [
+          {
+            "name": "South 55",
+            "acres": 55,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.156305,
+            "longitude": -89.466519,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          },
+          {
+            "name": "East 60",
+            "acres": 60,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.15096,
+            "longitude": -89.468893,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "West 65",
+            "acres": 65,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.155076,
+            "longitude": -89.463974,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          },
+          {
+            "name": "Home 72",
+            "acres": 72,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.149619,
+            "longitude": -89.466368,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "River 80",
+            "acres": 80,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.152992,
+            "longitude": -89.472832,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.35,
+          "yield_assumption": 179,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Rigoberto",
+      "last_name": "Weissnat",
+      "email": "rigoberto.weissnat@cape.fieldmark.app",
+      "farm": {
+        "name": "Weissnat Farm",
+        "total_acres": 152,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.111091,
+        "longitude": -89.601948,
+        "fields": [
+          {
+            "name": "East 72",
+            "acres": 72,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.107261,
+            "longitude": -89.597681,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "West 80",
+            "acres": 80,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.112634,
+            "longitude": -89.598507,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.37,
+          "yield_assumption": 176,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Shirley",
+      "last_name": "Botsford",
+      "email": "shirley.botsford@cape.fieldmark.app",
+      "farm": {
+        "name": "Botsford Farms",
+        "total_acres": 305,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.442185,
+        "longitude": -89.709179,
+        "fields": [
+          {
+            "name": "West 95",
+            "acres": 95,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.443356,
+            "longitude": -89.715648,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          },
+          {
+            "name": "Home 100",
+            "acres": 100,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.437103,
+            "longitude": -89.707277,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "River 110",
+            "acres": 110,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.444969,
+            "longitude": -89.716527,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.26,
+          "yield_assumption": 53,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Valentin",
+      "last_name": "Leannon",
+      "email": "valentin.leannon@cape.fieldmark.app",
+      "farm": {
+        "name": "Leannon Place",
+        "total_acres": 452,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.330248,
+        "longitude": -89.634802,
+        "fields": [
+          {
+            "name": "Home 120",
+            "acres": 120,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.331078,
+            "longitude": -89.629084,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "River 140",
+            "acres": 140,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.331028,
+            "longitude": -89.633756,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          },
+          {
+            "name": "Hill 160",
+            "acres": 160,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.332546,
+            "longitude": -89.643788,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "Creek 32",
+            "acres": 32,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.3353,
+            "longitude": -89.628897,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.41,
+          "yield_assumption": 178,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Georgene",
+      "last_name": "Marquardt",
+      "email": "georgene.marquardt@cape.fieldmark.app",
+      "farm": {
+        "name": "Marquardt Acres",
+        "total_acres": 232,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.422753,
+        "longitude": -89.707476,
+        "fields": [
+          {
+            "name": "River 32",
+            "acres": 32,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.422673,
+            "longitude": -89.711436,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          },
+          {
+            "name": "Hill 40",
+            "acres": 40,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.418646,
+            "longitude": -89.711127,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "Creek 45",
+            "acres": 45,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.422694,
+            "longitude": -89.710868,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          },
+          {
+            "name": "Bottom 55",
+            "acres": 55,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.420259,
+            "longitude": -89.707606,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "Tract 60",
+            "acres": 60,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.418799,
+            "longitude": -89.71442,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.33,
+          "yield_assumption": 179,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Nisha",
+      "last_name": "Thiel",
+      "email": "nisha.thiel@cape.fieldmark.app",
+      "farm": {
+        "name": "Thiel Home",
+        "total_acres": 115,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.462481,
+        "longitude": -89.509032,
+        "fields": [
+          {
+            "name": "Hill 55",
+            "acres": 55,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.465609,
+            "longitude": -89.505797,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "Creek 60",
+            "acres": 60,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.459767,
+            "longitude": -89.511329,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.22,
+          "yield_assumption": 52,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Emmett",
+      "last_name": "Ankunding",
+      "email": "emmett.ankunding@cape.fieldmark.app",
+      "farm": {
+        "name": "Ankunding Farm",
+        "total_acres": 240,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.071726,
+        "longitude": -89.681612,
+        "fields": [
+          {
+            "name": "Creek 72",
+            "acres": 72,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.06858,
+            "longitude": -89.677554,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          },
+          {
+            "name": "Bottom 80",
+            "acres": 80,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.069563,
+            "longitude": -89.673887,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "Tract 88",
+            "acres": 88,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.07401,
+            "longitude": -89.690095,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.37,
+          "yield_assumption": 177,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Maryjane",
+      "last_name": "Bartell",
+      "email": "maryjane.bartell@cape.fieldmark.app",
+      "farm": {
+        "name": "Bartell Farm",
+        "total_acres": 425,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.148715,
+        "longitude": -89.464862,
+        "fields": [
+          {
+            "name": "Bottom 95",
+            "acres": 95,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.153034,
+            "longitude": -89.468917,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "Tract 100",
+            "acres": 100,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.14765,
+            "longitude": -89.463989,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          },
+          {
+            "name": "North 110",
+            "acres": 110,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.145295,
+            "longitude": -89.467418,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "South 120",
+            "acres": 120,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.144222,
+            "longitude": -89.463046,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.39,
+          "yield_assumption": 178,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Sheridan",
+      "last_name": "Nader",
+      "email": "sheridan.nader@cape.fieldmark.app",
+      "farm": {
+        "name": "Nader Farms",
+        "total_acres": 492,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.41633,
+        "longitude": -89.520599,
+        "fields": [
+          {
+            "name": "Tract 120",
+            "acres": 120,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.411218,
+            "longitude": -89.524516,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          },
+          {
+            "name": "North 140",
+            "acres": 140,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.41973,
+            "longitude": -89.51449,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "South 160",
+            "acres": 160,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.411289,
+            "longitude": -89.513556,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          },
+          {
+            "name": "East 32",
+            "acres": 32,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.411734,
+            "longitude": -89.528522,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "West 40",
+            "acres": 40,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.419584,
+            "longitude": -89.520853,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.28,
+          "yield_assumption": 55,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Alden",
+      "last_name": "Robel",
+      "email": "alden.robel@cape.fieldmark.app",
+      "farm": {
+        "name": "Robel Place",
+        "total_acres": 72,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.366457,
+        "longitude": -89.544451,
+        "fields": [
+          {
+            "name": "North 32",
+            "acres": 32,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.360618,
+            "longitude": -89.54157,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "South 40",
+            "acres": 40,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.3671,
+            "longitude": -89.547408,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.33,
+          "yield_assumption": 176,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Maximina",
+      "last_name": "Carter",
+      "email": "maximina.carter@cape.fieldmark.app",
+      "farm": {
+        "name": "Carter Acres",
+        "total_acres": 180,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.369683,
+        "longitude": -89.450545,
+        "fields": [
+          {
+            "name": "South 55",
+            "acres": 55,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.36493,
+            "longitude": -89.457596,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          },
+          {
+            "name": "East 60",
+            "acres": 60,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.374429,
+            "longitude": -89.457879,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "West 65",
+            "acres": 65,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.372419,
+            "longitude": -89.444513,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.35,
+          "yield_assumption": 177,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Joanie",
+      "last_name": "Harris",
+      "email": "joanie.harris@cape.fieldmark.app",
+      "farm": {
+        "name": "Harris Home",
+        "total_acres": 335,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.418903,
+        "longitude": -89.549714,
+        "fields": [
+          {
+            "name": "East 72",
+            "acres": 72,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.418496,
+            "longitude": -89.551042,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "West 80",
+            "acres": 80,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.414476,
+            "longitude": -89.558077,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          },
+          {
+            "name": "Home 88",
+            "acres": 88,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.423135,
+            "longitude": -89.550616,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "River 95",
+            "acres": 95,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.41767,
+            "longitude": -89.551193,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.24,
+          "yield_assumption": 54,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Andre",
+      "last_name": "O'Kon",
+      "email": "andre.okon@cape.fieldmark.app",
+      "farm": {
+        "name": "O'Kon Farm",
+        "total_acres": 565,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.237044,
+        "longitude": -89.631183,
+        "fields": [
+          {
+            "name": "West 95",
+            "acres": 95,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.23128,
+            "longitude": -89.63261,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          },
+          {
+            "name": "Home 100",
+            "acres": 100,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.242104,
+            "longitude": -89.623506,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "River 110",
+            "acres": 110,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.241309,
+            "longitude": -89.625149,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          },
+          {
+            "name": "Hill 120",
+            "acres": 120,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.241348,
+            "longitude": -89.639714,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "Creek 140",
+            "acres": 140,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.238072,
+            "longitude": -89.63109,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.39,
+          "yield_assumption": 179,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Soledad",
+      "last_name": "Cruickshank",
+      "email": "soledad.cruickshank@cape.fieldmark.app",
+      "farm": {
+        "name": "Cruickshank Farm",
+        "total_acres": 260,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.382509,
+        "longitude": -89.516256,
+        "fields": [
+          {
+            "name": "Home 120",
+            "acres": 120,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.377885,
+            "longitude": -89.511669,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "River 140",
+            "acres": 140,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.384068,
+            "longitude": -89.509318,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.41,
+          "yield_assumption": 176,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Brice",
+      "last_name": "Olson",
+      "email": "brice.olson@cape.fieldmark.app",
+      "farm": {
+        "name": "Olson Farms",
+        "total_acres": 117,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.380308,
+        "longitude": -89.469864,
+        "fields": [
+          {
+            "name": "River 32",
+            "acres": 32,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.375467,
+            "longitude": -89.466863,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          },
+          {
+            "name": "Hill 40",
+            "acres": 40,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.377223,
+            "longitude": -89.462612,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "Creek 45",
+            "acres": 45,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.375082,
+            "longitude": -89.467731,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.2,
+          "yield_assumption": 53,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Gaston",
+      "last_name": "Gutmann",
+      "email": "gaston.gutmann@cape.fieldmark.app",
+      "farm": {
+        "name": "Gutmann Place",
+        "total_acres": 252,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.218659,
+        "longitude": -89.666393,
+        "fields": [
+          {
+            "name": "Hill 55",
+            "acres": 55,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.22192,
+            "longitude": -89.667445,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "Creek 60",
+            "acres": 60,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.217719,
+            "longitude": -89.662971,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          },
+          {
+            "name": "Bottom 65",
+            "acres": 65,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.21973,
+            "longitude": -89.673446,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "Tract 72",
+            "acres": 72,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.214843,
+            "longitude": -89.662444,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.35,
+          "yield_assumption": 178,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Ami",
+      "last_name": "King",
+      "email": "ami.king@cape.fieldmark.app",
+      "farm": {
+        "name": "King Acres",
+        "total_acres": 435,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.321204,
+        "longitude": -89.455046,
+        "fields": [
+          {
+            "name": "Creek 72",
+            "acres": 72,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.319633,
+            "longitude": -89.457071,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          },
+          {
+            "name": "Bottom 80",
+            "acres": 80,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.320324,
+            "longitude": -89.452852,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "Tract 88",
+            "acres": 88,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.318987,
+            "longitude": -89.461705,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          },
+          {
+            "name": "North 95",
+            "acres": 95,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.327177,
+            "longitude": -89.452006,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "South 100",
+            "acres": 100,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.325008,
+            "longitude": -89.459558,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.37,
+          "yield_assumption": 179,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Elicia",
+      "last_name": "Kiehn",
+      "email": "elicia.kiehn@cape.fieldmark.app",
+      "farm": {
+        "name": "Kiehn Home",
+        "total_acres": 195,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.109166,
+        "longitude": -89.685505,
+        "fields": [
+          {
+            "name": "Bottom 95",
+            "acres": 95,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.107429,
+            "longitude": -89.688868,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "Tract 100",
+            "acres": 100,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.104429,
+            "longitude": -89.678247,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.26,
+          "yield_assumption": 52,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Delores",
+      "last_name": "Rowe",
+      "email": "delores.rowe@cape.fieldmark.app",
+      "farm": {
+        "name": "Rowe Farm",
+        "total_acres": 420,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.086043,
+        "longitude": -89.506738,
+        "fields": [
+          {
+            "name": "Tract 120",
+            "acres": 120,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.085031,
+            "longitude": -89.499697,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          },
+          {
+            "name": "North 140",
+            "acres": 140,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.085326,
+            "longitude": -89.513063,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "South 160",
+            "acres": 160,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.085738,
+            "longitude": -89.509418,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.41,
+          "yield_assumption": 177,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Lenny",
+      "last_name": "Orn",
+      "email": "lenny.orn@cape.fieldmark.app",
+      "farm": {
+        "name": "Orn Farm",
+        "total_acres": 172,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.067359,
+        "longitude": -89.642121,
+        "fields": [
+          {
+            "name": "North 32",
+            "acres": 32,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.065518,
+            "longitude": -89.6434,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "South 40",
+            "acres": 40,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.062523,
+            "longitude": -89.647693,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          },
+          {
+            "name": "East 45",
+            "acres": 45,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.068486,
+            "longitude": -89.640559,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "West 55",
+            "acres": 55,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.068679,
+            "longitude": -89.639202,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.33,
+          "yield_assumption": 178,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Wes",
+      "last_name": "Lehner",
+      "email": "wes.lehner@cape.fieldmark.app",
+      "farm": {
+        "name": "Lehner Farms",
+        "total_acres": 332,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.192126,
+        "longitude": -89.538461,
+        "fields": [
+          {
+            "name": "South 55",
+            "acres": 55,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.190272,
+            "longitude": -89.542775,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          },
+          {
+            "name": "East 60",
+            "acres": 60,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.189064,
+            "longitude": -89.53094,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "West 65",
+            "acres": 65,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.197873,
+            "longitude": -89.538526,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          },
+          {
+            "name": "Home 72",
+            "acres": 72,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.196662,
+            "longitude": -89.535421,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "River 80",
+            "acres": 80,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.188387,
+            "longitude": -89.540292,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.22,
+          "yield_assumption": 55,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Monroe",
+      "last_name": "Johns",
+      "email": "monroe.johns@cape.fieldmark.app",
+      "farm": {
+        "name": "Johns Place",
+        "total_acres": 152,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.395206,
+        "longitude": -89.65248,
+        "fields": [
+          {
+            "name": "East 72",
+            "acres": 72,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.395463,
+            "longitude": -89.65135,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "West 80",
+            "acres": 80,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.390139,
+            "longitude": -89.65145,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.37,
+          "yield_assumption": 176,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Marget",
+      "last_name": "Hoppe",
+      "email": "marget.hoppe@cape.fieldmark.app",
+      "farm": {
+        "name": "Hoppe Acres",
+        "total_acres": 305,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.294276,
+        "longitude": -89.676593,
+        "fields": [
+          {
+            "name": "West 95",
+            "acres": 95,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.295519,
+            "longitude": -89.679494,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          },
+          {
+            "name": "Home 100",
+            "acres": 100,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.293199,
+            "longitude": -89.684419,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "River 110",
+            "acres": 110,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.293378,
+            "longitude": -89.684041,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.39,
+          "yield_assumption": 177,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Elmer",
+      "last_name": "Hand",
+      "email": "elmer.hand@cape.fieldmark.app",
+      "farm": {
+        "name": "Hand Home",
+        "total_acres": 452,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.360097,
+        "longitude": -89.480644,
+        "fields": [
+          {
+            "name": "Home 120",
+            "acres": 120,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.361164,
+            "longitude": -89.481046,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "River 140",
+            "acres": 140,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.365404,
+            "longitude": -89.485441,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          },
+          {
+            "name": "Hill 160",
+            "acres": 160,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.365998,
+            "longitude": -89.473922,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "Creek 32",
+            "acres": 32,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.357526,
+            "longitude": -89.472569,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.28,
+          "yield_assumption": 54,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Mabelle",
+      "last_name": "Moen",
+      "email": "mabelle.moen@cape.fieldmark.app",
+      "farm": {
+        "name": "Moen Farm",
+        "total_acres": 232,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.435402,
+        "longitude": -89.651784,
+        "fields": [
+          {
+            "name": "River 32",
+            "acres": 32,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.441086,
+            "longitude": -89.642848,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          },
+          {
+            "name": "Hill 40",
+            "acres": 40,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.430171,
+            "longitude": -89.655081,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "Creek 45",
+            "acres": 45,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.436098,
+            "longitude": -89.656146,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          },
+          {
+            "name": "Bottom 55",
+            "acres": 55,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.430394,
+            "longitude": -89.647637,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "Tract 60",
+            "acres": 60,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.43998,
+            "longitude": -89.656093,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.33,
+          "yield_assumption": 179,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Isaias",
+      "last_name": "O'Connell",
+      "email": "isaias.oconnell@cape.fieldmark.app",
+      "farm": {
+        "name": "O'Connell Farm",
+        "total_acres": 115,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.322149,
+        "longitude": -89.576037,
+        "fields": [
+          {
+            "name": "Hill 55",
+            "acres": 55,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.32502,
+            "longitude": -89.572119,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "Creek 60",
+            "acres": 60,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.318313,
+            "longitude": -89.582389,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.35,
+          "yield_assumption": 176,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Deana",
+      "last_name": "Gottlieb",
+      "email": "deana.gottlieb@cape.fieldmark.app",
+      "farm": {
+        "name": "Gottlieb Farms",
+        "total_acres": 240,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.237105,
+        "longitude": -89.651622,
+        "fields": [
+          {
+            "name": "Creek 72",
+            "acres": 72,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.242226,
+            "longitude": -89.653405,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          },
+          {
+            "name": "Bottom 80",
+            "acres": 80,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.236472,
+            "longitude": -89.65813,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "Tract 88",
+            "acres": 88,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.238758,
+            "longitude": -89.654147,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.24,
+          "yield_assumption": 53,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Jason",
+      "last_name": "Mosciski",
+      "email": "jason.mosciski@cape.fieldmark.app",
+      "farm": {
+        "name": "Mosciski Place",
+        "total_acres": 425,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.420686,
+        "longitude": -89.682139,
+        "fields": [
+          {
+            "name": "Bottom 95",
+            "acres": 95,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.415594,
+            "longitude": -89.687292,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "Tract 100",
+            "acres": 100,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.420818,
+            "longitude": -89.675383,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          },
+          {
+            "name": "North 110",
+            "acres": 110,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.422472,
+            "longitude": -89.690777,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "South 120",
+            "acres": 120,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.426591,
+            "longitude": -89.688986,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.39,
+          "yield_assumption": 178,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Hollie",
+      "last_name": "VonRueden",
+      "email": "hollie.vonrueden@cape.fieldmark.app",
+      "farm": {
+        "name": "VonRueden Acres",
+        "total_acres": 492,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.270109,
+        "longitude": -89.665779,
+        "fields": [
+          {
+            "name": "Tract 120",
+            "acres": 120,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.272643,
+            "longitude": -89.661418,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          },
+          {
+            "name": "North 140",
+            "acres": 140,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.276052,
+            "longitude": -89.673143,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "South 160",
+            "acres": 160,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.270609,
+            "longitude": -89.663902,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          },
+          {
+            "name": "East 32",
+            "acres": 32,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.269071,
+            "longitude": -89.668123,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "West 40",
+            "acres": 40,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.271183,
+            "longitude": -89.658839,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.41,
+          "yield_assumption": 179,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Missy",
+      "last_name": "Abbott",
+      "email": "missy.abbott@cape.fieldmark.app",
+      "farm": {
+        "name": "Abbott Home",
+        "total_acres": 72,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.093212,
+        "longitude": -89.530107,
+        "fields": [
+          {
+            "name": "North 32",
+            "acres": 32,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.094901,
+            "longitude": -89.535562,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "South 40",
+            "acres": 40,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.09172,
+            "longitude": -89.530717,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.2,
+          "yield_assumption": 52,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Vernon",
+      "last_name": "Reichel",
+      "email": "vernon.reichel@cape.fieldmark.app",
+      "farm": {
+        "name": "Reichel Farm",
+        "total_acres": 180,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.168447,
+        "longitude": -89.66717,
+        "fields": [
+          {
+            "name": "South 55",
+            "acres": 55,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.163947,
+            "longitude": -89.659756,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          },
+          {
+            "name": "East 60",
+            "acres": 60,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.163665,
+            "longitude": -89.674538,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "West 65",
+            "acres": 65,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.17266,
+            "longitude": -89.666778,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.35,
+          "yield_assumption": 177,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Pearlie",
+      "last_name": "Medhurst",
+      "email": "pearlie.medhurst@cape.fieldmark.app",
+      "farm": {
+        "name": "Medhurst Farm",
+        "total_acres": 335,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.434044,
+        "longitude": -89.544519,
+        "fields": [
+          {
+            "name": "East 72",
+            "acres": 72,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.43882,
+            "longitude": -89.537389,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "West 80",
+            "acres": 80,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.436781,
+            "longitude": -89.5404,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          },
+          {
+            "name": "Home 88",
+            "acres": 88,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.435847,
+            "longitude": -89.548016,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "River 95",
+            "acres": 95,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.430516,
+            "longitude": -89.540179,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.37,
+          "yield_assumption": 178,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Shalon",
+      "last_name": "Donnelly",
+      "email": "shalon.donnelly@cape.fieldmark.app",
+      "farm": {
+        "name": "Donnelly Farms",
+        "total_acres": 565,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.216264,
+        "longitude": -89.456822,
+        "fields": [
+          {
+            "name": "West 95",
+            "acres": 95,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.221999,
+            "longitude": -89.448099,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          },
+          {
+            "name": "Home 100",
+            "acres": 100,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.221756,
+            "longitude": -89.461072,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "River 110",
+            "acres": 110,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.215526,
+            "longitude": -89.452245,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          },
+          {
+            "name": "Hill 120",
+            "acres": 120,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.220735,
+            "longitude": -89.447894,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "Creek 140",
+            "acres": 140,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.216008,
+            "longitude": -89.463105,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.26,
+          "yield_assumption": 55,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Lacy",
+      "last_name": "Shields",
+      "email": "lacy.shields@cape.fieldmark.app",
+      "farm": {
+        "name": "Shields Place",
+        "total_acres": 260,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.265059,
+        "longitude": -89.57223,
+        "fields": [
+          {
+            "name": "Home 120",
+            "acres": 120,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.262128,
+            "longitude": -89.577819,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "River 140",
+            "acres": 140,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.269103,
+            "longitude": -89.577111,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.41,
+          "yield_assumption": 176,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Colby",
+      "last_name": "Cole",
+      "email": "colby.cole@cape.fieldmark.app",
+      "farm": {
+        "name": "Cole Acres",
+        "total_acres": 117,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.178762999999996,
+        "longitude": -89.645773,
+        "fields": [
+          {
+            "name": "River 32",
+            "acres": 32,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.176231,
+            "longitude": -89.642865,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          },
+          {
+            "name": "Hill 40",
+            "acres": 40,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.174828,
+            "longitude": -89.641062,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "Creek 45",
+            "acres": 45,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.178793,
+            "longitude": -89.643854,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.33,
+          "yield_assumption": 177,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Vilma",
+      "last_name": "Corwin",
+      "email": "vilma.corwin@cape.fieldmark.app",
+      "farm": {
+        "name": "Corwin Home",
+        "total_acres": 252,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.25002,
+        "longitude": -89.480828,
+        "fields": [
+          {
+            "name": "Hill 55",
+            "acres": 55,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.248544,
+            "longitude": -89.489057,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "Creek 60",
+            "acres": 60,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.245778,
+            "longitude": -89.481391,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          },
+          {
+            "name": "Bottom 65",
+            "acres": 65,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.248155,
+            "longitude": -89.482055,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "Tract 72",
+            "acres": 72,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.249745,
+            "longitude": -89.472196,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.22,
+          "yield_assumption": 54,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Kymberly",
+      "last_name": "Waelchi",
+      "email": "kymberly.waelchi@cape.fieldmark.app",
+      "farm": {
+        "name": "Waelchi Farm",
+        "total_acres": 435,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.431763,
+        "longitude": -89.661182,
+        "fields": [
+          {
+            "name": "Creek 72",
+            "acres": 72,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.426603,
+            "longitude": -89.654129,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          },
+          {
+            "name": "Bottom 80",
+            "acres": 80,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.431341,
+            "longitude": -89.665951,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "Tract 88",
+            "acres": 88,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.426911,
+            "longitude": -89.663658,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          },
+          {
+            "name": "North 95",
+            "acres": 95,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.42926,
+            "longitude": -89.669193,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "South 100",
+            "acres": 100,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.427992,
+            "longitude": -89.66967,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.37,
+          "yield_assumption": 179,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Mickie",
+      "last_name": "Monahan",
+      "email": "mickie.monahan@cape.fieldmark.app",
+      "farm": {
+        "name": "Monahan Farm",
+        "total_acres": 195,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.423612,
+        "longitude": -89.447898,
+        "fields": [
+          {
+            "name": "Bottom 95",
+            "acres": 95,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.428204,
+            "longitude": -89.451595,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "Tract 100",
+            "acres": 100,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.423273,
+            "longitude": -89.45173,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.39,
+          "yield_assumption": 176,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Jimmy",
+      "last_name": "Howe",
+      "email": "jimmy.howe@cape.fieldmark.app",
+      "farm": {
+        "name": "Howe Farms",
+        "total_acres": 420,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.446181,
+        "longitude": -89.563164,
+        "fields": [
+          {
+            "name": "Tract 120",
+            "acres": 120,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.45153,
+            "longitude": -89.568355,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          },
+          {
+            "name": "North 140",
+            "acres": 140,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.447985,
+            "longitude": -89.568014,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "South 160",
+            "acres": 160,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.445378,
+            "longitude": -89.566532,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.28,
+          "yield_assumption": 53,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Alda",
+      "last_name": "Huels",
+      "email": "alda.huels@cape.fieldmark.app",
+      "farm": {
+        "name": "Huels Place",
+        "total_acres": 172,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.438756,
+        "longitude": -89.684792,
+        "fields": [
+          {
+            "name": "North 32",
+            "acres": 32,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.436269,
+            "longitude": -89.683054,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "South 40",
+            "acres": 40,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.43684,
+            "longitude": -89.688192,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          },
+          {
+            "name": "East 45",
+            "acres": 45,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.439388,
+            "longitude": -89.682839,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "West 55",
+            "acres": 55,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.444168,
+            "longitude": -89.685157,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.33,
+          "yield_assumption": 178,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Denyse",
+      "last_name": "Satterfield",
+      "email": "denyse.satterfield@cape.fieldmark.app",
+      "farm": {
+        "name": "Satterfield Acres",
+        "total_acres": 332,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.415387,
+        "longitude": -89.440889,
+        "fields": [
+          {
+            "name": "South 55",
+            "acres": 55,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.412537,
+            "longitude": -89.444496,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          },
+          {
+            "name": "East 60",
+            "acres": 60,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.412559,
+            "longitude": -89.446957,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "West 65",
+            "acres": 65,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.419059,
+            "longitude": -89.442723,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          },
+          {
+            "name": "Home 72",
+            "acres": 72,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.411505,
+            "longitude": -89.437076,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "River 80",
+            "acres": 80,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.415355,
+            "longitude": -89.439046,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.35,
+          "yield_assumption": 179,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Owen",
+      "last_name": "Dietrich",
+      "email": "owen.dietrich@cape.fieldmark.app",
+      "farm": {
+        "name": "Dietrich Home",
+        "total_acres": 152,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.154529,
+        "longitude": -89.542477,
+        "fields": [
+          {
+            "name": "East 72",
+            "acres": 72,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.158564,
+            "longitude": -89.547051,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "West 80",
+            "acres": 80,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.156146,
+            "longitude": -89.533775,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.24,
+          "yield_assumption": 52,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Mercy",
+      "last_name": "Spencer",
+      "email": "mercy.spencer@cape.fieldmark.app",
+      "farm": {
+        "name": "Spencer Farm",
+        "total_acres": 305,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.228493,
+        "longitude": -89.67829,
+        "fields": [
+          {
+            "name": "West 95",
+            "acres": 95,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.228059,
+            "longitude": -89.67081,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          },
+          {
+            "name": "Home 100",
+            "acres": 100,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.230865,
+            "longitude": -89.670199,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "River 110",
+            "acres": 110,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.222955,
+            "longitude": -89.68698,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.39,
+          "yield_assumption": 177,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Wilbert",
+      "last_name": "Botsford",
+      "email": "wilbert.botsford@cape.fieldmark.app",
+      "farm": {
+        "name": "Botsford Farm",
+        "total_acres": 452,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.208565,
+        "longitude": -89.465545,
+        "fields": [
+          {
+            "name": "Home 120",
+            "acres": 120,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.214417,
+            "longitude": -89.471743,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "River 140",
+            "acres": 140,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.210104,
+            "longitude": -89.461049,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          },
+          {
+            "name": "Hill 160",
+            "acres": 160,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.202998,
+            "longitude": -89.461468,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "Creek 32",
+            "acres": 32,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.204983,
+            "longitude": -89.464716,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.41,
+          "yield_assumption": 178,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Xavier",
+      "last_name": "Macejkovic",
+      "email": "xavier.macejkovic@cape.fieldmark.app",
+      "farm": {
+        "name": "Macejkovic Farms",
+        "total_acres": 232,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.260586,
+        "longitude": -89.649564,
+        "fields": [
+          {
+            "name": "River 32",
+            "acres": 32,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.262105,
+            "longitude": -89.646449,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          },
+          {
+            "name": "Hill 40",
+            "acres": 40,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.257647,
+            "longitude": -89.6476,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "Creek 45",
+            "acres": 45,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.259337,
+            "longitude": -89.644275,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          },
+          {
+            "name": "Bottom 55",
+            "acres": 55,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.265658,
+            "longitude": -89.645299,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "Tract 60",
+            "acres": 60,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.262465,
+            "longitude": -89.64742,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.2,
+          "yield_assumption": 55,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Rory",
+      "last_name": "Beatty",
+      "email": "rory.beatty@cape.fieldmark.app",
+      "farm": {
+        "name": "Beatty Place",
+        "total_acres": 115,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.078589,
+        "longitude": -89.546282,
+        "fields": [
+          {
+            "name": "Hill 55",
+            "acres": 55,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.07798,
+            "longitude": -89.5432,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "Creek 60",
+            "acres": 60,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.074988,
+            "longitude": -89.554867,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.35,
+          "yield_assumption": 176,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Gary",
+      "last_name": "Littel",
+      "email": "gary.littel@cape.fieldmark.app",
+      "farm": {
+        "name": "Littel Acres",
+        "total_acres": 240,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.369468,
+        "longitude": -89.67713,
+        "fields": [
+          {
+            "name": "Creek 72",
+            "acres": 72,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.371826,
+            "longitude": -89.671221,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          },
+          {
+            "name": "Bottom 80",
+            "acres": 80,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.374088,
+            "longitude": -89.683243,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "Tract 88",
+            "acres": 88,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.36515,
+            "longitude": -89.675846,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.37,
+          "yield_assumption": 177,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Jae",
+      "last_name": "Volkman",
+      "email": "jae.volkman@cape.fieldmark.app",
+      "farm": {
+        "name": "Volkman Home",
+        "total_acres": 425,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.343406,
+        "longitude": -89.557608,
+        "fields": [
+          {
+            "name": "Bottom 95",
+            "acres": 95,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.349115,
+            "longitude": -89.553805,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "Tract 100",
+            "acres": 100,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.344258,
+            "longitude": -89.552006,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          },
+          {
+            "name": "North 110",
+            "acres": 110,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.342682,
+            "longitude": -89.558903,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "South 120",
+            "acres": 120,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.341421,
+            "longitude": -89.554544,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.26,
+          "yield_assumption": 54,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Donnell",
+      "last_name": "Kassulke",
+      "email": "donnell.kassulke@cape.fieldmark.app",
+      "farm": {
+        "name": "Kassulke Farm",
+        "total_acres": 492,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.454007,
+        "longitude": -89.664333,
+        "fields": [
+          {
+            "name": "Tract 120",
+            "acres": 120,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.451265,
+            "longitude": -89.660126,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          },
+          {
+            "name": "North 140",
+            "acres": 140,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.453169,
+            "longitude": -89.667557,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "South 160",
+            "acres": 160,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.457178,
+            "longitude": -89.666623,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          },
+          {
+            "name": "East 32",
+            "acres": 32,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.45538,
+            "longitude": -89.668131,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "West 40",
+            "acres": 40,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.455021,
+            "longitude": -89.658395,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.41,
+          "yield_assumption": 179,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Christin",
+      "last_name": "Schoen",
+      "email": "christin.schoen@cape.fieldmark.app",
+      "farm": {
+        "name": "Schoen Farm",
+        "total_acres": 72,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.101366,
+        "longitude": -89.476119,
+        "fields": [
+          {
+            "name": "North 32",
+            "acres": 32,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.105876,
+            "longitude": -89.479946,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "South 40",
+            "acres": 40,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.105162,
+            "longitude": -89.479611,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.33,
+          "yield_assumption": 176,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Devora",
+      "last_name": "Wolf",
+      "email": "devora.wolf@cape.fieldmark.app",
+      "farm": {
+        "name": "Wolf Farms",
+        "total_acres": 180,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.145317,
+        "longitude": -89.621045,
+        "fields": [
+          {
+            "name": "South 55",
+            "acres": 55,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.145187,
+            "longitude": -89.622149,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          },
+          {
+            "name": "East 60",
+            "acres": 60,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.149589,
+            "longitude": -89.620703,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "West 65",
+            "acres": 65,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.149934,
+            "longitude": -89.618877,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.22,
+          "yield_assumption": 53,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Leon",
+      "last_name": "Bernhard",
+      "email": "leon.bernhard@cape.fieldmark.app",
+      "farm": {
+        "name": "Bernhard Place",
+        "total_acres": 335,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.124366,
+        "longitude": -89.668872,
+        "fields": [
+          {
+            "name": "East 72",
+            "acres": 72,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.127414,
+            "longitude": -89.667856,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "West 80",
+            "acres": 80,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.123367,
+            "longitude": -89.670882,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          },
+          {
+            "name": "Home 88",
+            "acres": 88,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.12853,
+            "longitude": -89.668341,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "River 95",
+            "acres": 95,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.1201,
+            "longitude": -89.673957,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.37,
+          "yield_assumption": 178,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Lincoln",
+      "last_name": "Williamson",
+      "email": "lincoln.williamson@cape.fieldmark.app",
+      "farm": {
+        "name": "Williamson Acres",
+        "total_acres": 565,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.219131,
+        "longitude": -89.456952,
+        "fields": [
+          {
+            "name": "West 95",
+            "acres": 95,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.219358,
+            "longitude": -89.458203,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          },
+          {
+            "name": "Home 100",
+            "acres": 100,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.218526,
+            "longitude": -89.454348,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "River 110",
+            "acres": 110,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.22435,
+            "longitude": -89.46506,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          },
+          {
+            "name": "Hill 120",
+            "acres": 120,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.21934,
+            "longitude": -89.451962,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "Creek 140",
+            "acres": 140,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.217723,
+            "longitude": -89.454311,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.39,
+          "yield_assumption": 179,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Fredric",
+      "last_name": "Runte",
+      "email": "fredric.runte@cape.fieldmark.app",
+      "farm": {
+        "name": "Runte Home",
+        "total_acres": 260,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.155958,
+        "longitude": -89.668086,
+        "fields": [
+          {
+            "name": "Home 120",
+            "acres": 120,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.157423,
+            "longitude": -89.674856,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "River 140",
+            "acres": 140,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.152369,
+            "longitude": -89.659862,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.28,
+          "yield_assumption": 52,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Maira",
+      "last_name": "Schumm",
+      "email": "maira.schumm@cape.fieldmark.app",
+      "farm": {
+        "name": "Schumm Farm",
+        "total_acres": 117,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.163099,
+        "longitude": -89.471434,
+        "fields": [
+          {
+            "name": "River 32",
+            "acres": 32,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.161789,
+            "longitude": -89.471561,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          },
+          {
+            "name": "Hill 40",
+            "acres": 40,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.158404,
+            "longitude": -89.466658,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "Creek 45",
+            "acres": 45,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.167829,
+            "longitude": -89.478493,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.33,
+          "yield_assumption": 177,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Heidi",
+      "last_name": "Gislason",
+      "email": "heidi.gislason@cape.fieldmark.app",
+      "farm": {
+        "name": "Gislason Farm",
+        "total_acres": 252,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.364613,
+        "longitude": -89.632287,
+        "fields": [
+          {
+            "name": "Hill 55",
+            "acres": 55,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.363946,
+            "longitude": -89.637171,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "Creek 60",
+            "acres": 60,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.367106,
+            "longitude": -89.63143,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          },
+          {
+            "name": "Bottom 65",
+            "acres": 65,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.365208,
+            "longitude": -89.640568,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "Tract 72",
+            "acres": 72,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.362548,
+            "longitude": -89.635232,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.35,
+          "yield_assumption": 178,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Lindsay",
+      "last_name": "Goyette",
+      "email": "lindsay.goyette@cape.fieldmark.app",
+      "farm": {
+        "name": "Goyette Farms",
+        "total_acres": 435,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.123157,
+        "longitude": -89.691029,
+        "fields": [
+          {
+            "name": "Creek 72",
+            "acres": 72,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.128296,
+            "longitude": -89.694288,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          },
+          {
+            "name": "Bottom 80",
+            "acres": 80,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.122948,
+            "longitude": -89.694701,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "Tract 88",
+            "acres": 88,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.120107,
+            "longitude": -89.694222,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          },
+          {
+            "name": "North 95",
+            "acres": 95,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.117441,
+            "longitude": -89.686449,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "South 100",
+            "acres": 100,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.120448,
+            "longitude": -89.697187,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.24,
+          "yield_assumption": 55,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Arlyne",
+      "last_name": "Schulist",
+      "email": "arlyne.schulist@cape.fieldmark.app",
+      "farm": {
+        "name": "Schulist Place",
+        "total_acres": 195,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.063039,
+        "longitude": -89.642109,
+        "fields": [
+          {
+            "name": "Bottom 95",
+            "acres": 95,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.058953,
+            "longitude": -89.650476,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "Tract 100",
+            "acres": 100,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.058912,
+            "longitude": -89.641832,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.39,
+          "yield_assumption": 176,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Numbers",
+      "last_name": "Howell",
+      "email": "numbers.howell@cape.fieldmark.app",
+      "farm": {
+        "name": "Howell Acres",
+        "total_acres": 420,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.169461,
+        "longitude": -89.642445,
+        "fields": [
+          {
+            "name": "Tract 120",
+            "acres": 120,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.164494,
+            "longitude": -89.642129,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          },
+          {
+            "name": "North 140",
+            "acres": 140,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.163595,
+            "longitude": -89.640588,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "South 160",
+            "acres": 160,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.169579,
+            "longitude": -89.637748,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.41,
+          "yield_assumption": 177,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Leda",
+      "last_name": "Greenholt",
+      "email": "leda.greenholt@cape.fieldmark.app",
+      "farm": {
+        "name": "Greenholt Home",
+        "total_acres": 172,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.308647,
+        "longitude": -89.617562,
+        "fields": [
+          {
+            "name": "North 32",
+            "acres": 32,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.314196,
+            "longitude": -89.610688,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "South 40",
+            "acres": 40,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.311471,
+            "longitude": -89.612557,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          },
+          {
+            "name": "East 45",
+            "acres": 45,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.314033,
+            "longitude": -89.624749,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "West 55",
+            "acres": 55,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.310102,
+            "longitude": -89.614043,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.2,
+          "yield_assumption": 54,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Refugio",
+      "last_name": "Hudson",
+      "email": "refugio.hudson@cape.fieldmark.app",
+      "farm": {
+        "name": "Hudson Farm",
+        "total_acres": 332,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.398334,
+        "longitude": -89.542658,
+        "fields": [
+          {
+            "name": "South 55",
+            "acres": 55,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.401855,
+            "longitude": -89.541746,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          },
+          {
+            "name": "East 60",
+            "acres": 60,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.392749,
+            "longitude": -89.544382,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "West 65",
+            "acres": 65,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.403219,
+            "longitude": -89.550729,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          },
+          {
+            "name": "Home 72",
+            "acres": 72,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.394125,
+            "longitude": -89.539312,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "River 80",
+            "acres": 80,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.402421,
+            "longitude": -89.536568,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.35,
+          "yield_assumption": 179,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Tod",
+      "last_name": "Ward",
+      "email": "tod.ward@cape.fieldmark.app",
+      "farm": {
+        "name": "Ward Farm",
+        "total_acres": 152,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.131311,
+        "longitude": -89.515685,
+        "fields": [
+          {
+            "name": "East 72",
+            "acres": 72,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.129053,
+            "longitude": -89.517523,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "West 80",
+            "acres": 80,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.128424,
+            "longitude": -89.518576,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.37,
+          "yield_assumption": 176,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Chance",
+      "last_name": "Feil",
+      "email": "chance.feil@cape.fieldmark.app",
+      "farm": {
+        "name": "Feil Farms",
+        "total_acres": 305,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.226932,
+        "longitude": -89.630711,
+        "fields": [
+          {
+            "name": "West 95",
+            "acres": 95,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.225809,
+            "longitude": -89.639431,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          },
+          {
+            "name": "Home 100",
+            "acres": 100,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.231838,
+            "longitude": -89.626154,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "River 110",
+            "acres": 110,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.2224,
+            "longitude": -89.632771,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.26,
+          "yield_assumption": 53,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Delma",
+      "last_name": "Pouros",
+      "email": "delma.pouros@cape.fieldmark.app",
+      "farm": {
+        "name": "Pouros Place",
+        "total_acres": 452,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.136323,
+        "longitude": -89.496281,
+        "fields": [
+          {
+            "name": "Home 120",
+            "acres": 120,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.141727,
+            "longitude": -89.499019,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "River 140",
+            "acres": 140,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.140619,
+            "longitude": -89.489759,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          },
+          {
+            "name": "Hill 160",
+            "acres": 160,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.141227,
+            "longitude": -89.492202,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "Creek 32",
+            "acres": 32,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.140137,
+            "longitude": -89.48769,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.41,
+          "yield_assumption": 178,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Dewey",
+      "last_name": "Bosco",
+      "email": "dewey.bosco@cape.fieldmark.app",
+      "farm": {
+        "name": "Bosco Acres",
+        "total_acres": 232,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.179678,
+        "longitude": -89.661914,
+        "fields": [
+          {
+            "name": "River 32",
+            "acres": 32,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.184846,
+            "longitude": -89.662821,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          },
+          {
+            "name": "Hill 40",
+            "acres": 40,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.179029,
+            "longitude": -89.669691,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "Creek 45",
+            "acres": 45,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.184223,
+            "longitude": -89.662297,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          },
+          {
+            "name": "Bottom 55",
+            "acres": 55,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.17945,
+            "longitude": -89.661219,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "Tract 60",
+            "acres": 60,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.178987,
+            "longitude": -89.661014,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.33,
+          "yield_assumption": 179,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Pablo",
+      "last_name": "Leuschke",
+      "email": "pablo.leuschke@cape.fieldmark.app",
+      "farm": {
+        "name": "Leuschke Home",
+        "total_acres": 115,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.369561,
+        "longitude": -89.514239,
+        "fields": [
+          {
+            "name": "Hill 55",
+            "acres": 55,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.364342,
+            "longitude": -89.520185,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "Creek 60",
+            "acres": 60,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.367912,
+            "longitude": -89.521173,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.22,
+          "yield_assumption": 52,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Silas",
+      "last_name": "Batz",
+      "email": "silas.batz@cape.fieldmark.app",
+      "farm": {
+        "name": "Batz Farm",
+        "total_acres": 240,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.388303,
+        "longitude": -89.684227,
+        "fields": [
+          {
+            "name": "Creek 72",
+            "acres": 72,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.386035,
+            "longitude": -89.689395,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          },
+          {
+            "name": "Bottom 80",
+            "acres": 80,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.384068,
+            "longitude": -89.678836,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "Tract 88",
+            "acres": 88,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.386932,
+            "longitude": -89.689687,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.37,
+          "yield_assumption": 177,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Leeann",
+      "last_name": "Kilback",
+      "email": "leeann.kilback@cape.fieldmark.app",
+      "farm": {
+        "name": "Kilback Farm",
+        "total_acres": 425,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.311689,
+        "longitude": -89.548972,
+        "fields": [
+          {
+            "name": "Bottom 95",
+            "acres": 95,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.312237,
+            "longitude": -89.541721,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "Tract 100",
+            "acres": 100,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.310747,
+            "longitude": -89.552582,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          },
+          {
+            "name": "North 110",
+            "acres": 110,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.312474,
+            "longitude": -89.550617,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "South 120",
+            "acres": 120,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.317524,
+            "longitude": -89.555024,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.39,
+          "yield_assumption": 178,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Myron",
+      "last_name": "Legros",
+      "email": "myron.legros@cape.fieldmark.app",
+      "farm": {
+        "name": "Legros Farms",
+        "total_acres": 492,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.414696,
+        "longitude": -89.706345,
+        "fields": [
+          {
+            "name": "Tract 120",
+            "acres": 120,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.420502,
+            "longitude": -89.700686,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          },
+          {
+            "name": "North 140",
+            "acres": 140,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.416807,
+            "longitude": -89.704044,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "South 160",
+            "acres": 160,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.413924,
+            "longitude": -89.714374,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          },
+          {
+            "name": "East 32",
+            "acres": 32,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.409198,
+            "longitude": -89.697687,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "West 40",
+            "acres": 40,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.41711,
+            "longitude": -89.708982,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.28,
+          "yield_assumption": 55,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Albertine",
+      "last_name": "Kulas",
+      "email": "albertine.kulas@cape.fieldmark.app",
+      "farm": {
+        "name": "Kulas Place",
+        "total_acres": 72,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.198897,
+        "longitude": -89.473327,
+        "fields": [
+          {
+            "name": "North 32",
+            "acres": 32,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.199068,
+            "longitude": -89.474199,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "South 40",
+            "acres": 40,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.194643,
+            "longitude": -89.474475,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.33,
+          "yield_assumption": 176,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Hunter",
+      "last_name": "Gutkowski",
+      "email": "hunter.gutkowski@cape.fieldmark.app",
+      "farm": {
+        "name": "Gutkowski Acres",
+        "total_acres": 180,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.292069,
+        "longitude": -89.644758,
+        "fields": [
+          {
+            "name": "South 55",
+            "acres": 55,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.297437,
+            "longitude": -89.637073,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          },
+          {
+            "name": "East 60",
+            "acres": 60,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.289627,
+            "longitude": -89.648842,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "West 65",
+            "acres": 65,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.296544,
+            "longitude": -89.649122,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.35,
+          "yield_assumption": 177,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Kenton",
+      "last_name": "Medhurst",
+      "email": "kenton.medhurst@cape.fieldmark.app",
+      "farm": {
+        "name": "Medhurst Home",
+        "total_acres": 335,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.100356,
+        "longitude": -89.473587,
+        "fields": [
+          {
+            "name": "East 72",
+            "acres": 72,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.104945,
+            "longitude": -89.475714,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "West 80",
+            "acres": 80,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.103502,
+            "longitude": -89.467829,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          },
+          {
+            "name": "Home 88",
+            "acres": 88,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.099368,
+            "longitude": -89.480367,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "River 95",
+            "acres": 95,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.098698,
+            "longitude": -89.46558,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.24,
+          "yield_assumption": 54,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Ellan",
+      "last_name": "Brakus",
+      "email": "ellan.brakus@cape.fieldmark.app",
+      "farm": {
+        "name": "Brakus Farm",
+        "total_acres": 565,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.443705,
+        "longitude": -89.447348,
+        "fields": [
+          {
+            "name": "West 95",
+            "acres": 95,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.440362,
+            "longitude": -89.439515,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          },
+          {
+            "name": "Home 100",
+            "acres": 100,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.441088,
+            "longitude": -89.44694,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "River 110",
+            "acres": 110,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.44856,
+            "longitude": -89.448851,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          },
+          {
+            "name": "Hill 120",
+            "acres": 120,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.438404,
+            "longitude": -89.444359,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "Creek 140",
+            "acres": 140,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.449091,
+            "longitude": -89.445157,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.39,
+          "yield_assumption": 179,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Edward",
+      "last_name": "Corkery",
+      "email": "edward.corkery@cape.fieldmark.app",
+      "farm": {
+        "name": "Corkery Farm",
+        "total_acres": 260,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.29973,
+        "longitude": -89.65756,
+        "fields": [
+          {
+            "name": "Home 120",
+            "acres": 120,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.302789,
+            "longitude": -89.649282,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "River 140",
+            "acres": 140,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.295665,
+            "longitude": -89.655147,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.41,
+          "yield_assumption": 176,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Marybelle",
+      "last_name": "Dare",
+      "email": "marybelle.dare@cape.fieldmark.app",
+      "farm": {
+        "name": "Dare Farms",
+        "total_acres": 117,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.46168,
+        "longitude": -89.455685,
+        "fields": [
+          {
+            "name": "River 32",
+            "acres": 32,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.456915,
+            "longitude": -89.459146,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          },
+          {
+            "name": "Hill 40",
+            "acres": 40,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.460637,
+            "longitude": -89.450848,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "Creek 45",
+            "acres": 45,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.463228,
+            "longitude": -89.461264,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.2,
+          "yield_assumption": 53,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Herbert",
+      "last_name": "Cummings",
+      "email": "herbert.cummings@cape.fieldmark.app",
+      "farm": {
+        "name": "Cummings Place",
+        "total_acres": 252,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.18718,
+        "longitude": -89.527049,
+        "fields": [
+          {
+            "name": "Hill 55",
+            "acres": 55,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.190106,
+            "longitude": -89.521284,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "Creek 60",
+            "acres": 60,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.182476,
+            "longitude": -89.520084,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          },
+          {
+            "name": "Bottom 65",
+            "acres": 65,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.192994,
+            "longitude": -89.528494,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "Tract 72",
+            "acres": 72,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.190088,
+            "longitude": -89.520164,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.35,
+          "yield_assumption": 178,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Herma",
+      "last_name": "Littel",
+      "email": "herma.littel@cape.fieldmark.app",
+      "farm": {
+        "name": "Littel Acres",
+        "total_acres": 435,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.4691,
+        "longitude": -89.557702,
+        "fields": [
+          {
+            "name": "Creek 72",
+            "acres": 72,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.47498,
+            "longitude": -89.56107,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          },
+          {
+            "name": "Bottom 80",
+            "acres": 80,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.473643,
+            "longitude": -89.553058,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "Tract 88",
+            "acres": 88,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.468495,
+            "longitude": -89.550082,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          },
+          {
+            "name": "North 95",
+            "acres": 95,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.466984,
+            "longitude": -89.563117,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "South 100",
+            "acres": 100,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.471635,
+            "longitude": -89.557551,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.37,
+          "yield_assumption": 179,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Euna",
+      "last_name": "Halvorson",
+      "email": "euna.halvorson@cape.fieldmark.app",
+      "farm": {
+        "name": "Halvorson Home",
+        "total_acres": 195,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.076706,
+        "longitude": -89.682726,
+        "fields": [
+          {
+            "name": "Bottom 95",
+            "acres": 95,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.073114,
+            "longitude": -89.688424,
+            "costs": {
+              "seed": 101.5,
+              "fertilizer": 191.5,
+              "chemicals": 109.5
+            }
+          },
+          {
+            "name": "Tract 100",
+            "acres": 100,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.079207,
+            "longitude": -89.688307,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.26,
+          "yield_assumption": 52,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Emeline",
+      "last_name": "Fahey",
+      "email": "emeline.fahey@cape.fieldmark.app",
+      "farm": {
+        "name": "Fahey Farm",
+        "total_acres": 420,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.380884,
+        "longitude": -89.554852,
+        "fields": [
+          {
+            "name": "Tract 120",
+            "acres": 120,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.38254,
+            "longitude": -89.563324,
+            "costs": {
+              "seed": 78.0,
+              "fertilizer": 93.0,
+              "chemicals": 73.0
+            }
+          },
+          {
+            "name": "North 140",
+            "acres": 140,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.376934,
+            "longitude": -89.560639,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "South 160",
+            "acres": 160,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.378758,
+            "longitude": -89.561161,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.41,
+          "yield_assumption": 177,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Marcus",
+      "last_name": "Abshire",
+      "email": "marcus.abshire@cape.fieldmark.app",
+      "farm": {
+        "name": "Abshire Farm",
+        "total_acres": 172,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.208164,
+        "longitude": -89.689012,
+        "fields": [
+          {
+            "name": "North 32",
+            "acres": 32,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.20916,
+            "longitude": -89.680854,
+            "costs": {
+              "seed": 104.5,
+              "fertilizer": 194.5,
+              "chemicals": 112.5
+            }
+          },
+          {
+            "name": "South 40",
+            "acres": 40,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.204039,
+            "longitude": -89.695179,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          },
+          {
+            "name": "East 45",
+            "acres": 45,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.208941,
+            "longitude": -89.68307,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "West 55",
+            "acres": 55,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.207858,
+            "longitude": -89.690091,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.33,
+          "yield_assumption": 178,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Jarod",
+      "last_name": "Wilderman",
+      "email": "jarod.wilderman@cape.fieldmark.app",
+      "farm": {
+        "name": "Wilderman Farms",
+        "total_acres": 332,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.438127,
+        "longitude": -89.694263,
+        "fields": [
+          {
+            "name": "South 55",
+            "acres": 55,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.440679,
+            "longitude": -89.685987,
+            "costs": {
+              "seed": 70.5,
+              "fertilizer": 85.5,
+              "chemicals": 65.5
+            }
+          },
+          {
+            "name": "East 60",
+            "acres": 60,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.441876,
+            "longitude": -89.68724,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "West 65",
+            "acres": 65,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.435903,
+            "longitude": -89.689752,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          },
+          {
+            "name": "Home 72",
+            "acres": 72,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.440449,
+            "longitude": -89.686339,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "River 80",
+            "acres": 80,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.433693,
+            "longitude": -89.69956,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.22,
+          "yield_assumption": 55,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Gema",
+      "last_name": "Gleason",
+      "email": "gema.gleason@cape.fieldmark.app",
+      "farm": {
+        "name": "Gleason Place",
+        "total_acres": 152,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.098913,
+        "longitude": -89.540342,
+        "fields": [
+          {
+            "name": "East 72",
+            "acres": 72,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.100901,
+            "longitude": -89.539154,
+            "costs": {
+              "seed": 97.0,
+              "fertilizer": 187.0,
+              "chemicals": 105.0
+            }
+          },
+          {
+            "name": "West 80",
+            "acres": 80,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.101375,
+            "longitude": -89.536876,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.37,
+          "yield_assumption": 176,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Hosea",
+      "last_name": "Gusikowski",
+      "email": "hosea.gusikowski@cape.fieldmark.app",
+      "farm": {
+        "name": "Gusikowski Acres",
+        "total_acres": 305,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.272136,
+        "longitude": -89.689118,
+        "fields": [
+          {
+            "name": "West 95",
+            "acres": 95,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.27368,
+            "longitude": -89.681919,
+            "costs": {
+              "seed": 73.5,
+              "fertilizer": 88.5,
+              "chemicals": 68.5
+            }
+          },
+          {
+            "name": "Home 100",
+            "acres": 100,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.277742,
+            "longitude": -89.695333,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "River 110",
+            "acres": 110,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.273556,
+            "longitude": -89.694302,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.39,
+          "yield_assumption": 177,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Luise",
+      "last_name": "Price",
+      "email": "luise.price@cape.fieldmark.app",
+      "farm": {
+        "name": "Price Home",
+        "total_acres": 452,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.345359,
+        "longitude": -89.666239,
+        "fields": [
+          {
+            "name": "Home 120",
+            "acres": 120,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.34653,
+            "longitude": -89.657821,
+            "costs": {
+              "seed": 100.0,
+              "fertilizer": 190.0,
+              "chemicals": 108.0
+            }
+          },
+          {
+            "name": "River 140",
+            "acres": 140,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.350735,
+            "longitude": -89.671526,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          },
+          {
+            "name": "Hill 160",
+            "acres": 160,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.343159,
+            "longitude": -89.670028,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "Creek 32",
+            "acres": 32,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.34117,
+            "longitude": -89.661803,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.28,
+          "yield_assumption": 54,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Landon",
+      "last_name": "Reinger",
+      "email": "landon.reinger@cape.fieldmark.app",
+      "farm": {
+        "name": "Reinger Farm",
+        "total_acres": 232,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.320141,
+        "longitude": -89.556625,
+        "fields": [
+          {
+            "name": "River 32",
+            "acres": 32,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.315745,
+            "longitude": -89.556117,
+            "costs": {
+              "seed": 76.5,
+              "fertilizer": 91.5,
+              "chemicals": 71.5
+            }
+          },
+          {
+            "name": "Hill 40",
+            "acres": 40,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.319687,
+            "longitude": -89.552186,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "Creek 45",
+            "acres": 45,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.314613,
+            "longitude": -89.557518,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          },
+          {
+            "name": "Bottom 55",
+            "acres": 55,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.316308,
+            "longitude": -89.55193,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "Tract 60",
+            "acres": 60,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.314252,
+            "longitude": -89.56495,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.33,
+          "yield_assumption": 179,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Joel",
+      "last_name": "Nolan",
+      "email": "joel.nolan@cape.fieldmark.app",
+      "farm": {
+        "name": "Nolan Farm",
+        "total_acres": 115,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "corn",
+        "latitude": 37.419985,
+        "longitude": -89.650151,
+        "fields": [
+          {
+            "name": "Hill 55",
+            "acres": 55,
+            "soil_type": "Silt loam",
+            "primary_commodity": "corn",
+            "latitude": 37.414836,
+            "longitude": -89.658718,
+            "costs": {
+              "seed": 103.0,
+              "fertilizer": 193.0,
+              "chemicals": 111.0
+            }
+          },
+          {
+            "name": "Creek 60",
+            "acres": 60,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.419971,
+            "longitude": -89.656131,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.35,
+          "yield_assumption": 176,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    },
+    {
+      "first_name": "Joan",
+      "last_name": "Rodriguez",
+      "email": "joan.rodriguez@cape.fieldmark.app",
+      "farm": {
+        "name": "Rodriguez Farms",
+        "total_acres": 240,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "soybean",
+        "latitude": 37.144268,
+        "longitude": -89.601929,
+        "fields": [
+          {
+            "name": "Creek 72",
+            "acres": 72,
+            "soil_type": "Clay loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.143898,
+            "longitude": -89.595185,
+            "costs": {
+              "seed": 79.5,
+              "fertilizer": 94.5,
+              "chemicals": 74.5
+            }
+          },
+          {
+            "name": "Bottom 80",
+            "acres": 80,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.147869,
+            "longitude": -89.608934,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "Tract 88",
+            "acres": 88,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.147714,
+            "longitude": -89.593601,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 11.24,
+          "yield_assumption": 53,
+          "downside_commodity_price": 9.8,
+          "downside_yield": 46
+        }
+      }
+    },
+    {
+      "first_name": "Carlie",
+      "last_name": "Adams",
+      "email": "carlie.adams@cape.fieldmark.app",
+      "farm": {
+        "name": "Adams Place",
+        "total_acres": 425,
+        "county": "Cape Girardeau",
+        "region": "central",
+        "primary_commodity": "both",
+        "latitude": 37.066188,
+        "longitude": -89.593549,
+        "fields": [
+          {
+            "name": "Bottom 95",
+            "acres": 95,
+            "soil_type": "Alluvial",
+            "primary_commodity": "corn",
+            "latitude": 37.065329,
+            "longitude": -89.600102,
+            "costs": {
+              "seed": 95.5,
+              "fertilizer": 185.5,
+              "chemicals": 103.5
+            }
+          },
+          {
+            "name": "Tract 100",
+            "acres": 100,
+            "soil_type": "Silt loam",
+            "primary_commodity": "soybean",
+            "latitude": 37.064042,
+            "longitude": -89.590375,
+            "costs": {
+              "seed": 72.0,
+              "fertilizer": 87.0,
+              "chemicals": 67.0
+            }
+          },
+          {
+            "name": "North 110",
+            "acres": 110,
+            "soil_type": "Clay loam",
+            "primary_commodity": "corn",
+            "latitude": 37.071687,
+            "longitude": -89.586668,
+            "costs": {
+              "seed": 98.5,
+              "fertilizer": 188.5,
+              "chemicals": 106.5
+            }
+          },
+          {
+            "name": "South 120",
+            "acres": 120,
+            "soil_type": "Alluvial",
+            "primary_commodity": "soybean",
+            "latitude": 37.060717,
+            "longitude": -89.597277,
+            "costs": {
+              "seed": 75.0,
+              "fertilizer": 90.0,
+              "chemicals": 70.0
+            }
+          }
+        ],
+        "scenario": {
+          "name": "Base Case 2026",
+          "commodity_price": 4.39,
+          "yield_assumption": 178,
+          "downside_commodity_price": 3.8,
+          "downside_yield": 160
+        }
+      }
+    }
+  ]
+}

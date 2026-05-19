@@ -5,6 +5,7 @@ import StatsBar from "../components/sections/StatsBar";
 import SolutionsGrid from "../components/sections/SolutionsGrid";
 import HowItWorks from "../components/sections/HowItWorks";
 import DaleSection from "../components/sections/DaleSection";
+import PricingTable from "../components/sections/PricingTable";
 import Testimonials from "../components/sections/Testimonials";
 import CtaBanner from "../components/sections/CtaBanner";
 import SalesChatWidget from "../components/sales-chat/SalesChatWidget";
@@ -18,6 +19,7 @@ export default function HomePage() {
         <StatsBar />
         <SolutionsGrid />
         <HowItWorks />
+        <PricingTable />
         <DaleSection />
         <Testimonials />
         <CtaBanner />

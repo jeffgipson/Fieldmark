@@ -25,9 +25,10 @@ export const INPUT_CATEGORIES = [
   { key: "other", label: "Other" }
 ];
 
+/** Extension 2026 regional reference $/acre (display only). */
 export const BENCHMARK_REFERENCE = {
-  corn: { seed: 99.38, fertilizer: 187.01, chemicals: 104.0, labor: 22.6, total: 600.07 },
-  soybean: { seed: 75.0, fertilizer: 91.28, chemicals: 113.25, labor: 11.52, total: 387.69 }
+  corn: { seed: 99.38, fertilizer: 187.01, chemicals: 104 },
+  soybean: { seed: 75, fertilizer: 91.28, chemicals: 58 }
 };
 
 export const DEMO_CREDENTIALS = {

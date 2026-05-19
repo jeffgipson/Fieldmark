@@ -1,0 +1,32 @@
+<h1 style="margin:0 0 20px;font-family:'Montserrat',Helvetica,Arial,sans-serif;font-size:22px;font-weight:700;color:#4A4A4A;">
+  <%= @headline %>
+</h1>
+
+<% @paragraphs.each do |paragraph| %>
+  <p style="margin:0 0 16px;font-size:16px;line-height:1.6;color:#4A4A4A;">
+    <%= paragraph %>
+  </p>
+<% end %>
+
+<% if @list_heading.present? && @list_items.present? %>
+  <p style="margin:20px 0 8px;font-family:'Montserrat',Helvetica,Arial,sans-serif;font-size:16px;font-weight:600;color:#4A4A4A;">
+    <%= @list_heading %>
+  </p>
+  <ul style="margin:0 0 20px;padding-left:20px;font-size:15px;line-height:1.6;color:#4A4A4A;">
+    <% @list_items.each do |item| %>
+      <li style="margin-bottom:8px;"><%= item %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<% if @cta.present? %>
+  <table role="presentation" cellspacing="0" cellpadding="0" style="margin:24px 0 8px;">
+    <tr>
+      <td style="border-radius:24px;background-color:#0D8B8B;">
+        <a href="<%= @cta[:url] %>" target="_blank" style="display:inline-block;padding:14px 28px;font-family:'Montserrat',Helvetica,Arial,sans-serif;font-size:15px;font-weight:700;color:#FFFFFF;text-decoration:none;border-radius:24px;">
+          <%= @cta[:label] %>
+        </a>
+      </td>
+    </tr>
+  </table>
+<% end %>

@@ -1,0 +1,10 @@
+* text=auto eol=lf
+
+*.{rb,erb,js,css,json,yml,md} text eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary

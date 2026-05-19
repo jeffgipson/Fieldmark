@@ -1,9 +1,13 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { useFarm } from "./FarmContext";
 import * as conversationsApi from "../api/conversations";
 import { friendlyError } from "../utils/errors";
 
 const DaleChatContext = createContext(null);
+
+function isClickEvent(value) {
+  return value != null && typeof value === "object" && "preventDefault" in value;
+}
 
 export function DaleChatProvider({ children }) {
   const { farm, primaryScenario } = useFarm();
@@ -12,8 +16,45 @@ export function DaleChatProvider({ children }) {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [chatScenarioId, setChatScenarioId] = useState(null);
+  const [pendingMessage, setPendingMessage] = useState(null);
+  const [chatIntent, setChatIntent] = useState(null);
+  const pendingSentRef = useRef(false);
 
-  const openChat = () => setIsOpen(true);
+  const activeScenarioId = chatScenarioId ?? primaryScenario?.id;
+
+  const resetConversation = useCallback(() => {
+    setConversation(null);
+    setMessages([]);
+    pendingSentRef.current = false;
+  }, []);
+
+  const openChat = useCallback(
+    (options) => {
+      const opts = isClickEvent(options) ? {} : options || {};
+      const scenarioId = opts.scenarioId ?? null;
+
+      setChatScenarioId(scenarioId);
+      setChatIntent(opts.intent ?? null);
+
+      if (opts.initialMessage) {
+        setPendingMessage(opts.initialMessage);
+        resetConversation();
+      } else {
+        setPendingMessage(null);
+        const scenarioChanged =
+          scenarioId != null &&
+          conversation?.scenario_id != null &&
+          Number(conversation.scenario_id) !== Number(scenarioId);
+        if (scenarioChanged) resetConversation();
+      }
+
+      setError(null);
+      setIsOpen(true);
+    },
+    [conversation, resetConversation]
+  );
+
   const closeChat = () => setIsOpen(false);
   const toggleChat = () => setIsOpen((prev) => !prev);
 
@@ -28,7 +69,7 @@ export function DaleChatProvider({ children }) {
       try {
         const data = await conversationsApi.createConversation({
           farmId: farm.id,
-          scenarioId: primaryScenario?.id
+          scenarioId: activeScenarioId
         });
         if (!cancelled) {
           setConversation(data);
@@ -44,7 +85,7 @@ export function DaleChatProvider({ children }) {
     return () => {
       cancelled = true;
     };
-  }, [isOpen, conversation, farm, primaryScenario]);
+  }, [isOpen, conversation, farm, activeScenarioId]);
 
   const sendMessage = useCallback(
     async (content) => {
@@ -73,6 +114,16 @@ export function DaleChatProvider({ children }) {
     [conversation]
   );
 
+  useEffect(() => {
+    if (!isOpen || !conversation || !pendingMessage || pendingSentRef.current) return;
+    if (loading) return;
+
+    pendingSentRef.current = true;
+    const message = pendingMessage;
+    setPendingMessage(null);
+    sendMessage(message);
+  }, [isOpen, conversation, pendingMessage, loading, sendMessage]);
+
   const value = useMemo(
     () => ({
       isOpen,
@@ -83,9 +134,21 @@ export function DaleChatProvider({ children }) {
       messages,
       loading,
       error,
-      sendMessage
+      sendMessage,
+      chatIntent,
+      pendingMessage
     }),
-    [isOpen, openChat, closeChat, toggleChat, conversation, messages, loading, error, sendMessage]
+    [
+      isOpen,
+      openChat,
+      conversation,
+      messages,
+      loading,
+      error,
+      sendMessage,
+      chatIntent,
+      pendingMessage
+    ]
   );
 
   return <DaleChatContext.Provider value={value}>{children}</DaleChatContext.Provider>;

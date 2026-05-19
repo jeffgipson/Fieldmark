@@ -144,27 +144,36 @@ h4 {
   animation: fm-fade-in 0.35s ease-out both;
 }
 
-.fm-chat-bubble::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  right: 12px;
-  width: 0;
-  height: 0;
-  border: 10px solid transparent;
-  border-top-color: var(--color-fm-teal);
-  border-bottom: 0;
-  border-right: 0;
-  transform: rotate(-40deg);
-  transition: border-color 0.2s ease;
+@keyframes fm-shimmer {
+  0% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.45;
+  }
 }
 
-.fm-chat-bubble:hover::after {
-  border-top-color: var(--color-fm-teal-hover);
+.animate-fm-shimmer {
+  animation: fm-shimmer 1.8s ease-in-out infinite;
 }
 
-.fm-chat-bubble.dark-mode::after {
-  display: none;
+@keyframes fm-skeleton-flash {
+  0%,
+  100% {
+    background-color: rgb(237 235 232 / 0.55);
+  }
+  50% {
+    background-color: rgb(13 139 139 / 0.12);
+  }
+}
+
+.fm-report-skeleton-line {
+  height: 0.75rem;
+  border-radius: 0.5rem;
+  animation: fm-skeleton-flash 2s ease-in-out infinite;
 }
 
 @media (max-width: 1024px) {

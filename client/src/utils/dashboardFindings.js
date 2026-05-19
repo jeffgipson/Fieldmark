@@ -1,15 +1,28 @@
 import { formatPerAcre } from "./format";
+import { primaryCategoryDiff } from "./benchmark";
 
 export function buildDashboardFindings(scenario) {
-  const pc = scenario?.peer_comparison?.summary?.categories;
+  const summary = scenario?.peer_comparison?.summary;
+  const pc = summary?.categories;
+  const cohortAvailable = summary?.cohort?.available;
   if (!pc) return [];
   const items = [];
+
   const fert = pc.fertilizer;
-  if (fert && fert.difference_per_acre > 0) {
+  const fertDiff = primaryCategoryDiff(fert, cohortAvailable);
+  if (fertDiff && fertDiff.diff > 0) {
     items.push(
-      `Fertilizer runs $${Math.abs(fert.difference_per_acre).toFixed(0)}/ac above regional average — about $${Math.abs(fert.total_farm_dollar_impact).toLocaleString()} across the farm.`
+      `Fertilizer runs $${Math.abs(fertDiff.diff).toFixed(0)}/ac above the ${fertDiff.reference} — about $${Math.abs(fertDiff.impact || 0).toLocaleString()} across the farm.`
     );
   }
+
+  const margin = summary?.margin_comparison;
+  if (margin?.available && margin.user_base_margin_per_acre != null) {
+    items.push(
+      `Base margin ${formatPerAcre(margin.user_base_margin_per_acre)} vs peer median ${formatPerAcre(margin.peer_median_base_margin_per_acre)} (${Math.round(margin.base_margin_peer_percentile || 0)}th percentile).`
+    );
+  }
+
   const base = scenario?.results?.base_case;
   const down = scenario?.results?.downside_case;
   if (down?.margin_per_acre != null && base?.margin_per_acre != null) {
@@ -19,7 +32,7 @@ export function buildDashboardFindings(scenario) {
   }
   if (items.length === 0 && scenario?.results) {
     items.push(
-      "Your scenario is calculated. Review benchmarks and talk to Dale before March commitments."
+      "Your scenario is calculated. Review your cost comparison and talk to Dale before March commitments."
     );
   }
   return items.slice(0, 3);

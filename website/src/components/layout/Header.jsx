@@ -7,6 +7,7 @@ import Logo from "../ui/Logo";
 const NAV = [
   { label: "Solutions", href: "#solutions" },
   { label: "How It Works", href: "#how-it-works" },
+  { label: "Pricing", href: "#pricing" },
   { label: "Analyst", href: "#dale" },
   { label: "Farmers", href: "#stories" }
 ];

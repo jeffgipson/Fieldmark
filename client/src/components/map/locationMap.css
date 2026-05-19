@@ -14,6 +14,14 @@
   z-index: 0;
 }
 
+.fm-location-map-wrap .leaflet-overlay-pane svg {
+  z-index: 450;
+}
+
+.fm-location-map .leaflet-interactive {
+  cursor: pointer;
+}
+
 .fm-basemap-toggle {
   position: absolute;
   top: 10px;
@@ -74,4 +82,26 @@
 .fm-location-search-results {
   max-height: 12rem;
   overflow-y: auto;
+}
+
+/* Google Places dropdown above Leaflet map */
+.pac-container {
+  z-index: 10000;
+  border-radius: 8px;
+  font-family: inherit;
+}
+
+.fm-location-map--demo {
+  padding: 0;
+  overflow: hidden;
+  background: #2d2d2d;
+}
+
+.fm-location-map-demo-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  user-select: none;
 }

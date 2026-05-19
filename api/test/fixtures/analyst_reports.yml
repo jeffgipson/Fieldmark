@@ -1,0 +1,9 @@
+henderson_report:
+  scenario: base_case
+  status: 2
+  summary: Margins are acceptable at base case.
+  key_findings: ["Fertilizer spend is above the regional benchmark.", "Downside margin remains positive at current assumptions."]
+  recommendations: []
+  risk_flags: []
+  lender_narrative: Sample narrative
+  generated_at: 2026-05-19 12:00:00

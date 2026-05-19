@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, X } from "lucide-react";
 import { useDaleChat } from "../../contexts/DaleChatContext";
+import { useFarm } from "../../contexts/FarmContext";
+import * as prioritiesApi from "../../api/priorities";
 import DaleAvatar from "./DaleAvatar";
 import DaleChatBubble from "./DaleChatBubble";
 import DaleDisclaimer from "./DaleDisclaimer";
@@ -9,10 +11,32 @@ import { DALE_SUGGESTIONS } from "../../constants/app";
 import { DALE_COPY } from "../../constants/dale";
 
 export default function DaleChatPopover() {
-  const { isOpen, closeChat, messages, loading, error, sendMessage } = useDaleChat();
+  const { isOpen, closeChat, messages, loading, error, sendMessage, chatIntent, pendingMessage } =
+    useDaleChat();
+  const suggestions =
+    chatIntent === "decision_help"
+      ? DALE_COPY.decisionHelp.suggestions
+      : DALE_SUGGESTIONS;
+  const { farm, setPriorities } = useFarm();
   const [input, setInput] = useState("");
   const [showSuggestions, setShowSuggestions] = useState(true);
+  const [savingPriorityId, setSavingPriorityId] = useState(null);
+  const [prioritySavedId, setPrioritySavedId] = useState(null);
   const endRef = useRef(null);
+
+  async function saveAsPriority(message) {
+    if (!farm?.id || !message?.content?.trim()) return;
+    setSavingPriorityId(message.id);
+    try {
+      const created = await prioritiesApi.createPriorityFromMessage(farm.id, message.content);
+      setPriorities((prev) => [created, ...(prev || [])]);
+      setPrioritySavedId(message.id);
+    } catch {
+      // ignore — user can add from dashboard
+    } finally {
+      setSavingPriorityId(null);
+    }
+  }
 
   useEffect(() => {
     endRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -28,7 +52,7 @@ export default function DaleChatPopover() {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bottom-24 right-6 z-50 h-[640px] w-[440px] max-w-[calc(100vw-3rem)] animate-fm-in rounded-xl border border-fm-gray-light bg-fm-surface shadow-[var(--shadow-fm-panel)]">
+    <div className="fixed bottom-24 right-6 z-50 h-[640px] w-[min(520px,calc(100vw-1.5rem))] animate-fm-in rounded-xl border border-fm-gray-light bg-fm-surface shadow-[var(--shadow-fm-panel)]">
       <div className="flex h-full flex-col">
         <header className="relative flex items-center gap-3 border-b border-fm-gray-light px-4 py-3">
           <DaleAvatar variant="avatar" size="sm" />
@@ -47,16 +71,33 @@ export default function DaleChatPopover() {
         </header>
 
         <div className="flex-1 overflow-y-auto p-4">
-          {loading && messages.length === 0 && <LoadingDale />}
+          {loading && messages.length === 0 && <LoadingDale variant="chat" />}
           {messages.map((msg) => (
-            <DaleChatBubble
-              key={msg.id}
-              content={msg.content}
-              timestamp={msg.created_at}
-              isFarmer={msg.role === "user"}
-            />
+            <div key={msg.id}>
+              <DaleChatBubble
+                content={msg.content}
+                timestamp={msg.created_at}
+                isFarmer={msg.role === "user"}
+              />
+              {msg.role === "user" && farm?.id && (
+                <div className={`mb-3 flex ${msg.role === "user" ? "justify-end" : ""}`}>
+                  <button
+                    type="button"
+                    onClick={() => saveAsPriority(msg)}
+                    disabled={savingPriorityId === msg.id || prioritySavedId === msg.id}
+                    className="text-xs font-medium text-fm-teal hover:underline disabled:opacity-50"
+                  >
+                    {prioritySavedId === msg.id
+                      ? "Saved to priorities"
+                      : savingPriorityId === msg.id
+                        ? "Saving..."
+                        : "Save as season priority"}
+                  </button>
+                </div>
+              )}
+            </div>
           ))}
-          {loading && messages.length > 0 && <LoadingDale inline />}
+          {loading && messages.length > 0 && <LoadingDale variant="chat" />}
           {!loading && error && (
             <p className="rounded-lg border border-fm-alert/30 bg-[#fff8f8] px-3 py-2 text-sm text-fm-alert">
               {error}
@@ -65,9 +106,9 @@ export default function DaleChatPopover() {
           <div ref={endRef} />
         </div>
 
-        {showSuggestions && !loading && messages.length <= 1 && (
+        {showSuggestions && !loading && !pendingMessage && messages.length <= 1 && (
           <div className="flex flex-wrap gap-1.5 border-t border-fm-gray-light px-4 py-3">
-            {DALE_SUGGESTIONS.map((q) => (
+            {suggestions.map((q) => (
               <button
                 key={q}
                 type="button"
