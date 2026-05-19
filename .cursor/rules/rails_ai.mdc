@@ -1,0 +1,101 @@
+---
+description: How to call Claude in Fieldmark — use the Ai helper, not the SDK directly.
+globs:
+  - "api/app/**/*.rb"
+alwaysApply: false
+---
+
+# AI Calls (Claude)
+
+**See also:** `rails_helpers.mdc` (AppConfig, async reports, tests, demo seed)
+
+## Stack (do not skip layers)
+
+| Layer | Class | Location | Who may use it |
+|-------|--------|----------|----------------|
+| **Helper** | `Ai` | `api/app/services/ai.rb` | Feature services — **always start here** |
+| **Router** | `AiRouter` | `api/app/services/ai_router.rb` | Only `Ai` |
+| **SDK** | `Anthropic::Client` | Inside `AiRouter` only | Nobody else |
+
+```
+FeatureService → Ai.ask / Ai.chat / Ai.json → AiRouter → Anthropic API
+Controller     → include RescuesAi (not AiRouter)
+```
+
+## Default model
+
+- **Latest stable Sonnet:** `claude-sonnet-4-6` (`AiRouter::SONNET_STABLE_MODEL`)
+- **Override:** `ANTHROPIC_MODEL` in `.env` → `AppConfig.anthropic_model`
+- Bump `SONNET_STABLE_MODEL` when Anthropic ships a new GA Sonnet release
+
+## `Ai` API
+
+### `Ai.ask` — single user message
+
+```ruby
+text = Ai.ask(
+  "Explain seed cost vs benchmark.",
+  system: AnalystService::SYSTEM_PROMPT
+)
+```
+
+### `Ai.chat` — multi-turn
+
+Messages use Anthropic shape: `{ role: "user" | "assistant", content: "..." }`.
+
+```ruby
+text = Ai.chat(
+  messages: [
+    { role: "user", content: "Farm context:\n#{context.to_json}" },
+    { role: "user", content: user_message }
+  ],
+  system: AnalystService::SYSTEM_PROMPT,
+  max_tokens: 4096
+)
+```
+
+### `Ai.json` — structured output
+
+Appends “Return JSON only with keys: …” automatically. Strips ` ```json ` fences. Safe fallbacks on parse errors.
+
+```ruby
+payload = Ai.json(
+  system: AnalystService::SYSTEM_PROMPT,
+  keys: %i[summary key_findings recommendations risk_flags lender_narrative],
+  defaults: { key_findings: [], recommendations: [], risk_flags: [] },
+  messages: [
+    { role: "user", content: "Farm context:\n#{context.to_json}" },
+    { role: "user", content: REPORT_PROMPT }
+  ],
+  max_tokens: 4096
+)
+```
+
+Or with a single prompt: `Ai.json(system:, keys:, prompt: "...", defaults: {})`
+
+**Used by:** `AnalystReportGeneratorService`
+
+## Errors
+
+| Class | When | HTTP (via `RescuesAi`) |
+|-------|------|-------------------------|
+| `Ai::ConfigurationError` | Missing `ANTHROPIC_API_KEY` | 503 |
+| `Ai::ApiError` | Anthropic API failure (logged in `AiRouter`) | 502 |
+
+Controllers: `include RescuesAi` — do not rescue inline. Override `ai_failure_message` if needed.
+
+Feature services: let errors bubble to the controller (or job for async work).
+
+## Rules
+
+- Never call `Anthropic::Client` or `AiRouter` from controllers or feature services.
+- Never put domain prompts in `Ai` / `AiRouter` — keep them in the feature service (e.g. `AnalystService::SYSTEM_PROMPT`).
+- Never expose raw Anthropic errors to clients.
+- **Sync AI:** `AnalystService` (chat) runs in the request.
+- **Async AI:** lender reports via `GenerateAnalystReportJob` only (see `rails_helpers.mdc`).
+
+## Analyst persona
+
+Reuse `AnalystService::SYSTEM_PROMPT` for farm financial analysis, chat, and lender reports unless building a clearly separate product surface.
+
+Independent Missouri corn/soy analyst; plain Midwest language; dollar amounts and percentages; downside scenarios; no vendor recommendations.

@@ -1,0 +1,232 @@
+---
+description: Fieldmark platform helpers — Ai, AppConfig, CurrentSeason, demo seed, async reports, API tests.
+globs:
+  - "api/**/*"
+  - "tools/fieldmark/**/*"
+alwaysApply: false
+---
+
+# Fieldmark Platform Helpers
+
+Use these instead of ad-hoc `ENV.fetch`, raw Anthropic calls, or one-off demo scripts.
+
+**Related rules:** `rails_ai.mdc` (Claude stack), `rails_services.mdc`, `rails_controllers.mdc`, `project_context.mdc`
+
+---
+
+## Quick reference
+
+| Helper | File | Use when |
+|--------|------|----------|
+| `Ai.ask` / `Ai.chat` | `api/app/services/ai.rb` | Any Claude text response |
+| `Ai.json` | `api/app/services/ai.rb` | Claude must return structured JSON |
+| `AiRouter` | `api/app/services/ai_router.rb` | **Never** from feature code — only via `Ai` |
+| `RescuesAi` | `api/app/controllers/concerns/rescues_ai.rb` | Controller calls Claude (chat or report enqueue) |
+| `AppConfig` | `api/lib/app_config.rb` | Reading environment variables |
+| `CurrentSeason` | `api/lib/current_season.rb` | Season year for costs, benchmarks, scenarios |
+| `DemoSeed` | `api/app/services/demo_seed.rb` | Repeatable Vibeathon / local demo data |
+| `ApiTestHelpers` | `api/test/support/api_test_helpers.rb` | Integration tests against JSON API |
+| `GenerateAnalystReportJob` | `api/app/jobs/generate_analyst_report_job.rb` | Async lender report generation |
+
+---
+
+## `AppConfig` — environment variables
+
+**Rule:** Never call `ENV.fetch` in controllers, services, or initializers. Add a method to `AppConfig` and a commented line in `api/.env.example`.
+
+```ruby
+AppConfig.anthropic_api_key   # nil if missing
+AppConfig.anthropic_model     # default: claude-sonnet-4-6 (AiRouter::SONNET_STABLE_MODEL)
+AppConfig.jwt_secret_key
+AppConfig.cors_origins        # array of strings
+AppConfig.redis_url
+AppConfig.demo_email          # default: demo@fieldmark.app
+AppConfig.demo_password       # default: password123
+```
+
+Loaded early via `require_relative` in `api/config/application.rb` (before Devise initializer).
+
+---
+
+## `CurrentSeason` — planning year
+
+**Rule:** Use `CurrentSeason.year` for `input_costs.season_year`, scenario calculators, and peer comparisons. Use `CurrentSeason.benchmark_year` for `BenchmarkRegion` lookups and benchmark API defaults.
+
+```ruby
+CurrentSeason.year           # default 2026
+CurrentSeason.benchmark_year # same as year unless product splits them later
+```
+
+Override: `PLANNING_SEASON_YEAR=2026` in `.env`.
+
+Do **not** use `Date.current.year` for farm financial data — demo and MU benchmarks are tied to the 2026 planning season.
+
+---
+
+## `Ai` — Claude calls (see `rails_ai.mdc`)
+
+### Text
+
+```ruby
+text = Ai.ask("Summarize margin risk.", system: AnalystService::SYSTEM_PROMPT)
+
+text = Ai.chat(
+  messages: [{ role: "user", content: "..." }],
+  system: AnalystService::SYSTEM_PROMPT,
+  max_tokens: 4096
+)
+```
+
+### JSON
+
+```ruby
+payload = Ai.json(
+  system: AnalystService::SYSTEM_PROMPT,
+  keys: %i[summary key_findings recommendations risk_flags lender_narrative],
+  defaults: { key_findings: [], recommendations: [], risk_flags: [] },
+  messages: [
+    { role: "user", content: "Farm context:\n#{context.to_json}" },
+    { role: "user", content: "Generate a lender summary." }
+  ]
+)
+# => { summary: "...", key_findings: [...], ... }
+```
+
+- Pass **`prompt:`** OR **`messages:`**, not both.
+- Strips markdown code fences; on parse failure uses `defaults` (plural keys default to `[]`).
+- Errors: `Ai::ConfigurationError` (missing API key), `Ai::ApiError` (Anthropic failure).
+
+### Model
+
+- Default: latest stable Sonnet (`claude-sonnet-4-6`).
+- Override: `ANTHROPIC_MODEL` in `.env` → `AppConfig.anthropic_model`.
+
+---
+
+## `RescuesAi` — controller error handling
+
+**Rule:** AI controllers `include RescuesAi` instead of inline `rescue` blocks.
+
+```ruby
+class Api::V1::AnalystMessagesController < BaseController
+  include RescuesAi
+  # ...
+  private
+
+  def ai_failure_message
+    "Analyst request failed."  # optional override; default shown above
+  end
+end
+```
+
+| Exception | HTTP | `errors[].field` |
+|-----------|------|------------------|
+| `Ai::ConfigurationError` | 503 | `anthropic` (exposes config message) |
+| `Ai::ApiError` | 502 | `anthropic` (generic `ai_failure_message`) |
+
+Used by: `AnalystMessagesController`, `AnalystReportsController` (override message: `"Report generation failed."`).
+
+---
+
+## Async lender reports
+
+**Requires:** Redis + `bin/jobs` (Sidekiq) running in development/production.
+
+### Flow
+
+1. `POST /api/v1/scenarios/:scenario_id/report` → `202 Accepted`, creates/updates `AnalystReport` with `status: pending`, enqueues `GenerateAnalystReportJob`.
+2. Client polls `GET /api/v1/scenarios/:scenario_id/report` until `status` is `completed` or `failed`.
+3. `?regenerate=true` on POST replaces a **completed** report.
+
+### Report `status` enum
+
+| Status | Meaning |
+|--------|---------|
+| `pending` | Queued, not started |
+| `processing` | Job running |
+| `completed` | `summary`, `key_findings`, etc. populated |
+| `failed` | See `error_message` |
+
+### Controller edge case
+
+Only return early for in-flight reports when **`report.persisted?`** — new records default to `pending` before first save.
+
+### Service / job
+
+- `AnalystReportGeneratorService` — uses `Ai.json`, called only from the job.
+- `GenerateAnalystReportJob` — `discard_on Ai::ConfigurationError`; marks `failed` on `Ai::ApiError` without re-raising.
+
+### Frontend / CLI
+
+```typescript
+// tools/fieldmark/src/api-client.ts
+await client.generateReport(scenarioId);
+const { data } = await client.getReport(scenarioId); // poll until completed
+```
+
+---
+
+## `DemoSeed` — demo account
+
+```bash
+cd api
+bin/rails demo:seed    # idempotent: demo user + Henderson farm + scenario + calculate/compare
+bin/rails demo:reset   # destroys demo user's farms, then re-seeds
+```
+
+| ENV | Default |
+|-----|---------|
+| `DEMO_EMAIL` | `demo@fieldmark.app` |
+| `DEMO_PASSWORD` | `password123` |
+
+Creates: central MO corn farm, North 80 field, seed/fertilizer/chemical costs, Base Case scenario with calculated results and peer comparison. Ensures MU benchmarks exist (`db:seed` if needed).
+
+---
+
+## `ApiTestHelpers` — integration tests
+
+Included globally via `api/test/test_helper.rb`.
+
+```ruby
+auth = register_user!
+headers = api_headers(auth[:token])
+
+post "/api/v1/farms", params: { farm: { name: "Test", ... } }, headers: headers, as: :json
+assert_api_success(:created)
+
+token = login_user!(email: "farmer_one@fieldmark.test")  # fixture user
+```
+
+| Method | Purpose |
+|--------|---------|
+| `api_headers(token)` | JSON + optional Bearer |
+| `json_body` / `api_data` / `api_errors` | Parse `{ data, meta, errors }` envelope |
+| `assert_api_success(:created)` | Assert status, empty errors, data present |
+| `register_user!` | Random email register → `{ email, password, token }` |
+| `with_stubbed_service(Klass, :call, value) { ... }` | Stub class method for jobs/services |
+
+**Rules:**
+
+- Stub `AnalystReportGeneratorService` (or other Claude services) in tests — **never** call Claude in CI.
+- Use `perform_enqueued_jobs` after POST report to run `GenerateAnalystReportJob` inline (test adapter).
+- User fixtures must include `email`, `encrypted_password`, `jti` (see `test/fixtures/users.yml`).
+
+Example: `api/test/integration/api_smoke_test.rb`
+
+---
+
+## Smoke script
+
+```bash
+api/bin/test_api                 # full journey; POST report enqueue only
+RUN_AI_SMOKE=1 api/bin/test_api  # + poll report + live analyst message (needs bin/jobs + ANTHROPIC_API_KEY)
+```
+
+---
+
+## Adding a new helper
+
+1. One clear entry point (`self.call` or module method).
+2. Document in this file + `.env.example` if config-related.
+3. Add a Cursor rule section or cross-link from `rails_ai` / `rails_services`.
+4. Add integration test or extend `api_smoke_test.rb` when behavior is user-facing.

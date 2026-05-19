@@ -1,0 +1,21 @@
+---
+description: Common Rails 8 Mistakes to Avoid
+alwaysApply: true
+---
+
+# Common Rails 8 Mistakes to Avoid
+
+- Do NOT use `render :json => ` (old syntax) — use `render json:`
+- Do NOT use `attr_accessible` — removed in Rails 4+, use strong params
+- Do NOT use `before_filter` — use `before_action`
+- Do NOT use hash rockets in enum definitions for new code
+- Do NOT skip `null: false` on required DB columns
+- Do NOT use string column for enums — always integer
+- Do NOT call `.all` without a scope in controllers — always scope to user
+- Do NOT use `update_attributes` — use `update`
+- Do NOT use `find_by_x` dynamic finders — use `find_by(x:)`
+- Do NOT rescue Exception — rescue StandardError or specific subclasses
+- Do NOT put logic in routes.rb
+- Do NOT use `respond_to` blocks in API-only controllers
+- Do NOT forget to add foreign_key constraints in migrations
+- Do NOT use `validates_presence_of` — use `validates :field, presence: true`

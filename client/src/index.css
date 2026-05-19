@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+@theme {
+  --color-fm-teal: #0d8b8b;
+  --color-fm-teal-hover: #0a7474;
+  --color-fm-teal-muted: #e8f4f4;
+  --color-fm-teal-subtle: #f2f9f9;
+  --color-fm-charcoal: #4a4a4a;
+  --color-fm-cream: #f5f3f0;
+  --color-fm-cream-deep: #ebe8e3;
+  --color-fm-gold: #d4a574;
+  --color-fm-gold-muted: #faf6f0;
+  --color-fm-alert: #c0392b;
+  --color-fm-success: #27ae60;
+  --color-fm-gray-light: #f0eeeb;
+  --color-fm-gray-medium: #9b9b9b;
+  --color-fm-gray-dark: #2c2c2c;
+  --color-fm-sidebar: #252525;
+  --color-fm-input-border: #d4d0cb;
+  --color-fm-surface: #ffffff;
+  --color-fm-ink: #1f1f1f;
+
+  --font-display: "Montserrat", system-ui, sans-serif;
+  --font-body: "Lato", system-ui, sans-serif;
+  --font-family-display: var(--font-display);
+  --font-family-body: var(--font-body);
+
+  --radius-fm-sm: 8px;
+  --radius-fm-md: 12px;
+  --radius-fm-lg: 16px;
+  --radius-fm-xl: 20px;
+  --shadow-fm-card: 0 1px 2px rgba(28, 25, 23, 0.04), 0 4px 16px rgba(28, 25, 23, 0.06);
+  --shadow-fm-card-hover: 0 4px 8px rgba(28, 25, 23, 0.06), 0 12px 28px rgba(28, 25, 23, 0.08);
+  --shadow-fm-panel: 0 1px 0 rgba(255, 255, 255, 0.8) inset, 0 8px 32px rgba(28, 25, 23, 0.07);
+  --shadow-fm-highlight: 0 0 0 1px rgba(13, 139, 139, 0.08), 0 8px 24px rgba(13, 139, 139, 0.1);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-fm-charcoal);
+  background-color: var(--color-fm-cream);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Warm field-grid texture — subtle, not decorative AI mesh */
+.fm-canvas {
+  background-color: var(--color-fm-cream);
+  background-image:
+    radial-gradient(ellipse 120% 80% at 100% -20%, rgba(13, 139, 139, 0.06), transparent 50%),
+    radial-gradient(ellipse 80% 60% at -10% 100%, rgba(212, 165, 116, 0.07), transparent 45%),
+    linear-gradient(rgba(74, 74, 74, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(74, 74, 74, 0.03) 1px, transparent 1px);
+  background-size: auto, auto, 32px 32px, 32px 32px;
+}
+
+.fm-panel {
+  background: var(--color-fm-surface);
+  border-radius: var(--radius-fm-xl);
+  box-shadow: var(--shadow-fm-panel);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+}
+
+.fm-card {
+  background: var(--color-fm-surface);
+  border-radius: var(--radius-fm-lg);
+  border: 1px solid var(--color-fm-gray-light);
+  box-shadow: var(--shadow-fm-card);
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.fm-card:hover {
+  box-shadow: var(--shadow-fm-card-hover);
+}
+
+.fm-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-fm-teal);
+}
+
+.fm-stat {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.fm-icon-ring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 12px;
+  background: var(--color-fm-teal-muted);
+  color: var(--color-fm-teal);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-fm-ink);
+}
+
+@keyframes dale-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+.animate-dale-pulse {
+  animation: dale-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes fm-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fm-in {
+  animation: fm-fade-in 0.35s ease-out both;
+}
+
+.fm-chat-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  right: 12px;
+  width: 0;
+  height: 0;
+  border: 10px solid transparent;
+  border-top-color: var(--color-fm-teal);
+  border-bottom: 0;
+  border-right: 0;
+  transform: rotate(-40deg);
+  transition: border-color 0.2s ease;
+}
+
+.fm-chat-bubble:hover::after {
+  border-top-color: var(--color-fm-teal-hover);
+}
+
+.fm-chat-bubble.dark-mode::after {
+  display: none;
+}
+
+@media (max-width: 1024px) {
+  .sidebar-label {
+    display: none;
+  }
+}

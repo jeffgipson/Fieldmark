@@ -1,0 +1,20 @@
+---
+description: Rails 8 Service Object Rules
+globs:
+  - "app/services/**/*.rb"
+alwaysApply: false
+---
+
+# Service Objects
+
+- Location: app/services/
+- Naming: descriptive with verb (AnalystService, ScenarioCalculatorService)
+- Always use a call class method as entry point
+- Always return a result object or raise a specific error
+- Never call external APIs directly from controllers or models
+- Claude: use `Ai.ask`, `Ai.chat`, or `Ai.json` only (`rails_ai.mdc`) — never `Anthropic::Client` or `AiRouter`
+- Structured Claude output: `Ai.json(system:, keys:, messages:|prompt:, defaults: {})` — do not hand-parse JSON in services
+- ENV: use `AppConfig` (`rails_helpers.mdc`) — never `ENV.fetch` in services
+- Season year: use `CurrentSeason.year` / `benchmark_year` — not `Date.current.year`
+- Controllers rescue AI errors via `include RescuesAi` — not inline rescue blocks
+- Long-running Claude work: enqueue a job (e.g. `GenerateAnalystReportJob`), do not block HTTP requests

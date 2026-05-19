@@ -1,0 +1,16 @@
+---
+description: Rails 8 Specific Rules
+alwaysApply: true
+---
+
+# Rails 8 Specific Rules
+
+- Use `rails new appname --api --database=postgresql` for API-only apps
+- Solid Queue is the default background job adapter in Rails 8 — do NOT add Sidekiq unless asked
+- Solid Cache is the default cache store — do NOT add Redis unless asked
+- Propshaft is the default asset pipeline — irrelevant for API-only but do not add Sprockets
+- Use `config.api_only = true` in application.rb — already set by --api flag
+- Do NOT include ActionView, ActionMailer middleware unless explicitly needed
+- Authentication: Rails 8 has built-in `has_secure_password` — use Devise + JWT for this project as specified
+- Do NOT use `protect_from_forgery` in API-only mode
+- Use `before_action :authenticate_user!` pattern for JWT auth

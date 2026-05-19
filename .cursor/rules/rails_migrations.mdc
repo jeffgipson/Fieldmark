@@ -1,0 +1,20 @@
+---
+description: Rails 8 Migration Rules
+globs:
+  - "db/migrate/*.rb"
+alwaysApply: false
+---
+
+# Migrations
+
+- Always run migrations in order — never edit an existing migration after it runs
+- Always include `null: false` constraints on required fields at the DB level
+- Always add `default:` values where appropriate (especially enums and booleans)
+- Foreign keys: always add `foreign_key: true` in migrations
+- Indexes: add indexes on ALL foreign keys, ALL enum columns, and any column 
+  used in WHERE clauses or ORDER BY
+- Use `add_index` with `unique: true` for uniqueness constraints
+- Timestamps: always include `t.timestamps` — never omit
+- jsonb: use `t.jsonb :field_name, default: {}` for JSON columns in PostgreSQL
+- Decimal: always specify precision and scale: `t.decimal :amount, precision: 10, scale: 2`
+- Enum columns: store as integer with a default: `t.integer :status, default: 0, null: false`

@@ -1,0 +1,20 @@
+---
+description: Rails 8 Model Rules
+globs:
+  - "app/models/**/*.rb"
+alwaysApply: false
+---
+
+# Models
+
+- Always define enums AFTER associations and BEFORE validations
+- Enum syntax for Rails 8: 
+  `enum :region, { northern: 0, central: 1, southwest: 2 }, validate: true`
+  NOT the old hash rocket syntax: `enum region: { northern: 0 }`
+- Always add validations for presence on required fields
+- Always validate inclusion for enums (Rails 8 validate: true handles this)
+- Association declarations order: belongs_to, has_many, has_one, has_many :through
+- Always specify `dependent: :destroy` or `dependent: :nullify` on has_many
+- Use `inverse_of` on associations to avoid N+1 queries
+- Scopes always use lambda syntax: `scope :recent, -> { order(created_at: :desc) }`
+- Never put business logic in models — use service objects

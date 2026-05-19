@@ -1,0 +1,15 @@
+---
+description: Database Rules
+globs:
+  - "config/database.yml"
+  - "db/schema.rb"
+alwaysApply: false
+---
+
+# Database
+
+- Always use PostgreSQL — never SQLite for this project
+- Use jsonb not json for JSON columns (jsonb is indexable)
+- Connection pool: set in database.yml, default 5 is fine for dev
+- Always run: rails db:create db:migrate db:seed in that order
+- Seeds: use find_or_create_by to make seeds idempotent

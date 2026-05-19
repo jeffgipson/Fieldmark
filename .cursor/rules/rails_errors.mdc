@@ -1,0 +1,15 @@
+---
+description: Error Handling Patterns
+globs:
+  - "app/controllers/application_controller.rb"
+alwaysApply: false
+---
+
+# Error Handling Patterns
+
+- ApplicationController should have:
+  rescue_from ActiveRecord::RecordNotFound, with: :not_found
+  rescue_from ActiveRecord::RecordInvalid, with: :unprocessable_entity
+  rescue_from ActionController::ParameterMissing, with: :bad_request
+- Each handler renders JSON error envelope with appropriate status
+- Service objects raise StandardError subclasses — never return nil on failure

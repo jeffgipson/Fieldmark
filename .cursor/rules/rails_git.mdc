@@ -1,0 +1,11 @@
+---
+description: Git Hygiene Rules
+alwaysApply: true
+---
+
+# Git Hygiene
+
+- .gitignore must include: .env, config/master.key, config/credentials/*.key
+- Never commit secrets
+- config/credentials.yml.enc is safe to commit (encrypted)
+- .env.example is safe to commit (no real values)

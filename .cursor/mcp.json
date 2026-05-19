@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "fieldmark": {
+      "command": "node",
+      "args": ["tools/fieldmark/dist/mcp-server.js"],
+      "env": {
+        "FIELDMARK_API_URL": "http://localhost:3000"
+      }
+    }
+  }
+}

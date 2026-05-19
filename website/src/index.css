@@ -1,0 +1,85 @@
+@import "tailwindcss";
+
+@theme {
+  --color-fm-teal: #0d8b8b;
+  --color-fm-teal-hover: #0a7474;
+  --color-fm-teal-dark: #065656;
+  --color-fm-charcoal: #4a4a4a;
+  --color-fm-cream: #f5f3f0;
+  --color-fm-gold: #d4a574;
+  --color-fm-alert: #c0392b;
+  --color-fm-success: #27ae60;
+  --color-fm-gray-light: #f0eeeb;
+  --color-fm-gray-medium: #9b9b9b;
+  --color-fm-gray-dark: #2c2c2c;
+
+  --font-display: "Montserrat", system-ui, sans-serif;
+  --font-body: "Lato", system-ui, sans-serif;
+  --font-family-display: var(--font-display);
+  --font-family-body: var(--font-body);
+
+  --shadow-fm-card: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-fm-elevated: 0 12px 40px rgba(0, 0, 0, 0.12);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-fm-charcoal);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  line-height: 1.15;
+  color: var(--color-fm-gray-dark);
+}
+
+@keyframes hero-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-slide-active {
+  animation: hero-fade-in 0.6s ease-out forwards;
+}
+
+@keyframes stat-count {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.stat-reveal {
+  animation: stat-count 0.5s ease-out forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .hero-slide-active,
+  .stat-reveal {
+    animation: none;
+  }
+}

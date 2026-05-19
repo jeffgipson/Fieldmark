@@ -1,0 +1,34 @@
+{
+  "name": "@fieldmark/tools",
+  "version": "0.1.0",
+  "description": "CLI and MCP server for the Fieldmark farm financial planning API",
+  "type": "module",
+  "license": "MIT",
+  "bin": {
+    "fieldmark": "./dist/cli.js",
+    "fieldmark-mcp": "./dist/mcp-server.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev:cli": "tsx src/cli.ts",
+    "dev:mcp": "tsx src/mcp-server.ts",
+    "prepare": "npm run build"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "commander": "^13.1.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ]
+}

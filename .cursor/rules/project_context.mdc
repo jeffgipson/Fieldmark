@@ -1,0 +1,97 @@
+---
+description: "Core project overview, data model, and tech specs for the Fieldmark application."
+alwaysApply: true
+---
+
+# Fieldmark Application Overview
+
+## 1. Core Concept & Problem
+
+Fieldmark is a farm financial planning SaaS tool for mid-scale Midwest corn and soybean farmers. It solves the information asymmetry problem farmers face when committing to expensive input costs in March, months before knowing their harvest revenue.
+
+**The goal is to provide farmers with "ammunition to negotiate" by giving them independent data.**
+
+Key outcomes for the farmer:
+- Go from anxiety to **confidence**.
+- Have fact-based conversations with advisors and lenders (not replace them).
+
+## 2. Core User Journey
+
+1.  **Onboarding:** A user registers, creates a `Farm` (name, acres, region).
+2.  **Field Setup:** The user adds `Fields` to their farm (acres, soil type, commodity).
+3.  **Cost Entry:** The user enters `InputCosts` per field for the current season (seed, fertilizer, etc.).
+4.  **Peer Benchmark:** The system compares the user's costs against seeded **MU Extension 2026 regional benchmarks**.
+5.  **Scenario Modeling:** The user runs `Scenarios` (base case and downside case) to see margin impact.
+6.  **AI Analysis:** An AI analyst interprets the benchmarks and scenarios in plain language, flags risks, and can answer questions.
+7.  **Lender Report:** The AI generates a professional, lender-ready `AnalystReport` (async — client polls until `completed`).
+8.  **Decision Logging:** The farmer logs their final `Decision` for future reference.
+
+## 3. AI Analyst Design ("The Independent Analyst")
+
+The AI analyst is the core differentiator, powered by **Claude** (`anthropic` gem).
+
+- **Calls:** `Ai.ask` / `Ai.chat` / `Ai.json` → `AiRouter` (see `rails_ai.mdc`)
+- **Reports:** async via `GenerateAnalystReportJob` + Sidekiq (`rails_helpers.mdc`)
+- **Model:** latest stable Sonnet (`claude-sonnet-4-6`)
+
+### Persona & System Prompt
+
+-   **Persona:** An independent agricultural financial analyst with no ties to vendors. Speaks plain Midwest language, respects farmer expertise, and focuses on honest, data-backed analysis.
+-   **Core System Prompt:** `"You are an independent agricultural financial analyst helping a Missouri corn and soybean farmer understand their margins before making March input commitments. You have no financial relationship with input vendors, co-ops, or agronomists. Your only job is honest, data-backed analysis. Speak in plain Midwest language. Use specific dollar amounts and percentages. Never guess — if you don't have the data, say so. Never recommend a specific vendor or product. Always show downside scenarios, not just base case. Validate farmer expertise — they know their land. You are showing them data they have not had access to before."`
+
+### AI Capabilities
+
+-   **DO:** Explain benchmarks, identify high-cost areas, model cash flow, assess downside risk, answer questions, and generate lender reports.
+-   **NEVER:** Recommend specific products/vendors, guarantee outcomes, patronize the user, or use jargon.
+
+## 4. Technical Architecture & Data Model
+
+### Stack
+-   **Backend:** Rails 8 API (api-only mode).
+-   **Database:** PostgreSQL.
+-   **Authentication:** Devise + JWT.
+-   **Gems:** `anthropic-sdk-ruby`, `rack-attack`, `kaminari`.
+-   **Frontend:** React (in a separate repository).
+
+### Data Model
+-   `User`: The farmer's account.
+-   `Farm`: Belongs to a `User`.
+-   `Field`: Belongs to a `Farm`.
+-   `InputCost`: Belongs to a `Field`.
+-   `BenchmarkRegion`: System data seeded from MU Extension.
+-   `Scenario`: Belongs to a `Farm`, captures what-if assumptions and results.
+-   `PeerComparison`: A snapshot of benchmark results for a `Scenario`.
+-   `AnalystConversation`: The chat history with the AI.
+-   `AnalystReport`: The structured lender-ready report.
+-   `Decision`: The final decision logged by the farmer for a `Scenario`.
+
+## 5. Benchmark Data Source
+
+-   **Source:** University of Missouri (MU) Extension 2026 official crop budgets. This is a critical, trusted, and independent data source.
+-   **Data is SEEDED**, not user-generated.
+-   **Example (Corn):** Seed: $99.38/ac, Fertilizer: $187.01/ac, Total Operating: $600.07/ac.
+-   **Example (Soybean):** Seed: $75.00/ac, Fertilizer: $91.28/ac, Total Operating: $387.69/ac.
+
+## 6. Business Context: Hackathon Project
+
+-   The goal is a **working MVP** for the Cape Girardeau Vibeathon.
+-   The demo must clearly show the user journey from problem to "ammunition".
+-   **Build Priority:** Rails API first (models, auth, services), then React frontend.
+
+## 7. Vocabulary
+
+-   **USE:** know, margin, scenario, peer, spend, decision, validate, benchmark, ammunition, independent, confidence.
+-   **AVOID:** empower, transform, revolutionary, innovative, disrupt, leverage, AI-powered, game-changing.
+
+## 8. Platform helpers (for agents)
+
+| Topic | Cursor rule |
+|-------|-------------|
+| Claude (`Ai`, `Ai.json`, `RescuesAi`) | `rails_ai.mdc` |
+| AppConfig, CurrentSeason, demo seed, async reports, API tests | `rails_helpers.mdc` |
+| JSON envelope, controllers | `rails_json.mdc`, `rails_controllers.mdc` |
+
+**Demo:** `cd api && bin/rails demo:seed` → `demo@fieldmark.app` / `password123` (see `DEMO_EMAIL` in `.env.example`).
+
+**Smoke test:** `api/bin/test_api` · full AI: `RUN_AI_SMOKE=1 api/bin/test_api` (requires `bin/jobs` + `ANTHROPIC_API_KEY`).
+

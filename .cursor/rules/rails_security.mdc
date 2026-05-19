@@ -1,0 +1,18 @@
+---
+description: Security Rules
+alwaysApply: true
+---
+
+# Security Rules
+
+- NEVER hardcode API keys, secrets, or passwords in any file
+- Store secrets in Rails credentials (rails credentials:edit) or ENV vars
+- Access via: ENV.fetch('ANTHROPIC_API_KEY') — always use fetch, not []
+- Add .env to .gitignore immediately
+- Create .env.example with placeholder values
+- Rate limit auth endpoints using rack-attack gem
+- Scope all queries to the current user:
+  current_user.farms.find(params[:id]) NOT Farm.find(params[:id])
+- Never trust params[:user_id] — always use current_user.id
+- Validate all input server-side with strong parameters AND model validations
+- Use parameterized queries always (ActiveRecord handles this — never string interpolate)

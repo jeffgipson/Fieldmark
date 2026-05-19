@@ -1,0 +1,13 @@
+---
+description: JSON Response Rules
+alwaysApply: true
+---
+
+# JSON Responses
+
+- Always use this envelope format:
+  Success: { data: {}, meta: { page:, per_page:, total: } }
+  Error: { errors: [{ field:, message: }] }
+- Use jbuilder or explicit as_json — do NOT use ActiveModel::Serializers
+- Never expose: password_digest, internal IDs in unexpected places, 
+  raw error messages, stack traces

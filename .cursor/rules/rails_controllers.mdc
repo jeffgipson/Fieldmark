@@ -1,0 +1,25 @@
+---
+description: Rails 8 Controller Rules
+globs:
+  - "app/controllers/**/*.rb"
+alwaysApply: false
+---
+
+# Controllers
+
+- Always inherit from ApplicationController (which inherits from ActionController::API)
+- Always use strong parameters — never use params directly
+- Always rescue_from in ApplicationController for common errors:
+  ActiveRecord::RecordNotFound → 404
+  ActiveRecord::RecordInvalid → 422
+  ActionController::ParameterMissing → 400
+- Namespace all API controllers under Api::V1
+- File path: app/controllers/api/v1/farms_controller.rb
+- Class name: Api::V1::FarmsController
+- Always use before_action for authentication
+- Always use before_action :set_resource for finding records
+- Return consistent JSON envelope: { data:, meta:, errors: }
+- Use render json: with explicit status codes
+- Never rescue specific errors in individual controllers — use ApplicationController
+- **Exception:** AI endpoints `include RescuesAi` (`rails_helpers.mdc`) for `Ai::ConfigurationError` / `Ai::ApiError`
+- Async resources: return `202 Accepted` when enqueueing jobs (e.g. `POST .../report` → `GenerateAnalystReportJob`)

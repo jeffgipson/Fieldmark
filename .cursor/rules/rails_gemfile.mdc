@@ -1,0 +1,19 @@
+---
+description: Gemfile Rules
+globs:
+  - "Gemfile"
+alwaysApply: false
+---
+
+# Gemfile Rules
+
+- Always specify gem versions with ~> for stability
+- Group gems correctly: development, test, production
+- Required gems for this project:
+  gem 'devise'
+  gem 'devise-jwt'
+  gem 'rack-cors'
+  gem 'kaminari'
+  gem 'rack-attack'
+  gem 'anthropic' (anthropic-sdk-ruby)
+- Do NOT add gems not in the spec without asking first

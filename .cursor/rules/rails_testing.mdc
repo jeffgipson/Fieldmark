@@ -1,0 +1,14 @@
+---
+description: Rails Testing Conventions
+globs:
+  - "spec/**/*.rb"
+alwaysApply: false
+---
+
+# Testing Conventions (if tests are written)
+
+- Use RSpec not Minitest
+- Factory Bot for factories
+- Shoulda Matchers for model tests
+- Request specs for API endpoints, not controller specs
+- Always test the JSON envelope structure

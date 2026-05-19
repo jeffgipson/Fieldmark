@@ -1,0 +1,77 @@
+@import "leaflet/dist/leaflet.css";
+@import "leaflet-draw/dist/leaflet.draw.css";
+
+.fm-location-map-wrap {
+  position: relative;
+}
+
+.fm-location-map {
+  height: 320px;
+  width: 100%;
+  border-radius: var(--radius-fm-lg);
+  overflow: hidden;
+  border: 1px solid var(--color-fm-gray-light);
+  z-index: 0;
+}
+
+.fm-basemap-toggle {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  display: flex;
+  gap: 4px;
+  border-radius: 8px;
+  background: var(--color-fm-surface);
+  padding: 4px;
+  box-shadow: var(--shadow-fm-card);
+}
+
+.fm-basemap-toggle button {
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  background: transparent;
+  color: var(--color-fm-charcoal);
+}
+
+.fm-basemap-toggle button.active {
+  background: var(--color-fm-teal-muted);
+  color: var(--color-fm-teal);
+}
+
+.fm-field-mode-toggle {
+  margin-bottom: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.fm-field-mode-toggle button {
+  border-radius: 10px;
+  border: 1px solid var(--color-fm-gray-light);
+  background: var(--color-fm-surface);
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--color-fm-charcoal);
+}
+
+.fm-field-mode-toggle button.active {
+  border-color: var(--color-fm-teal);
+  background: var(--color-fm-teal-subtle);
+  color: var(--color-fm-teal);
+}
+
+.fm-location-map .leaflet-control-draw {
+  border-radius: 8px;
+}
+
+.fm-location-search-results {
+  max-height: 12rem;
+  overflow-y: auto;
+}

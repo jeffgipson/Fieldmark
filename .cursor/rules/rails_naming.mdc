@@ -1,0 +1,16 @@
+---
+description: Rails 8 Naming Conventions
+alwaysApply: true
+---
+
+# Rails 8 Naming Conventions (Critical)
+
+- Model names: singular, PascalCase (User, Farm, InputCost)
+- Table names: plural, snake_case (users, farms, input_costs)
+- Controller names: plural, PascalCase (FarmsController, InputCostsController)
+- Migration names: descriptive snake_case (create_farms, add_region_to_farms)
+- File names: always snake_case matching the class name
+- Foreign keys: singular_model_name_id (farm_id, user_id, field_id)
+- Join tables: alphabetical order, both plural (fields_input_costs)
+- Enums: defined in model, stored as integers in DB, always add a DB index
+- Scopes: named with descriptive verb phrases (scope :active, -> { where(active: true) })

@@ -1,0 +1,217 @@
+# Fieldmark — LLM Context File
+
+> Know your margins before March.
+
+This file gives AI assistants enough context to work on Fieldmark without re-scanning the whole repository. For full HTTP details, read `api/docs/API.md`.
+
+## What Fieldmark Is
+
+Farm financial planning SaaS for mid-scale Midwest corn and soybean farmers. Farmers enter per-field input costs, compare against independent MU Extension 2026 benchmarks, run margin scenarios, chat with an independent AI analyst, generate a lender-ready report, and log their decision.
+
+**Core value:** Fact-based "ammunition to negotiate" before March input commitments — not replacing advisors or lenders.
+
+**Vocabulary to use:** know, margin, scenario, peer, spend, decision, validate, benchmark, ammunition, independent, confidence.
+
+**Avoid:** empower, transform, revolutionary, innovative, disrupt, leverage, AI-powered, game-changing.
+
+## Repository Layout
+
+```
+Fieldmark/
+├── api/                    # Rails 8 API-only backend (PRIMARY)
+│   ├── app/
+│   │   ├── controllers/api/v1/   # All JSON endpoints
+│   │   ├── models/               # ActiveRecord domain
+│   │   └── services/             # Business logic (calculator, peer compare, AI)
+│   ├── config/routes.rb
+│   ├── db/schema.rb
+│   ├── db/seeds.rb               # MU Extension benchmark data
+│   ├── docs/API.md               # Full API reference
+│   └── bin/test_api              # End-to-end smoke test script
+├── client/                 # React + Vite frontend (separate app)
+├── tools/fieldmark/        # CLI (`fieldmark`) + MCP server (`fieldmark-mcp`)
+├── docs/                   # Business validation PDFs (not code)
+├── .cursor/mcp.json        # Cursor MCP config for Fieldmark
+├── llm.txt                 # This file
+└── README.md
+```
+
+Note: `fieldmark-api/` may be a duplicate scaffold — treat `api/` as canonical unless told otherwise.
+
+## Tech Stack
+
+| Layer        | Choice                                      |
+|--------------|---------------------------------------------|
+| Backend      | Ruby on Rails 8, API-only (`config.api_only`) |
+| Database     | PostgreSQL                                  |
+| Auth         | Devise + devise-jwt (Bearer token)          |
+| AI           | Anthropic Claude via `anthropic-sdk-ruby`   |
+| Jobs         | Solid Queue / Redis (see `api/bin/jobs`)    |
+| Rate limit   | rack-attack on auth endpoints               |
+| Frontend     | React + Vite + Tailwind in `client/`        |
+
+## Data Model (Relationships)
+
+```
+User
+ └── Farm (region, primary_commodity, county, total_acres)
+      ├── Field (acres, soil_type, primary_commodity)
+      │    └── InputCost (season_year, category, amount_per_acre)
+      ├── Scenario (prices, yields, results JSONB)
+      │    ├── PeerComparison (percentiles vs BenchmarkRegion)
+      │    ├── AnalystReport (AI-generated lender summary)
+      │    └── Decision (one per scenario)
+      └── AnalystConversation
+           └── AnalystMessage (user / assistant)
+
+BenchmarkRegion — system-seeded, not user-owned
+JwtDenylist — revoked JWTs
+```
+
+## API Quick Reference
+
+**Base:** `http://localhost:3000` (development)
+
+**Envelope (always):**
+```json
+{ "data": {}, "meta": {}, "errors": [] }
+```
+Errors: `{ "data": null, "meta": {}, "errors": [{ "field": "...", "message": "..." }] }`
+
+**Auth header (protected routes):** `Authorization: Bearer <token>`
+
+### Public
+
+| Method | Path            | Notes        |
+|--------|-----------------|--------------|
+| GET    | /api/health     | No auth      |
+
+### Auth
+
+| Method | Path                    | Body key  |
+|--------|-------------------------|-----------|
+| POST   | /api/v1/auth/register   | `user`    |
+| POST   | /api/v1/auth/login      | `user`    |
+| DELETE | /api/v1/auth/logout     | Bearer JWT|
+
+Register/login return `data.token` plus user fields (`id`, `email`, `first_name`, `last_name`, `role`).
+
+### Resources (all require JWT)
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| GET | /api/v1/benchmarks?region=&commodity=&year= | MU Extension regional costs |
+| GET/POST/PATCH/DELETE | /api/v1/farms | Farm CRUD |
+| GET/POST/PATCH/DELETE | /api/v1/farms/:farm_id/fields | Field CRUD |
+| GET/POST/PATCH/DELETE | /api/v1/fields/:field_id/input_costs | Cost lines |
+| GET/POST/PATCH/DELETE | /api/v1/farms/:farm_id/scenarios | Scenario CRUD |
+| POST | /api/v1/farms/:farm_id/scenarios/:id/calculate | Margin math → `results` |
+| POST | /api/v1/farms/:farm_id/scenarios/:id/compare | Peer percentiles |
+| POST | /api/v1/conversations | Start AI chat (`conversation.farm_id`, optional `scenario_id`) |
+| GET | /api/v1/conversations/:id | Chat + messages |
+| POST | /api/v1/conversations/:id/messages | Ask analyst (`message.content`) |
+| POST | /api/v1/scenarios/:scenario_id/report | Lender report (Claude) |
+| POST/PATCH | /api/v1/scenarios/:scenario_id/decision | Log farmer decision |
+
+Pagination: `?page=1&per_page=25` on farm/field/scenario index endpoints.
+
+## Enum String Values (API)
+
+- **Farm region:** `northern`, `central`, `southwest`
+- **Farm primary_commodity:** `corn`, `soybean`, `both`
+- **Field primary_commodity:** `corn`, `soybean`
+- **InputCost category:** `seed`, `fertilizer`, `chemicals`, `labor`, `custom_hire`, `other`
+- **Decision decision_type:** `proceed`, `wait`, `modify`, `cancel`
+- **User role:** `farmer`, `admin` (admin sees all farms)
+
+## Key Services
+
+| Service | File | Role |
+|---------|------|------|
+| ScenarioCalculatorService | `api/app/services/scenario_calculator_service.rb` | Weighted costs + base/downside margins |
+| PeerComparisonService | `api/app/services/peer_comparison_service.rb` | Percentiles vs benchmark for farm region |
+| ContextSnapshotBuilder | `api/app/services/context_snapshot_builder.rb` | Frozen JSON for AI context |
+| AnalystService | `api/app/services/analyst_service.rb` | Chat replies (Claude) |
+| AnalystReportGeneratorService | `api/app/services/analyst_report_generator_service.rb` | Lender report JSON |
+| Ai | `api/app/services/ai.rb` | **Use this** — `Ai.ask` / `Ai.chat` |
+| AiRouter | `api/app/services/ai_router.rb` | Internal gateway (only called by `Ai`) |
+
+**AI persona (system prompt):** Independent ag financial analyst for Missouri corn/soy. Plain Midwest language, dollar amounts, downside scenarios, no vendor recommendations. See `AnalystService::SYSTEM_PROMPT`.
+
+**Claude model:** `claude-sonnet-4-6` (latest stable Sonnet via `AiRouter::SONNET_STABLE_MODEL`; override with `ANTHROPIC_MODEL`)
+
+## Benchmark Data (Seeded 2026)
+
+Source: MU Extension publications g651 (corn) and g654 (soybean). Seeded for all three regions.
+
+| $/acre | Corn | Soybean |
+|--------|-----:|--------:|
+| Seed | 99.38 | 75.00 |
+| Fertilizer | 187.01 | 91.28 |
+| Chemicals | 104.00 | 113.25 |
+| Total operating | 600.07 | 387.69 |
+
+Compare uses farm `region` + commodity (soybean if farm primary is soybean, else corn).
+
+## Security & Conventions
+
+- Scope all queries to `current_user.farms` — never `Model.find(params[:id])` on tenant data.
+- Secrets: `ENV.fetch('ANTHROPIC_API_KEY')`, `JWT_SECRET_KEY` — never hardcode.
+- JSON envelope required on all responses (`JsonResponse` concern).
+- Strong params in controllers; validations in models.
+- Auth throttled: 10 req/min/IP on login and register.
+
+## Demo User Journey (API order)
+
+1. Register → JWT
+2. Create farm → fields → input costs (current season year, e.g. 2026)
+3. Fetch benchmark for farm region/commodity
+4. Create scenario with base + downside price/yield
+5. POST calculate → review `results.base_case` / `downside_case`
+6. POST compare → review percentiles
+7. POST conversation + messages (needs ANTHROPIC_API_KEY)
+8. POST report
+9. POST decision
+
+Run `cd api && bin/test_api` to exercise steps 1–9 (skips AI if key missing).
+
+## Local Development
+
+```bash
+cd api
+bundle install
+cp .env.example .env   # set ANTHROPIC_API_KEY, JWT_SECRET_KEY
+rails db:create db:migrate db:seed
+rails server           # :3000
+bin/jobs               # background worker (separate terminal)
+```
+
+Frontend: `cd client && npm install && npm run dev` (typically :5173).
+
+CORS default: `http://localhost:5173`
+
+## Files to Read First
+
+| Task | Read |
+|------|------|
+| Add endpoint | `api/config/routes.rb`, matching controller in `api/app/controllers/api/v1/` |
+| Change margin math | `api/app/services/scenario_calculator_service.rb` |
+| Change peer logic | `api/app/services/peer_comparison_service.rb` |
+| Change AI behavior | `api/app/services/analyst_service.rb`, `analyst_report_generator_service.rb` |
+| Schema / enums | `api/db/schema.rb`, `api/app/models/*.rb` |
+| Full HTTP contract | `api/docs/API.md` |
+| Product context | `.cursor/rules/project_context.mdc` |
+
+## Coding Standards (This Repo)
+
+- Rails 8 API-only; no ActiveModel::Serializers — use `as_json` in controllers.
+- Enums stored as integers in DB, exposed as strings in JSON.
+- Migrations: foreign keys, `null: false` on required columns.
+- Prefer services over fat controllers.
+- Do not commit `.env` or `config/master.key`.
+
+## Related Documentation
+
+- **API reference:** `api/docs/API.md`
+- **README setup:** `README.md`
+- **Product rules for Cursor:** `.cursor/rules/project_context.mdc`
