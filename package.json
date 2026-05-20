@@ -9,6 +9,10 @@
     "dev:status": "bin/dev-status",
     "setup:local-domains": "bin/setup-local-domains",
     "sync:llm": "bin/sync-llm-txt",
-    "sync:favicons": "bin/sync-favicons"
+    "sync:favicons": "bin/sync-favicons",
+    "deploy:pages": "bin/deploy-cloudflare-pages",
+    "deploy:pages:website": "bin/deploy-cloudflare-pages website",
+    "deploy:pages:app": "bin/deploy-cloudflare-pages app",
+    "deploy:pages:admin": "bin/deploy-cloudflare-pages admin"
   }
 }

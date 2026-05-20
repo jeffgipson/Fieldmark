@@ -47,7 +47,15 @@ If `DATABASE_URL` is empty, link Postgres to the app or paste the connection URL
 
 ## After first successful deploy
 
+Rails uses **three DB configs** (primary, cache, cable) on one Postgres URL. Hatchbox `db:migrate` only runs primary migrations unless you also load cache/cable:
+
 ```bash
+cd /home/deploy/field_mark/current
+RAILS_ENV=production bundle exec rake db:migrate
+DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=production bundle exec rake db:schema:load:cache db:schema:load:cable
 RAILS_ENV=production bundle exec rake demo:seed
-# or sample_data:seed — see api/lib/tasks/
 ```
+
+Without `solid_cache_entries`, auth requests fail (`PG::UndefinedTable`) when Rack::Attack uses Solid Cache.
+
+Health check: `GET /api/health` (not `/` or `/up` — API-only app). Optional: `sample_data:seed` for all Cape Girardeau test farmers.
