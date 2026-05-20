@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Copy repo-root llm.txt to public dirs (website + farmer app) and llms.txt alias.
+set -euo pipefail
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+SRC="$ROOT/llm.txt"
+
+for dest in "$ROOT/website/public/llm.txt" "$ROOT/client/public/llm.txt" "$ROOT/website/public/llms.txt"; do
+  cp "$SRC" "$dest"
+done
+
+echo "Synced llm.txt → website/public/, client/public/, website/public/llms.txt"

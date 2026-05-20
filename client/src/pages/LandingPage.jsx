@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { BarChart2, MessageCircle, TrendingDown } from "lucide-react";
 import { BRAND } from "../constants/brand";
+import { developerPath, websitePath } from "../lib/appUrls";
 import Button from "../components/ui/Button";
 import Logo from "../components/ui/Logo";
 import DaleAvatar from "../components/dale/DaleAvatar";
@@ -16,11 +17,25 @@ export default function LandingPage() {
     <div className="fm-canvas min-h-screen">
       <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6 lg:px-10">
         <Logo size="lg" />
-        <Link to="/login">
-          <Button variant="secondary" className="!px-5 !py-2.5">
-            Sign in
-          </Button>
-        </Link>
+        <div className="flex items-center gap-4">
+          <a
+            href={websitePath("/")}
+            className="hidden text-sm font-bold text-fm-charcoal hover:text-fm-teal sm:inline"
+          >
+            Website
+          </a>
+          <a
+            href={developerPath()}
+            className="text-sm font-bold text-fm-charcoal hover:text-fm-teal"
+          >
+            Developers
+          </a>
+          <Link to="/login">
+            <Button variant="secondary" className="!px-5 !py-2.5">
+              Sign in
+            </Button>
+          </Link>
+        </div>
       </header>
 
       <section className="mx-auto grid max-w-6xl items-center gap-12 px-6 pb-20 pt-8 lg:grid-cols-2 lg:gap-16 lg:px-10 lg:pt-12">
@@ -78,8 +93,8 @@ export default function LandingPage() {
             },
             {
               Icon: MessageCircle,
-              title: "Talk to Dale",
-              text: "Your independent analyst inside the app — numbers first, no vendor ties.",
+              title: "Meet D.A.L.E.",
+              text: "Data Analytics for Land Economics — your independent analyst inside the app.",
               showDale: true
             }
           ].map(({ Icon, title, text, showDale }) => (

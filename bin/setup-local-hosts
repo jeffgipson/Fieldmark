@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# Add fieldmark.local hostnames to /etc/hosts (macOS/Linux).
+set -euo pipefail
+
+MARKER="# fieldmark.local dev"
+BLOCK="$MARKER
+127.0.0.1 fieldmark.local www.fieldmark.local app.fieldmark.local api.fieldmark.local admin.fieldmark.local
+"
+
+if grep -q "$MARKER" /etc/hosts 2>/dev/null; then
+  echo "✓ /etc/hosts already has fieldmark.local entries"
+  exit 0
+fi
+
+echo "Adding fieldmark.local to /etc/hosts (requires your password)…"
+printf '\n%s' "$BLOCK" | sudo tee -a /etc/hosts >/dev/null
+echo "✓ Done. Test with: ping -c1 fieldmark.local"

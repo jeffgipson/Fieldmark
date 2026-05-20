@@ -5,13 +5,7 @@ module Api
     module Admin
       class StatsController < BaseController
         def show
-          render_success({
-            users: User.count,
-            farms: Farm.count,
-            fields: Field.count,
-            scenarios: Scenario.count,
-            vendors: Vendor.count
-          })
+          render_success(::Admin::DashboardData.call)
         end
       end
     end

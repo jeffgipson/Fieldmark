@@ -25,9 +25,11 @@
 **If Fieldmark were a person:**
 They would be an experienced ag finance advisor who respects your expertise, shows you data you don't have access to, and helps you make decisions with confidence. They would never hype features, oversimplify your business, or claim to replace your trusted advisors.
 
-## Mascot — Dale the Owl
+## Mascot — D.A.L.E. the Owl
 
-Dale is Fieldmark's AI agricultural financial analyst. He is represented by a barn owl mascot character.
+**D.A.L.E.** — **Data Analytics for Land Economics**
+
+D.A.L.E. is Fieldmark's AI agricultural financial analyst. He is represented by a barn owl mascot character. In casual UI copy (chat, sidebar), he is often called Dale; in onboarding, reports, and marketing, use the full name and acronym.
 
 **Why an owl:**
 - Wisdom — the right metaphor for independent analysis
@@ -35,7 +37,8 @@ Dale is Fieldmark's AI agricultural financial analyst. He is represented by a ba
 - Directly connects to the tagline "See what they see"
 - Native to Missouri farmland — authentic, not manufactured
 
-**Dale's identity:**
+**D.A.L.E.'s identity:**
+- Full name: D.A.L.E. — Data Analytics for Land Economics
 - Completely independent — no financial relationship with any input vendor, seed company, co-op, or agronomist
 - Plainspoken — Midwest language, specific numbers, no jargon
 - Proactive — leads with findings, doesn't wait to be asked

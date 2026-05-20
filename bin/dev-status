@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+# Quick check that the local Fieldmark stack is up on expected ports.
+set -uo pipefail
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+WEBSITE_TITLE="Know your margins before March"
+CLIENT_TITLE="<title>Fieldmark</title>"
+
+html_on_port() {
+  curl -s "http://127.0.0.1:$1/" 2>/dev/null || true
+}
+
+check_http() {
+  local name=$1
+  local url=$2
+  local code
+  code=$(curl -s -o /dev/null -w "%{http_code}" "$url" 2>/dev/null) || code="fail"
+  if [[ "$code" == "200" || "$code" == "304" ]]; then
+    printf "  \033[0;32m✓\033[0m %-18s %s\n" "$name" "$url"
+    return 0
+  fi
+  printf "  \033[0;31m✗\033[0m %-18s %s (HTTP %s)\n" "$name" "$url" "$code"
+  return 1
+}
+
+check_app_on_port() {
+  local name=$1
+  local port=$2
+  local title_needle=$3
+  local url="http://localhost:${port}/"
+  local html
+  html=$(html_on_port "$port")
+
+  if [[ -n "$html" ]] && [[ "$html" == *"$title_needle"* ]]; then
+    printf "  \033[0;32m✓\033[0m %-18s %s\n" "$name" "$url"
+    return 0
+  fi
+
+  if [[ -z "$html" ]]; then
+    printf "  \033[0;31m✗\033[0m %-18s %s (not running)\n" "$name" "$url"
+    return 1
+  fi
+
+  printf "  \033[0;31m✗\033[0m %-18s %s (wrong app on this port)\n" "$name" "$url"
+  return 1
+}
+
+echo "Fieldmark dev status"
+echo ""
+
+check_http "API" "http://localhost:3000/api/health"
+check_app_on_port "Farmer app" 5173 "$CLIENT_TITLE"
+check_http "Admin" "http://localhost:5175/"
+
+website_port=""
+for port in 5174 5176; do
+  html=$(html_on_port "$port")
+  if [[ -n "$html" ]] && [[ "$html" == *"$WEBSITE_TITLE"* ]]; then
+    website_port=$port
+    printf "  \033[0;32m✓\033[0m %-18s http://localhost:%s/\n" "Website" "$port"
+    break
+  fi
+done
+
+if [[ -z "$website_port" ]]; then
+  if check_http "Website" "http://localhost:5174/"; then
+    printf "       \033[0;33m→ port 5174 is up but serving the wrong app (often the farmer app)\033[0m\n"
+  fi
+  website_port=5174
+else
+  check_http "API docs" "http://localhost:${website_port}/developer"
+fi
+
+if [[ "$website_port" == "5176" ]]; then
+  echo ""
+  printf "  \033[0;33m!\033[0m Website fell back to :5176 — free :5174 and restart: ./bin/dev\n"
+fi
+
+echo ""
+echo "Public site (pricing, hero): http://localhost:${website_port}/"
+echo "Farmer app (sign in):        http://localhost:5173/"
+echo ""
+echo "Start stack: ./bin/dev"
+echo "Fix ports:   lsof -ti tcp:5173,tcp:5174,tcp:5175,tcp:5176 | xargs kill 2>/dev/null; ./bin/dev"

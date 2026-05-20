@@ -14,7 +14,11 @@ module Api
         )
 
         @conversation.update!(
-          context_snapshot: ContextSnapshotBuilder.call(@conversation.farm, @conversation.scenario)
+          context_snapshot: ContextSnapshotBuilder.call(
+            @conversation.farm,
+            @conversation.scenario,
+            client_path: message_params[:client_path]
+          )
         )
 
         assistant_message = AnalystService.call(
@@ -41,7 +45,7 @@ module Api
       end
 
       def message_params
-        params.require(:message).permit(:content)
+        params.require(:message).permit(:content, :client_path)
       end
 
       def message_json(message)

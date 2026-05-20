@@ -9,11 +9,12 @@ export default function DaleSection() {
         <div>
           <p className="text-sm font-bold uppercase tracking-widest text-fm-gold">Inside the app</p>
           <h2 className="font-display mt-3 text-3xl font-bold text-white sm:text-4xl">
-            Meet Dale — your independent analyst
+            Meet D.A.L.E.
           </h2>
+          <p className="mt-3 text-lg font-semibold text-fm-gold">Data Analytics for Land Economics</p>
           <p className="mt-6 text-lg text-white/80">
-            Dale is the analyst you talk to once your costs and scenarios are in Fieldmark. He reads
-            your numbers, flags high-cost areas, explains downside risk in
+            Your independent agricultural financial analyst. Once your costs and scenarios are in
+            Fieldmark, D.A.L.E. reads your numbers, flags high-cost areas, explains downside risk in
             plain language, and never recommends a specific product or dealer.
           </p>
           <ul className="mt-8 space-y-4">

@@ -9,6 +9,7 @@ import FieldBoundaryEditModal from "./FieldBoundaryEditModal";
 import FieldDescription from "./FieldDescription";
 import { FIELD_COMMODITIES } from "../../constants/app";
 import { formatAcres as formatAcresUtil, formatCommodity, formatRegion } from "../../utils/format";
+import { acresFromBoundary } from "../../utils/polygonAcres";
 
 function profileMeta(field) {
   const meta = field?.location_meta || {};

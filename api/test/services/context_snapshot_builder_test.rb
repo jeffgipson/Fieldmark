@@ -25,6 +25,8 @@ class ContextSnapshotBuilderTest < ActiveSupport::TestCase
     assert snapshot[:yield_context].present?
     assert snapshot[:regional_risk].present?
     assert snapshot[:sensitivity_summary].nil? || snapshot[:sensitivity_summary].key?(:breakeven_price_at_base_yield)
+    assert snapshot[:app_guide].present?
+    assert snapshot[:app_guide][:common_tasks].any? { |t| t[:id] == "import_csv_margin_history" }
   end
 
   test "flags missing data when farm has no costs" do

@@ -10,7 +10,7 @@ class GenerateAnalystReportJob < ApplicationJob
     report.update!(status: :processing, error_message: nil)
 
     payload = AnalystReportGeneratorService.call(report.scenario)
-    report.assign_attributes(payload.merge(status: :completed))
+    report.assign_attributes(payload.merge(status: :completed, error_message: nil))
     report.save!
     notify_report_ready!(report)
   rescue Ai::ApiError

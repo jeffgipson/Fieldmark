@@ -11,7 +11,11 @@ module Api
 
         conversation = farm.analyst_conversations.build(
           scenario: scenario,
-          context_snapshot: ContextSnapshotBuilder.call(farm, scenario)
+          context_snapshot: ContextSnapshotBuilder.call(
+            farm,
+            scenario,
+            client_path: conversation_params[:client_path]
+          )
         )
 
         if conversation.save
@@ -35,7 +39,7 @@ module Api
       end
 
       def conversation_params
-        params.require(:conversation).permit(:farm_id, :scenario_id)
+        params.require(:conversation).permit(:farm_id, :scenario_id, :client_path)
       end
 
       def conversation_json(conversation, include_messages: false)

@@ -59,7 +59,8 @@ export function AuthProvider({ children }) {
 
   const ensureAdmin = useCallback((data) => {
     if (data?.role !== "admin") {
-      throw new Error("This account is not an admin. Use the farmer app at localhost:5173.");
+      const appUrl = import.meta.env.VITE_APP_URL || "http://localhost:5173";
+      throw new Error(`This account is not an admin. Use the farmer app at ${appUrl}.`);
     }
   }, []);
 

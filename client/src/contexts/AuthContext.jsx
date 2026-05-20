@@ -1,13 +1,18 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import * as authApi from "../api/auth";
+import * as profileApi from "../api/profile";
 import { setAuthToken, setUnauthorizedHandler } from "../api/http";
+import { getStoredToken } from "../utils/authStorage";
 
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
+  const storedToken = getStoredToken();
   const [user, setUser] = useState(null);
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(storedToken);
+  const [bootstrapping, setBootstrapping] = useState(Boolean(storedToken));
   const [welcomeFlash, setWelcomeFlash] = useState(false);
+  const bootstrappingRef = useRef(Boolean(storedToken));
 
   const clearAuth = useCallback(() => {
     setToken(null);
@@ -59,6 +64,7 @@ export function AuthProvider({ children }) {
       user,
       token,
       isAuthenticated: Boolean(token),
+      bootstrapping,
       welcomeFlash,
       clearWelcomeFlash: () => setWelcomeFlash(false),
       login,
@@ -67,15 +73,42 @@ export function AuthProvider({ children }) {
       logout,
       setUserFromProfile
     }),
-    [user, token, welcomeFlash, login, loginDemo, register, logout, setUserFromProfile]
+    [user, token, bootstrapping, welcomeFlash, login, loginDemo, register, logout, setUserFromProfile]
   );
+
+  useEffect(() => {
+    bootstrappingRef.current = bootstrapping;
+  }, [bootstrapping]);
+
+  useEffect(() => {
+    if (!storedToken) return undefined;
+
+    let cancelled = false;
+
+    (async () => {
+      try {
+        const profile = await profileApi.getProfile();
+        if (cancelled) return;
+        setUser({ ...profile, token: storedToken });
+        setToken(storedToken);
+        setAuthToken(storedToken);
+      } catch {
+        if (!cancelled) clearAuth();
+      } finally {
+        if (!cancelled) setBootstrapping(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [storedToken, clearAuth]);
 
   useEffect(() => {
     setUnauthorizedHandler(() => {
       clearAuth();
-      if (window.location.pathname !== "/login") {
-        window.location.href = "/login";
-      }
+      if (bootstrappingRef.current || window.location.pathname === "/login") return;
+      window.location.href = "/login";
     });
   }, [clearAuth]);
 

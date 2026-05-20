@@ -1,10 +1,16 @@
 import axios from "axios";
+import { clearStoredToken, getStoredToken, setStoredToken } from "../utils/authStorage";
 
-let authToken = null;
+let authToken = getStoredToken();
 let onUnauthorized = null;
 
 export function setAuthToken(token) {
   authToken = token;
+  if (token) {
+    setStoredToken(token);
+  } else {
+    clearStoredToken();
+  }
 }
 
 export function getAuthToken() {

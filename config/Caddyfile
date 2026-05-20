@@ -1,0 +1,24 @@
+# Local dev reverse proxy — maps *.fieldmark.local → Vite/Rails ports.
+# Requires /etc/hosts entries (run: ./bin/setup-local-hosts)
+# Start with: caddy run --config config/Caddyfile
+# Or: FIELDMARK_LOCAL_DOMAINS=1 ./bin/dev
+
+{
+	auto_https off
+}
+
+http://fieldmark.local, http://www.fieldmark.local {
+	reverse_proxy 127.0.0.1:5174
+}
+
+http://app.fieldmark.local {
+	reverse_proxy 127.0.0.1:5173
+}
+
+http://api.fieldmark.local {
+	reverse_proxy 127.0.0.1:3000
+}
+
+http://admin.fieldmark.local {
+	reverse_proxy 127.0.0.1:5175
+}

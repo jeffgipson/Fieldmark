@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# One-time setup: /etc/hosts + .env for fieldmark.local dev.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+
+echo "Fieldmark local domains setup"
+echo ""
+
+"$ROOT/bin/setup-local-hosts"
+"$ROOT/bin/apply-local-domains-env"
+
+if ! command -v caddy >/dev/null 2>&1; then
+  echo ""
+  echo "Caddy is not installed (needed to route fieldmark.local → app ports)."
+  echo "  brew install caddy"
+  echo ""
+  echo "Then start the stack with local domains:"
+  echo "  FIELDMARK_LOCAL_DOMAINS=1 ./bin/dev"
+  exit 0
+fi
+
+echo ""
+echo "✓ Setup complete. Start dev with:"
+echo "  FIELDMARK_LOCAL_DOMAINS=1 ./bin/dev"
+echo ""
+echo "  Website:    http://fieldmark.local"
+echo "  Farmer app: http://app.fieldmark.local"
+echo "  API:        http://api.fieldmark.local"
+echo "  Admin:      http://admin.fieldmark.local"
+echo "  API docs:   http://fieldmark.local/developer"

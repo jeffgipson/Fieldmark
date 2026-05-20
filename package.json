@@ -1,0 +1,13 @@
+{
+  "name": "fieldmark",
+  "private": true,
+  "description": "Fieldmark monorepo — use npm run dev from the repo root to start all apps",
+  "scripts": {
+    "dev": "bin/dev",
+    "dev:jobs": "FIELDMARK_DEV_JOBS=1 bin/dev",
+    "dev:local": "FIELDMARK_LOCAL_DOMAINS=1 bin/dev",
+    "dev:status": "bin/dev-status",
+    "setup:local-domains": "bin/setup-local-domains",
+    "sync:llm": "bin/sync-llm-txt"
+  }
+}

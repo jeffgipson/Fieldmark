@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
 class ContextSnapshotBuilder
-  def self.call(farm, scenario = nil)
-    new(farm, scenario).call
+  def self.call(farm, scenario = nil, client_path: nil)
+    new(farm, scenario, client_path:).call
   end
 
-  def initialize(farm, scenario)
+  def initialize(farm, scenario, client_path: nil)
     @farm = farm
     @scenario = scenario
+    @client_path = client_path
   end
 
   def call
@@ -37,6 +38,7 @@ class ContextSnapshotBuilder
       forecast: forecast_payload,
       target_plan: target_plan_payload,
       underwriting: underwriting_payload,
+      app_guide: FieldmarkAppGuide.payload(scenario: @scenario, client_path: @client_path),
       captured_at: Time.current.iso8601
     }
   end

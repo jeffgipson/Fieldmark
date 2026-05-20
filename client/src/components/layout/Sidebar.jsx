@@ -8,6 +8,7 @@ import {
   Sprout,
   TrendingUp,
   Handshake,
+  Plug,
   UserCircle
 } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
@@ -24,7 +25,8 @@ const MAIN_NAV = [
 
 const TOOLS_NAV = [
   { to: "/reports", label: "Reports", icon: FileText, end: true },
-  { to: "/resources", label: "Resources", icon: Handshake, end: true }
+  { to: "/resources", label: "Resources", icon: Handshake, end: true },
+  { to: "/integrations", label: "Integrations", icon: Plug, end: true }
 ];
 
 function NavLinkItem({ to, label, icon: Icon, end = false }) {

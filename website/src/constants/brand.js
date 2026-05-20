@@ -1,7 +1,8 @@
 export const BRAND = {
   name: "Fieldmark",
   tagline: "Clarity for Every Field.",
-  appUrl: import.meta.env.VITE_APP_URL || "http://localhost:5173",
+  appUrl: import.meta.env.VITE_APP_URL || "",
+  websiteUrl: import.meta.env.VITE_WEBSITE_URL || "http://localhost:5174",
 
 };
 

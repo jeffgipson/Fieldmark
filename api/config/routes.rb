@@ -75,6 +75,7 @@ Rails.application.routes.draw do
 
       namespace :admin do
         get "stats", to: "stats#show"
+        get "stripe", to: "stripe#show"
 
         resources :users, only: %i[index show create update destroy]
         resources :farms, only: %i[index show create update destroy] do
@@ -106,6 +107,7 @@ Rails.application.routes.draw do
       resources :invitations, only: %i[index create destroy]
 
       get "map_config", to: "map_config#show"
+      get "integrations", to: "integrations#index"
 
       scope :locations, controller: "locations" do
         post :lookup, action: :lookup

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { appPath } from "../../lib/links";
 import Button from "../ui/Button";
@@ -9,7 +10,8 @@ const NAV = [
   { label: "How It Works", href: "#how-it-works" },
   { label: "Pricing", href: "#pricing" },
   { label: "Analyst", href: "#dale" },
-  { label: "Farmers", href: "#stories" }
+  { label: "Farmers", href: "#stories" },
+  { label: "Developers", to: "/developer" }
 ];
 
 export default function Header() {
@@ -40,20 +42,30 @@ export default function Header() {
       ].join(" ")}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 lg:px-8">
-          <a href="#" className="block">
+          <Link to="/" className="block">
             <Logo size="lg" onDark />
-          </a>
+          </Link>
 
           <nav className="hidden items-center gap-8 md:flex">
-            {NAV.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="text-sm font-bold text-white/85 transition hover:text-white"
-              >
-                {item.label}
-              </a>
-            ))}
+            {NAV.map((item) =>
+              item.to ? (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className="text-sm font-bold text-white/85 transition hover:text-white"
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="text-sm font-bold text-white/85 transition hover:text-white"
+                >
+                  {item.label}
+                </a>
+              )
+            )}
           </nav>
 
           <div className="hidden items-center gap-3 md:flex">
@@ -81,16 +93,27 @@ export default function Header() {
       {menuOpen && (
         <div className="border-t border-white/10 bg-fm-gray-dark md:hidden">
           <nav className="flex flex-col gap-1 px-6 py-4">
-            {NAV.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                className="rounded-lg px-3 py-3 font-bold text-white/90 hover:bg-white/5"
-                onClick={() => setMenuOpen(false)}
-              >
-                {item.label}
-              </a>
-            ))}
+            {NAV.map((item) =>
+              item.to ? (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className="rounded-lg px-3 py-3 font-bold text-white/90 hover:bg-white/5"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {item.label}
+                </Link>
+              ) : (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  className="rounded-lg px-3 py-3 font-bold text-white/90 hover:bg-white/5"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {item.label}
+                </a>
+              )
+            )}
             <hr className="my-2 border-white/10" />
             <a href={appPath("/login")} className="px-3 py-3 font-bold text-white/90">
               Sign In

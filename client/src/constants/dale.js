@@ -20,17 +20,18 @@ export const DALE_COLORS = {
 };
 
 export const DALE_COPY = {
-  name: "Dale",
-  tagline: "Your independent analyst",
+  name: "D.A.L.E.",
+  fullName: "Data Analytics for Land Economics",
+  tagline: "Your independent agricultural financial analyst",
   disclaimer: BRAND.attribution.dale,
   emptyState: {
     message: "Add your input costs and I'll tell you where you stand before March.",
     cta: "Add your first field"
   },
   welcome: {
-    title: "Meet Dale",
+    title: "Meet D.A.L.E.",
     message:
-      "I'm Dale — your independent analyst. I've already looked at how Missouri farms your size plan for March inputs. Once you enter your costs, I'll show you where you stand on costs and what your margin looks like in a downside year."
+      "I'm D.A.L.E. — Data Analytics for Land Economics. I have no relationship with any input vendor, co-op, or agronomist. My only job is to show you what your numbers actually say — before March."
   },
   loading: "Looking at your numbers...",
   briefingCard: {
@@ -38,6 +39,11 @@ export const DALE_COPY = {
     cta: "Talk to Dale"
   },
   report: {
+    header: {
+      preparedBy: "Analysis prepared by D.A.L.E.",
+      subtitle: "Data Analytics for Land Economics",
+      attribution: "Fieldmark Agricultural Intelligence"
+    },
     generating: "Putting together your lender report...",
     ready: "Your lender report is ready",
     steps: {

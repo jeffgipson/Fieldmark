@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useFarm } from "./FarmContext";
 import * as conversationsApi from "../api/conversations";
 import { friendlyError } from "../utils/errors";
@@ -10,6 +11,7 @@ function isClickEvent(value) {
 }
 
 export function DaleChatProvider({ children }) {
+  const { pathname } = useLocation();
   const { farm, primaryScenario } = useFarm();
   const [isOpen, setIsOpen] = useState(false);
   const [conversation, setConversation] = useState(null);
@@ -69,7 +71,8 @@ export function DaleChatProvider({ children }) {
       try {
         const data = await conversationsApi.createConversation({
           farmId: farm.id,
-          scenarioId: activeScenarioId
+          scenarioId: activeScenarioId,
+          clientPath: pathname
         });
         if (!cancelled) {
           setConversation(data);
@@ -97,7 +100,9 @@ export function DaleChatProvider({ children }) {
       setMessages((m) => [...m, optimistic]);
 
       try {
-        const data = await conversationsApi.sendMessage(conversation.id, content);
+        const data = await conversationsApi.sendMessage(conversation.id, content, {
+          clientPath: pathname
+        });
         setMessages((m) => [
           ...m.filter((x) => x.id !== tempId),
           data.user_message,
@@ -111,7 +116,7 @@ export function DaleChatProvider({ children }) {
       }
       return null;
     },
-    [conversation]
+    [conversation, pathname]
   );
 
   useEffect(() => {

@@ -159,6 +159,9 @@ class AnalystContextFindings
     unless @readiness[:regional_benchmark_available]
       gaps << "Extension benchmark row missing for this farm region/commodity — do not invent peer averages."
     end
+    if @farm.farm_season_snapshots.none?
+      gaps << "No prior-season actuals on record — point the farmer to Scenarios → season actuals → Upload history CSV (see app_guide import_csv_margin_history)."
+    end
 
     gaps << boundary_message if gaps.empty?
     gaps

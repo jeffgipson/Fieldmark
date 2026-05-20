@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import * as reportsApi from "../api/reports";
+import { DALE_COPY } from "../constants/dale";
 import DaleAvatar from "../components/dale/DaleAvatar";
 import Button from "../components/ui/Button";
 import Card from "../components/ui/Card";
@@ -9,7 +10,6 @@ import LoadingDale from "../components/ui/LoadingDale";
 import PageHeader from "../components/ui/PageHeader";
 import { BRAND } from "../constants/brand";
 import Logo from "../components/ui/Logo";
-import { DALE_COPY } from "../constants/dale";
 import { useFarm } from "../contexts/FarmContext";
 import { formatAcres, formatCommodity, formatRegion } from "../utils/format";
 import { friendlyError } from "../utils/errors";
@@ -184,7 +184,11 @@ export default function ReportPage() {
             <div>
               <div className="flex items-center gap-2">
                 <DaleAvatar variant="avatar" size="sm" />
-                <p className="text-sm font-bold text-fm-teal">Prepared by Dale, Fieldmark Agricultural Analyst</p>
+                <div>
+                  <p className="text-sm font-bold text-fm-teal">{DALE_COPY.report.header.preparedBy}</p>
+                  <p className="text-xs text-fm-gray-medium">{DALE_COPY.report.header.subtitle}</p>
+                  <p className="text-xs text-fm-gray-medium">{DALE_COPY.report.header.attribution}</p>
+                </div>
               </div>
               <p className="mt-2 font-display text-xl font-bold">{farm?.name}</p>
               <p className="text-sm text-fm-gray-medium">

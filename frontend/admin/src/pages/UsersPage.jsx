@@ -4,6 +4,7 @@ import PageHeader from '../components/ui/PageHeader';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import Input, { Label } from '../components/ui/Input';
+import Modal from '../components/ui/Modal';
 
 export default function UsersPage() {
   const [users, setUsers] = useState([]);
@@ -72,24 +73,62 @@ export default function UsersPage() {
         ))}
       </div>
 
-      {editing && (
-        <Card className="mt-8">
-          <h3 className="font-display font-semibold">Edit {editing.first_name} {editing.last_name}</h3>
-          <div className="mt-4 grid gap-4 sm:grid-cols-2">
-            <Input value={editing.first_name} onChange={e => setEditing({...editing, first_name: e.target.value})} placeholder="First name" />
-            <Input value={editing.last_name} onChange={e => setEditing({...editing, last_name: e.target.value})} placeholder="Last name" />
-            <Input value={editing.email} onChange={e => setEditing({...editing, email: e.target.value})} placeholder="Email" />
-            <select className="fm-input" value={editing.role} onChange={e => setEditing({...editing, role: e.target.value})}>
-              <option value="farmer">farmer</option>
-              <option value="admin">admin</option>
-            </select>
-          </div>
-          <div className="mt-4 flex gap-2">
-            <Button onClick={saveUser}>Save</Button>
-            <Button variant="secondary" onClick={() => setEditing(null)}>Cancel</Button>
-          </div>
-        </Card>
-      )}
+      <Modal
+        open={Boolean(editing)}
+        onClose={() => setEditing(null)}
+        title={editing ? `Edit ${editing.first_name} ${editing.last_name}` : undefined}
+        placement="mainPanel"
+      >
+        {editing && (
+          <>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <Label htmlFor="edit-first-name">First name</Label>
+                <Input
+                  id="edit-first-name"
+                  value={editing.first_name}
+                  onChange={(e) => setEditing({ ...editing, first_name: e.target.value })}
+                />
+              </div>
+              <div>
+                <Label htmlFor="edit-last-name">Last name</Label>
+                <Input
+                  id="edit-last-name"
+                  value={editing.last_name}
+                  onChange={(e) => setEditing({ ...editing, last_name: e.target.value })}
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <Label htmlFor="edit-email">Email</Label>
+                <Input
+                  id="edit-email"
+                  type="email"
+                  value={editing.email}
+                  onChange={(e) => setEditing({ ...editing, email: e.target.value })}
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <Label htmlFor="edit-role">Role</Label>
+                <select
+                  id="edit-role"
+                  className="w-full rounded-lg border-[1.5px] border-fm-input-border bg-white px-4 py-3 text-base text-fm-charcoal focus:border-fm-teal focus:outline-none focus:ring-[3px] focus:ring-fm-teal/15"
+                  value={editing.role}
+                  onChange={(e) => setEditing({ ...editing, role: e.target.value })}
+                >
+                  <option value="farmer">farmer</option>
+                  <option value="admin">admin</option>
+                </select>
+              </div>
+            </div>
+            <div className="mt-6 flex justify-end gap-2">
+              <Button variant="secondary" onClick={() => setEditing(null)}>
+                Cancel
+              </Button>
+              <Button onClick={saveUser}>Save</Button>
+            </div>
+          </>
+        )}
+      </Modal>
     </div>
   )
 }

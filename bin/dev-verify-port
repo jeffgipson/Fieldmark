@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Verify a dev port is serving the expected Vite app (by index.html title).
+# Usage: bin/dev-verify-port <port> <expected_title_substring>
+set -uo pipefail
+
+port="${1:?port required}"
+expected="${2:?expected title substring required}"
+
+html=$(curl -s "http://127.0.0.1:${port}/" 2>/dev/null) || html=""
+if [[ -n "$html" ]] && [[ "$html" == *"$expected"* ]]; then
+  exit 0
+fi
+exit 1

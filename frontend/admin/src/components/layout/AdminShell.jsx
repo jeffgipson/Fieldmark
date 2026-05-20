@@ -25,6 +25,7 @@ export default function AdminShell() {
           <NavItem to="/farms">Farms</NavItem>
           <NavItem to="/vendors">Vendors</NavItem>
           <NavItem to="/benchmarks">Benchmarks</NavItem>
+          <NavItem to="/payments">Stripe / Payments</NavItem>
         </nav>
         <div className="px-4 py-4 border-t border-gray-700">
           <p className="text-sm">{user?.email}</p>

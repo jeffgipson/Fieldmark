@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import Button from "../components/ui/Button";
 import Logo from "../components/ui/Logo";
 import Card from "../components/ui/Card";
@@ -9,7 +9,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { friendlyError } from "../utils/errors";
 
 export default function LoginPage() {
-  const { login, loginDemo } = useAuth();
+  const { login, loginDemo, isAuthenticated, bootstrapping } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -44,6 +44,9 @@ export default function LoginPage() {
       setLoading(false);
     }
   }
+
+  if (bootstrapping) return null;
+  if (isAuthenticated) return <Navigate to="/dashboard" replace />;
 
   return (
     <div className="fm-canvas flex min-h-screen items-center justify-center px-4 py-12">

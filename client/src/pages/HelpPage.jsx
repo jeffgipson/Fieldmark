@@ -22,7 +22,7 @@ const FAQ = [
   },
   {
     q: "Who is Dale?",
-    a: "Dale is Fieldmark's independent analyst — no ties to input vendors. Use Talk to Dale for plain-language help interpreting your margins, benchmarks, and downside scenarios."
+    a: "D.A.L.E. — Data Analytics for Land Economics — is Fieldmark's independent analyst with no ties to input vendors. Use Talk to Dale for plain-language help interpreting your margins, benchmarks, and downside scenarios."
   }
 ];
 

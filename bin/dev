@@ -1,0 +1,181 @@
+#!/usr/bin/env bash
+# Start API + farmer app + website + admin for local development.
+set -uo pipefail
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+RUN_JOBS="${FIELDMARK_DEV_JOBS:-0}"
+CLEAN_PORTS="${FIELDMARK_DEV_CLEAN:-1}"
+LOCAL_DOMAINS="${FIELDMARK_LOCAL_DOMAINS:-0}"
+
+API_PORT=3000
+CLIENT_PORT=5173
+WEBSITE_PORT=5174
+ADMIN_PORT=5175
+
+red() { printf "\033[0;31m%s\033[0m\n" "$*"; }
+green() { printf "\033[0;32m%s\033[0m\n" "$*"; }
+yellow() { printf "\033[0;33m%s\033[0m\n" "$*"; }
+bold() { printf "\033[1m%s\033[0m\n" "$*"; }
+
+port_pids() {
+  lsof -ti "tcp:$1" 2>/dev/null || true
+}
+
+stop_port() {
+  local port=$1
+  local pids
+  pids=$(port_pids "$port")
+  [[ -z "$pids" ]] && return 0
+  yellow "  Stopping port $port (pid $pids)…"
+  kill $pids 2>/dev/null || true
+}
+
+api_healthy() {
+  curl -sf "http://127.0.0.1:${API_PORT}/api/health" >/dev/null 2>&1
+}
+
+cleanup_stale_rails_pid() {
+  local pidfile="$ROOT/api/tmp/pids/server.pid"
+  [[ -f "$pidfile" ]] || return 0
+  local pid
+  pid=$(cat "$pidfile" 2>/dev/null) || true
+  if [[ -n "$pid" ]] && ! kill -0 "$pid" 2>/dev/null; then
+    rm -f "$pidfile"
+  fi
+}
+
+cleanup() {
+  trap - EXIT INT TERM
+  local pids
+  pids=$(jobs -p 2>/dev/null) || true
+  if [[ -n "${pids:-}" ]]; then
+    kill $pids 2>/dev/null || true
+  fi
+  wait 2>/dev/null || true
+}
+
+bold "Fieldmark — starting local stack"
+echo ""
+
+if ! command -v npm >/dev/null 2>&1; then
+  red "npm is required. Install Node.js 20+ and try again."
+  exit 1
+fi
+
+if [[ "$CLEAN_PORTS" == "1" ]]; then
+  bold "Freeing dev ports ${CLIENT_PORT}, ${WEBSITE_PORT}, ${ADMIN_PORT}…"
+  stop_port "$CLIENT_PORT"
+  stop_port "$WEBSITE_PORT"
+  stop_port "$ADMIN_PORT"
+  # Also clear common fallback ports from prior failed starts
+  stop_port 5176
+  stop_port 5177
+  sleep 0.5
+fi
+
+cleanup_stale_rails_pid
+
+for env_pair in "website/.env.example:website/.env" "client/.env.example:client/.env"; do
+  example="${env_pair%%:*}"
+  target="${env_pair##*:}"
+  if [[ -f "$ROOT/$example" && ! -f "$ROOT/$target" ]]; then
+    cp "$ROOT/$example" "$ROOT/$target"
+    yellow "  Created $target from $example"
+  fi
+done
+
+for dir in client website frontend/admin; do
+  if [[ ! -d "$ROOT/$dir/node_modules" ]]; then
+    bold "Installing $dir dependencies…"
+    (cd "$ROOT/$dir" && npm install) || {
+      red "npm install failed in $dir"
+      exit 1
+    }
+  fi
+done
+
+trap cleanup EXIT INT TERM
+
+if api_healthy; then
+  green "  API already running on http://localhost:${API_PORT}"
+else
+  if [[ -n "$(port_pids "$API_PORT")" ]]; then
+    red "Port ${API_PORT} is in use but API health check failed."
+    red "Stop the other process or run: lsof -ti tcp:${API_PORT} | xargs kill"
+    exit 1
+  fi
+  bold "Starting API…"
+  (cd "$ROOT/api" && bin/rails server -p "$API_PORT") &
+  for _ in 1 2 3 4 5 6 7 8 9 10; do
+    sleep 0.5
+    api_healthy && break
+  done
+  if ! api_healthy; then
+    red "API did not become ready on port ${API_PORT}. Check api/log/development.log"
+    exit 1
+  fi
+  green "  API ready on http://localhost:${API_PORT}"
+fi
+
+if [[ "$RUN_JOBS" == "1" ]]; then
+  (cd "$ROOT/api" && bin/jobs) &
+fi
+
+if [[ "$LOCAL_DOMAINS" == "1" ]]; then
+  if ! command -v caddy >/dev/null 2>&1; then
+    red "FIELDMARK_LOCAL_DOMAINS=1 requires Caddy. Run: brew install caddy && ./bin/setup-local-domains"
+    exit 1
+  fi
+  if ! grep -q "fieldmark.local dev" /etc/hosts 2>/dev/null; then
+    yellow "  /etc/hosts missing fieldmark.local — run: ./bin/setup-local-hosts"
+  fi
+  bold "Starting Caddy (fieldmark.local → app ports)…"
+  caddy run --config "$ROOT/config/Caddyfile" &
+fi
+
+bold "Starting frontends (website first so :${WEBSITE_PORT} is not stolen)…"
+(cd "$ROOT/website" && npm run dev -- --port "$WEBSITE_PORT" --strictPort) &
+(cd "$ROOT/client" && npm run dev -- --port "$CLIENT_PORT" --strictPort) &
+(cd "$ROOT/frontend/admin" && npm run dev -- --port "$ADMIN_PORT" --strictPort) &
+
+WEBSITE_URL="http://localhost:${WEBSITE_PORT}"
+for _ in 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15; do
+  if "$ROOT/bin/dev-verify-port" "$WEBSITE_PORT" "Know your margins before March"; then
+    break
+  fi
+  sleep 0.5
+done
+
+if ! "$ROOT/bin/dev-verify-port" "$WEBSITE_PORT" "Know your margins before March"; then
+  echo ""
+  red "Port ${WEBSITE_PORT} is not serving the website app (pricing, marketing homepage)."
+  red "Another process may be using it — often a second copy of the farmer app."
+  red "Fix: lsof -ti tcp:${WEBSITE_PORT},tcp:5176 | xargs kill 2>/dev/null; then run ./bin/dev again"
+  if "$ROOT/bin/dev-verify-port" 5176 "Know your margins before March"; then
+    yellow "  (Website appears to be on http://localhost:5176 instead — use that URL for now.)"
+    WEBSITE_URL="http://localhost:5176"
+  fi
+fi
+
+echo ""
+if [[ "$LOCAL_DOMAINS" == "1" ]]; then
+  green "  Website          http://fieldmark.local  ← pricing, hero, /developer"
+  green "  Farmer app       http://app.fieldmark.local"
+  green "  API              http://api.fieldmark.local"
+  green "  Admin            http://admin.fieldmark.local"
+  echo ""
+  echo "  (localhost URLs still work: :5174 website, :5173 app, :3000 API)"
+else
+  green "  API              http://localhost:${API_PORT}"
+  green "  Website          ${WEBSITE_URL}  ← pricing, hero, /developer"
+  green "  Farmer app       http://localhost:${CLIENT_PORT}  ← sign in / dashboard"
+  green "  Admin            http://localhost:${ADMIN_PORT}"
+  green "  API docs         ${WEBSITE_URL}/developer"
+fi
+echo ""
+echo "Press Ctrl+C to stop all processes started by this script."
+echo "(Set FIELDMARK_DEV_CLEAN=0 to skip freeing ports on startup.)"
+echo "(Local domains: ./bin/setup-local-domains then FIELDMARK_LOCAL_DOMAINS=1 ./bin/dev)"
+echo ""
+
+wait
