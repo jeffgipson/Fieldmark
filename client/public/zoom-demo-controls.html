@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fieldmark — Demo Presenter</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1a1a2e;
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    padding: 14px;
+    color: #ccc;
+  }
+  h1 { color: #fff; font-size: 15px; font-weight: 600; margin-bottom: 4px; }
+  .subtitle { color: #888; font-size: 12px; margin-bottom: 14px; line-height: 1.4; }
+  .status {
+    font-size: 11px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    margin-bottom: 14px;
+    background: rgba(26,158,143,0.15);
+    border: 1px solid rgba(26,158,143,0.35);
+    color: #8ab4b0;
+  }
+  .status.warn { background: rgba(243,156,18,0.12); border-color: rgba(243,156,18,0.4); color: #e8c07a; }
+  .embed-settings {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #2a2a3e;
+  }
+  .embed-settings label { color: #999; font-size: 12px; width: 100%; }
+  .embed-settings input {
+    flex: 1;
+    min-width: 160px;
+    background: #2d2d2d;
+    border: 1px solid #444;
+    border-radius: 6px;
+    color: #eee;
+    padding: 8px 10px;
+    font-size: 12px;
+    font-family: inherit;
+  }
+  .demo-controls { display: flex; gap: 8px; flex-wrap: wrap; }
+  .demo-btn {
+    background: #2d2d2d;
+    border: 1px solid #444;
+    border-radius: 6px;
+    color: #ccc;
+    font-size: 12px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: all 0.2s;
+  }
+  .demo-btn:hover { background: #1a9e8f; color: #fff; border-color: #1a9e8f; }
+  .demo-btn.primary { border-color: #1a9e8f; color: #1a9e8f; }
+  .demo-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .automation-panel {
+    margin-bottom: 14px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid #2a2a3e;
+  }
+  .automation-panel .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .automation-status { font-size: 11px; color: #8ab4b0; line-height: 1.45; }
+  .automation-status strong { color: #1a9e8f; }
+  .automation-status em { color: #aaa; font-style: normal; }
+  label.random-toggle {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; color: #999; cursor: pointer;
+  }
+  label.random-toggle input { accent-color: #1a9e8f; }
+</style>
+</head>
+<body>
+  <h1>Fieldmark demo — presenter</h1>
+  <p class="subtitle">Detached controls. Keep this window on your laptop; share only the main Zoom demo window.</p>
+  <p class="status" id="status">Connecting to demo…</p>
+
+  <div class="automation-panel">
+    <div class="row">
+      <button type="button" class="demo-btn primary" data-action="timeline-start" id="timeline-play">▶ Play timeline</button>
+      <button type="button" class="demo-btn" data-action="timeline-pause" id="timeline-pause" disabled>⏸ Pause</button>
+      <button type="button" class="demo-btn" data-action="timeline-stop" id="timeline-stop" disabled>⏹ Stop</button>
+      <label class="random-toggle">
+        <input type="checkbox" id="random-moments" checked />
+        Random moments
+      </label>
+    </div>
+    <p class="automation-status" id="automation-status">Script idle — ~7 min with product Q&amp;A.</p>
+  </div>
+
+  <div class="embed-settings">
+    <label for="app-url">App path in frame</label>
+    <input type="text" id="app-url" value="/" placeholder="/farms/1/benchmarks" />
+    <button type="button" class="demo-btn" data-action="reload-frame">Reload</button>
+  </div>
+
+  <div class="demo-controls">
+      <button type="button" class="demo-btn" data-action="webcam-toggle" id="toggle-webcam">📷 Host webcam</button>
+      <button type="button" class="demo-btn primary" data-action="present">⛶ Presentation (F)</button>
+    <button type="button" class="demo-btn primary" data-action="fullscreen">Fullscreen (⌘⇧F)</button>
+    <button type="button" class="demo-btn" data-action="trigger" data-event="benchmark">📊 Benchmark Reveal</button>
+    <button type="button" class="demo-btn" data-action="trigger" data-event="mike_wow">😮 Mike Reacts</button>
+    <button type="button" class="demo-btn" data-action="trigger" data-event="waverly_hand">✋ Waverly Raises Hand</button>
+    <button type="button" class="demo-btn" data-action="trigger" data-event="dale_speaks">🦉 Dale Responds</button>
+    <button type="button" class="demo-btn" data-action="trigger" data-event="chat_flood">💬 Chat Lights Up</button>
+    <button type="button" class="demo-btn" data-action="trigger" data-event="scenario">📈 Scenario Model</button>
+    <button type="button" class="demo-btn" data-action="reset">🔄 Reset</button>
+    <button type="button" class="demo-btn" data-action="attach">📎 Re-attach to main window</button>
+  </div>
+
+<script>
+  const MSG = 'fieldmark-zoom-demo';
+  const origin = window.location.origin;
+  const statusEl = document.getElementById('status');
+  const appUrlInput = document.getElementById('app-url');
+  const demo = () => window.opener;
+
+  function setStatus(text, warn = false) {
+    statusEl.textContent = text;
+    statusEl.classList.toggle('warn', warn);
+  }
+
+  function send(action, extra = {}) {
+    const target = demo();
+    if (!target || target.closed) {
+      setStatus('Demo window closed. Re-open zoom-demo.html and detach again.', true);
+      return false;
+    }
+    target.postMessage({ type: MSG, action, ...extra }, origin);
+    return true;
+  }
+
+  function connected() {
+    return demo() && !demo().closed;
+  }
+
+  function syncFromParent() {
+    send('get-state');
+  }
+
+  window.addEventListener('message', (e) => {
+    if (e.origin !== origin || e.data?.type !== MSG) return;
+    if (e.data.action === 'state') {
+      if (e.data.path != null) appUrlInput.value = e.data.path;
+      setStatus('Linked to demo window');
+    }
+    if (e.data.action === 'detached-ended') {
+      setStatus('Controls re-attached on main window. You can close this panel.', true);
+    }
+    if (e.data.action === 'timeline-status') updateTimelineUi(e.data);
+    if (e.data.action === 'webcam-state') {
+      const btn = document.getElementById('toggle-webcam');
+      if (btn) btn.textContent = e.data.on ? '📷 Webcam on' : '📷 Host webcam';
+    }
+  });
+
+  function formatElapsed(sec) {
+    const m = String(Math.floor(sec / 60)).padStart(2, '0');
+    const s = String(sec % 60).padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  function updateTimelineUi(st) {
+    const el = document.getElementById('automation-status');
+    const playBtn = document.getElementById('timeline-play');
+    const pauseBtn = document.getElementById('timeline-pause');
+    const stopBtn = document.getElementById('timeline-stop');
+    if (!el || !st) return;
+    if (!st.running) {
+      el.innerHTML = 'Script idle — ~7 min with product Q&amp;A.';
+      if (playBtn) { playBtn.disabled = false; playBtn.textContent = '▶ Play timeline'; }
+      if (pauseBtn) { pauseBtn.disabled = true; pauseBtn.textContent = '⏸ Pause'; }
+      if (stopBtn) stopBtn.disabled = true;
+    } else if (st.paused) {
+      el.innerHTML = `<strong>Paused</strong> at ${formatElapsed(st.elapsedSec)}`;
+      if (playBtn) { playBtn.disabled = false; playBtn.textContent = '▶ Resume'; }
+      if (pauseBtn) pauseBtn.disabled = true;
+      if (stopBtn) stopBtn.disabled = false;
+    } else {
+      const next = st.nextCue
+        ? `Next @ ${formatElapsed(st.nextCue.at)}: <em>${st.nextCue.label}</em>`
+        : 'Wrapping up…';
+      el.innerHTML = `<strong>Live</strong> ${formatElapsed(st.elapsedSec)} — ${next}`;
+      if (playBtn) { playBtn.disabled = true; playBtn.textContent = '▶ Playing…'; }
+      if (pauseBtn) { pauseBtn.disabled = false; pauseBtn.textContent = '⏸ Pause'; }
+      if (stopBtn) stopBtn.disabled = false;
+    }
+  }
+
+  document.querySelectorAll('[data-action]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const action = btn.dataset.action;
+      if (action === 'trigger') send('trigger-event', { event: btn.dataset.event });
+      else if (action === 'reset') send('reset');
+      else if (action === 'present') send('present');
+      else if (action === 'fullscreen') send('fullscreen');
+      else if (action === 'reload-frame') send('set-path', { path: appUrlInput.value.trim() || '/' });
+      else if (action === 'webcam-toggle') send('webcam-toggle');
+      else if (action === 'timeline-start') send('timeline-start');
+      else if (action === 'timeline-pause') send('timeline-pause');
+      else if (action === 'timeline-stop') send('timeline-stop');
+      else if (action === 'attach') {
+        send('attach');
+        window.close();
+      }
+    });
+  });
+
+  document.getElementById('random-moments')?.addEventListener('change', (e) => {
+    send('timeline-random', { enabled: e.target.checked });
+  });
+
+  appUrlInput.addEventListener('change', () => {
+    send('set-path', { path: appUrlInput.value.trim() || '/' });
+  });
+
+  if (!connected()) {
+    setStatus('Open zoom-demo.html first, then click “Detach controls”.', true);
+    document.querySelectorAll('.demo-controls .demo-btn, .embed-settings .demo-btn').forEach((b) => {
+      if (b.dataset.action !== 'attach') b.disabled = true;
+    });
+  } else {
+    setStatus('Linked to demo window');
+    syncFromParent();
+    setInterval(() => {
+      if (!connected()) setStatus('Demo window closed.', true);
+    }, 1000);
+  }
+
+  window.addEventListener('beforeunload', () => {
+    if (connected()) send('controls-closing');
+  });
+</script>
+</body>
+</html>
