@@ -4,11 +4,26 @@ The Rails app lives in **`api/`**. Set Hatchbox **Root directory** to `api` (or 
 
 ## Required environment variables
 
-Set these in **Hatchbox → field_mark app → Environment** (applies to **all servers** in the cluster: sparkling-water, wild-river, cold-paper, etc.).
+Set these in **Hatchbox → Apps → field_mark → Environment** (app-wide, all servers).
+
+### `DATABASE_URL` (required — deploy fails without it)
+
+Hatchbox does **not** auto-create this unless you add it.
+
+1. Create or open your **managed Postgres** (DigitalOcean, Crunchy, etc.) and copy the connection URL, e.g.  
+   `postgresql://user:password@host:25060/fieldmark_production?sslmode=require`
+2. In Hatchbox: **Apps → field_mark → Environment → Add variable**
+   - **Name:** `DATABASE_URL`
+   - **Value:** paste the full connection string
+3. **Save**, then **Deploy** again.
+
+If you use Hatchbox’s own Postgres addon, open that database in Hatchbox and copy the URL it shows into `DATABASE_URL`.
+
+The app loads `shared/.hatchbox.env` on boot (see `api/config/boot.rb`), but the variable must exist in that file — empty env produces `KeyError: DATABASE_URL`.
 
 | Variable | Purpose |
 |----------|---------|
-| `DATABASE_URL` | Managed Postgres connection string. **Attach a PostgreSQL database** to the app in Hatchbox so this is set automatically. Without it, deploy fails on `db:migrate` with a local socket error. |
+| `DATABASE_URL` | Managed Postgres connection string (see steps above). |
 | `REDIS_URL` | Sidekiq + Action Cable (`redis://…`) |
 | `JWT_SECRET_KEY` | Devise JWT signing |
 | `RAILS_MASTER_KEY` | Decrypt `config/credentials.yml.enc` |

@@ -92,7 +92,7 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    url: <%= ENV.fetch("DATABASE_URL") %>
+    url: <%= ENV.fetch("DATABASE_URL") { raise "DATABASE_URL missing — Hatchbox → field_mark → Environment: add DATABASE_URL (Postgres connection string). See docs/HATCHBOX.md." } %>
   cache:
     <<: *primary_production
     migrations_paths: db/cache_migrate
