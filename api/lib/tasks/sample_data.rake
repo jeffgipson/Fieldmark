@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require Rails.root.join("lib/sample_data/cape_girardeau_generator")
-
 namespace :sample_data do
   desc "Generate db/seeds/cape_girardeau_sample.json (COUNT=100 default)"
   task generate: :environment do
+    require Rails.root.join("lib/sample_data/cape_girardeau_generator")
+
     count = ENV.fetch("COUNT", 100).to_i
     result = SampleData::CapeGirardeauGenerator.call(count: count)
     puts "Wrote #{result[:path]}"
