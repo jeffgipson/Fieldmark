@@ -4,7 +4,9 @@ require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
-Bundler.require(*Rails.groups)
+# Hatchbox: bundle install excludes development/test; deploy rake must not require those gems.
+bundler_groups = Rails.env.production? ? %i[default production] : Rails.groups
+Bundler.require(*bundler_groups)
 
 require_relative "../lib/app_config"
 require_relative "../lib/current_season"
