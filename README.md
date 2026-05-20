@@ -1,10 +1,78 @@
 # Fieldmark
 
-Fieldmark is a farm financial planning tool that gives mid-scale Midwest corn and soybean farmers independent benchmark data and AI-powered analysis before they commit to expensive input purchases.
+Fieldmark is a farm financial planning SaaS for mid-scale Midwest corn and soybean farmers (**Hackathon Problem #1 — Baseline: Farm Financial Planning**). Farmers enter **per-field input costs**, then compare against **MU Extension 2026** industry benchmarks and **anonymized regional peer cohorts** before signing seed and fertilizer agreements — with **D.A.L.E.** (Data Analytics for Land Economics) to interpret the numbers without vendor conflicts of interest.
+
+**Judges & AI reviewers:** [`docs/JUDGE_REVIEW.md`](docs/JUDGE_REVIEW.md) · [`llm.txt`](llm.txt) · [`AGENTS.md`](AGENTS.md)
+
+### Submission summary
+
+> Farmers face a structural disadvantage when buying inputs: vendors and advisors may have conflicts of interest. Fieldmark gives **independent ammunition** — **per-field** costs vs **MU Extension** planning budgets and vs **anonymized peer medians** in your region (no farm identities exposed), plus **D.A.L.E.** for plain-language margin and downside analysis and lender-ready reports. Verify: `./bin/dev`, `cd api && bin/rails demo:seed`, `api/bin/test_api`. Demo: `demo@fieldmark.app` / `password123`.
+
+## Meet D.A.L.E.
+
+**Data Analytics for Land Economics**
+
+D.A.L.E. is Fieldmark's AI-powered agricultural financial analyst. Independent. Data-backed. On your side.
+
+## Developer documentation
+
+- **Interactive API docs & playground:** http://localhost:5174/developer (dedicated `website/` app)
+- **llm.txt:** http://localhost:5174/llm.txt (also `/llms.txt`; source: repo root — run `npm run sync:llm` after edits)
+- **MCP server:** `tools/fieldmark/` — see README for Cursor setup
+- **Full API reference:** `api/docs/API.md`
 
 ## Running the stack
 
-### Running the API
+### Start everything (recommended)
+
+From the repo root:
+
+```bash
+./bin/dev
+# or: npm run dev
+```
+
+This starts the API, farmer app, public website, and admin together.
+
+**Open the website (pricing, hero):** http://localhost:5174  
+**Farmer app (sign in):** http://localhost:5173  
+
+If `:5174` shows the wrong app (no pricing table), another process stole the port. Run `./bin/dev-status` — it detects this. Fix with:
+
+```bash
+lsof -ti tcp:5173,tcp:5174,tcp:5175,tcp:5176 | xargs kill 2>/dev/null
+./bin/dev
+```
+
+| Service | URL |
+|---------|-----|
+| Website (`website/`) | http://localhost:5174 |
+| Farmer app (`client/`) | http://localhost:5173 |
+| API | http://localhost:3000 |
+| Admin | http://localhost:5175 |
+| API docs & playground | http://localhost:5174/developer |
+
+Optional background jobs (reports, mail): `FIELDMARK_DEV_JOBS=1 ./bin/dev` or `npm run dev:jobs`.
+
+### Local domains (`fieldmark.local`)
+
+```bash
+npm run setup:local-domains   # once: /etc/hosts + .env + brew install caddy
+npm run dev:local             # http://fieldmark.local, app.fieldmark.local, …
+```
+
+See [docs/LOCAL_DOMAINS.md](docs/LOCAL_DOMAINS.md).
+
+Copy env files once per app (see `config/local-urls.env.example`):
+
+```bash
+cp website/.env.example website/.env
+cp client/.env.example client/.env
+```
+
+In dev, a **Local dev** bar on the website and farmer app links between all services. API docs live only on the website (`/developer`); the farmer app redirects there.
+
+### Running the API alone
 
 ```bash
 cd api
@@ -13,7 +81,7 @@ bin/dev
 
 **Database gotcha:** Do not set `DATABASE_URL` in `api/.env` for local work. Rails applies it to every environment, including test — and `bin/rails test` truncates the connected database. That looks like your dev data “keeps getting wiped.” Use `config/database.yml` (`fieldmark_development` / `fieldmark_test`) instead.
 
-### Running the client app
+### Running the client app alone
 
 ```bash
 cd client
