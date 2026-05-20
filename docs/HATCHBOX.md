@@ -35,6 +35,8 @@ Optional: `DEMO_EMAIL`, `DEMO_PASSWORD`, `NASS_API_KEY`, `PERPLEXITY_API_KEY`, m
 
 Do **not** rely on a `.env` file in production; Hatchbox injects env via `.hatchbox.env`.
 
+Also set **`RAILS_ENV=production`** in Hatchbox Environment (the app defaults to production when `.hatchbox.env` exists, but setting it explicitly avoids surprises).
+
 ## Deploy branch
 
 Production deploys should track **`main`** (includes Hatchbox boot fixes). After pushing, trigger **Deploy** in Hatchbox.

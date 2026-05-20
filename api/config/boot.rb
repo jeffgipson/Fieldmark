@@ -15,6 +15,8 @@ if File.exist?(hatchbox_env)
                               (value.start_with?("'") && value.end_with?("'"))
     ENV[key.strip] ||= value
   end
+
+  ENV["RAILS_ENV"] = "production" if ENV["RAILS_ENV"].to_s.empty?
 end
 
 require "bundler/setup" # Set up gems listed in the Gemfile.
