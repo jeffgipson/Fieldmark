@@ -1,3 +1,35 @@
+import {
+  Briefcase,
+  Building2,
+  Handshake,
+  Landmark,
+  Scale,
+  Shield,
+  Sprout,
+  Tractor,
+  Truck,
+  Wheat
+} from "lucide-react";
+
+const VENDOR_CATEGORY_ICONS = {
+  ag_lender: Landmark,
+  seed_dealer: Sprout,
+  farm_store_coop: Building2,
+  fertilizer_chemical: Truck,
+  crop_insurance: Shield,
+  grain_merchandiser: Wheat,
+  equipment_dealer: Tractor,
+  farm_accounting: Briefcase,
+  custom_applicator: Truck,
+  agronomist: Sprout,
+  farm_attorney: Scale,
+  other: Handshake
+};
+
+export function vendorCategoryIcon(category) {
+  return VENDOR_CATEGORY_ICONS[category] || Handshake;
+}
+
 export const VENDOR_CATEGORIES = [
   { value: "ag_lender", label: "Ag lender" },
   { value: "seed_dealer", label: "Seed dealer" },

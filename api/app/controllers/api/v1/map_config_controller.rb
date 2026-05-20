@@ -3,6 +3,8 @@
 module Api
   module V1
     class MapConfigController < BaseController
+      skip_before_action :authenticate_api_v1_user!, only: :show
+
       # Parcel tile layer for Leaflet (token stays server-side; client uses session auth to fetch).
       def show
         render_success(

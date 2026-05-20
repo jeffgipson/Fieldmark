@@ -2,11 +2,11 @@
 
 Fieldmark is a farm financial planning SaaS for mid-scale Midwest corn and soybean farmers (**Hackathon Problem #1 — Baseline: Farm Financial Planning**). Farmers enter **per-field input costs**, then compare against **MU Extension 2026** industry benchmarks and **anonymized regional peer cohorts** before signing seed and fertilizer agreements — with **D.A.L.E.** (Data Analytics for Land Economics) to interpret the numbers without vendor conflicts of interest.
 
-**Judges & AI reviewers:** [`docs/JUDGE_REVIEW.md`](docs/JUDGE_REVIEW.md) · [`llm.txt`](llm.txt) · [`AGENTS.md`](AGENTS.md)
+**Judges & AI reviewers:** [`docs/JUDGE_REVIEW.md`](docs/JUDGE_REVIEW.md) (start here — code & verification) · [`llm.txt`](llm.txt) · [`AGENTS.md`](AGENTS.md) · Strategy: [`docs/BUSINESS_MODEL.md`](docs/BUSINESS_MODEL.md) · [`docs/MARKETING_PLAN.md`](docs/MARKETING_PLAN.md)
 
 ### Submission summary
 
-> Farmers face a structural disadvantage when buying inputs: vendors and advisors may have conflicts of interest. Fieldmark gives **independent ammunition** — **per-field** costs vs **MU Extension** planning budgets and vs **anonymized peer medians** in your region (no farm identities exposed), plus **D.A.L.E.** for plain-language margin and downside analysis and lender-ready reports. Verify: `./bin/dev`, `cd api && bin/rails demo:seed`, `api/bin/test_api`. Demo: `demo@fieldmark.app` / `password123`.
+> Farmers face a structural disadvantage when buying inputs: vendors and advisors may have conflicts of interest. Fieldmark gives **independent ammunition** — **per-field** costs vs **MU Extension** planning budgets and vs **anonymized peer medians** in your region (no farm identities exposed), plus **D.A.L.E.** for plain-language margin and downside analysis and lender-ready reports. Verify: `./bin/dev`, `cd api && bin/rails demo:seed`, `api/bin/test_api`. Demo: sign in → **Try demo — no password needed**.
 
 ## Meet D.A.L.E.
 
@@ -51,6 +51,8 @@ lsof -ti tcp:5173,tcp:5174,tcp:5175,tcp:5176 | xargs kill 2>/dev/null
 | API | http://localhost:3000 |
 | Admin | http://localhost:5175 |
 | API docs & playground | http://localhost:5174/developer |
+
+Favicons live in `client/public/` (source of truth). After updating them, run `npm run sync:favicons` to copy to the website, admin, and API.
 
 Optional background jobs (reports, mail): `FIELDMARK_DEV_JOBS=1 ./bin/dev` or `npm run dev:jobs`.
 
@@ -114,7 +116,7 @@ Then refresh the admin dashboard. Expect ~101 users, 100 farms, 41 vendors.
 
 ## Business model
 
-Full detail: [docs/BUSINESS_MODEL.md](docs/BUSINESS_MODEL.md).
+Full detail: [docs/BUSINESS_MODEL.md](docs/BUSINESS_MODEL.md). Go-to-market: [docs/MARKETING_PLAN.md](docs/MARKETING_PLAN.md).
 
 | Side | How we make money |
 |------|-------------------|

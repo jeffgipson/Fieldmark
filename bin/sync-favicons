@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+# Copy Fieldmark favicons from client/public to all other apps.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+SRC="$ROOT/client/public"
+FILES=(
+  favicon.ico
+  favicon-16x16.png
+  favicon-32x32.png
+  apple-touch-icon.png
+  icon-192.png
+  icon-512.png
+)
+
+DESTS=(
+  website/public
+  frontend/admin/public
+  api/public
+)
+
+for dest in "${DESTS[@]}"; do
+  mkdir -p "$ROOT/$dest"
+  for f in "${FILES[@]}"; do
+    cp "$SRC/$f" "$ROOT/$dest/$f"
+  done
+  echo "Synced favicons → $dest"
+done

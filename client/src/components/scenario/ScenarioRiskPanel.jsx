@@ -54,9 +54,22 @@ export default function ScenarioRiskPanel({
 
       {regionalRisk?.message && (
         <div>
-          <p className="mt-4 text-sm font-semibold text-fm-charcoal">
-            {formatRegion(farm?.region)} Missouri
-          </p>
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            <p className="text-sm font-semibold text-fm-charcoal">
+              {formatRegion(farm?.region)} Missouri
+            </p>
+            {regionalRisk.live && (
+              <span className="rounded-full bg-fm-teal/15 px-2 py-0.5 text-xs font-bold uppercase tracking-wide text-fm-teal">
+                Live research
+                {regionalRisk.researched_at && (
+                  <span className="font-normal normal-case text-fm-gray-medium">
+                    {" "}
+                    · {new Date(regionalRisk.researched_at).toLocaleDateString()}
+                  </span>
+                )}
+              </span>
+            )}
+          </div>
           <p className="mt-1 text-sm text-fm-charcoal">{regionalRisk.message}</p>
           {regionalRisk.source && (
             <p className="mt-1 text-xs text-fm-gray-medium">
@@ -69,6 +82,23 @@ export default function ScenarioRiskPanel({
               )}
               {regionalRisk.note && <> — {regionalRisk.note}</>}
             </p>
+          )}
+          {regionalRisk.live && Array.isArray(regionalRisk.citations) && regionalRisk.citations.length > 0 && (
+            <ul className="mt-2 space-y-1 text-xs">
+              <li className="font-bold uppercase tracking-wide text-fm-gray-medium">Sources</li>
+              {regionalRisk.citations.slice(0, 4).map((cite) => (
+                <li key={cite.url}>
+                  <a
+                    href={cite.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-fm-teal hover:underline"
+                  >
+                    {cite.title || cite.url}
+                  </a>
+                </li>
+              ))}
+            </ul>
           )}
         </div>
       )}

@@ -7,6 +7,9 @@ class AnalystReportGeneratorService
     Do not recommend vendors. Output plain text only — no HTML tags, no markdown,
     and do not paste the farm context JSON back into the report. key_findings,
     recommendations, and risk_flags must be simple string sentences, not objects.
+    When regional_risk.live is true in the farm context, include a short Regional
+    conditions paragraph in the lender_narrative citing regional_risk sources by name;
+    do not invent conditions if live is false.
   PROMPT
 
   def self.call(scenario)

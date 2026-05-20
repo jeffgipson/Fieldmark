@@ -91,7 +91,7 @@ The AI analyst is the core differentiator, powered by **Claude** (`anthropic` ge
 | AppConfig, CurrentSeason, demo seed, async reports, API tests | `rails_helpers.mdc` |
 | JSON envelope, controllers | `rails_json.mdc`, `rails_controllers.mdc` |
 
-**Demo:** `cd api && bin/rails demo:seed` → `demo@fieldmark.app` / `password123` (see `DEMO_EMAIL` in `.env.example`).
+**Demo:** `cd api && bin/rails demo:seed` → sign in via **Try demo** or `POST /api/v1/auth/demo` (see `DEMO_*` in `.env.example`).
 
 **Smoke test:** `api/bin/test_api` · full AI: `RUN_AI_SMOKE=1 api/bin/test_api` (requires `bin/jobs` + `ANTHROPIC_API_KEY`).
 

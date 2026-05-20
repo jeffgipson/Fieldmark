@@ -8,6 +8,9 @@ export default function DaleWelcome({ onContinue }) {
       <DaleAvatar variant="waving" size="xl" showName />
       <h1 className="font-display mt-4 text-4xl font-bold">{DALE_COPY.welcome.title}</h1>
       <p className="mt-4 text-lg leading-relaxed text-fm-charcoal">{DALE_COPY.welcome.message}</p>
+      {DALE_COPY.welcome.liveResearchNote && (
+        <p className="mt-3 text-sm text-fm-gray-medium">{DALE_COPY.welcome.liveResearchNote}</p>
+      )}
       {onContinue && (
         <button
           type="button"

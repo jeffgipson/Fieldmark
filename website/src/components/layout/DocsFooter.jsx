@@ -12,17 +12,36 @@ export default function DocsFooter() {
           <Link to="/developer" className="text-fm-teal-dark hover:underline">
             Developer docs
           </Link>
-          <a href="/llm.txt" target="_blank" rel="noopener noreferrer" className="hover:text-fm-teal-dark">
-            llm.txt
-          </a>
           <a
-            href="https://github.com/jeffgipson/Fieldmark/blob/main/tools/fieldmark/README.md"
+            href="https://github.com/jeffgipson/Fieldmark/blob/main/docs/JUDGE_REVIEW.md"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-fm-teal-dark"
           >
-            MCP setup
+            Judge review
           </a>
+          <a href="/llm.txt" target="_blank" rel="noopener noreferrer" className="hover:text-fm-teal-dark">
+            llm.txt
+          </a>
+          <a
+            href="https://github.com/jeffgipson/Fieldmark/blob/main/docs/BUSINESS_MODEL.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-fm-teal-dark"
+          >
+            Business model
+          </a>
+          <a
+            href="https://github.com/jeffgipson/Fieldmark/blob/main/docs/MARKETING_PLAN.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-fm-teal-dark"
+          >
+            Marketing plan
+          </a>
+          <Link to="/developer/MCP" className="hover:text-fm-teal-dark">
+            MCP setup
+          </Link>
           <a
             href="https://github.com/jeffgipson/Fieldmark/blob/main/api/docs/API.md"
             target="_blank"

@@ -1,5 +1,4 @@
 import http, { unwrap } from "./http";
-import { DEMO_CREDENTIALS } from "../constants/app";
 
 export async function login(email, password) {
   const res = await http.post("/api/v1/auth/login", {
@@ -10,10 +9,7 @@ export async function login(email, password) {
 
 export async function loginDemo() {
   const res = await http.post("/api/v1/auth/demo");
-  const data = unwrap(res);
-  if (data?.token) return data;
-  // Fallback when API has not picked up JWT dispatch for /auth/demo yet.
-  return login(DEMO_CREDENTIALS.email, DEMO_CREDENTIALS.password);
+  return unwrap(res);
 }
 
 export async function register(userPayload) {

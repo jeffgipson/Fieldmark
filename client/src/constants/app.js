@@ -31,12 +31,8 @@ export const BENCHMARK_REFERENCE = {
   soybean: { seed: 75, fertilizer: 91.28, chemicals: 58 }
 };
 
-export const DEMO_CREDENTIALS = {
-  email: "demo@fieldmark.app",
-  password: "password123"
-};
-
 export const DALE_SUGGESTIONS = [
+  "What do USDA sources say about conditions in my region?",
   "What does my fertilizer cost mean for March?",
   "Show me my worst case scenario.",
   "Am I in a good position to lock in inputs now?",

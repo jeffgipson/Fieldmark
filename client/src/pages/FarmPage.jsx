@@ -440,6 +440,7 @@ export default function FarmPage() {
               boundary={newField.boundary}
               onLocationChange={handleFieldLocation}
               onInsights={handleFieldInsights}
+              scrollWheelZoom={false}
             />
           </div>
           <div><Label>Field name</Label><Input value={newField.name} onChange={(e) => setNewField({ ...newField, name: e.target.value })} required /></div>

@@ -4,6 +4,8 @@
 
 **Fieldmark** is a financial planning SaaS for mid-scale Midwest corn and soybean farmers. It addresses the lack of **independent** cost benchmarks when farmers commit to expensive seed, fertilizer, and chemical purchases — often with advisors or vendors who may have conflicts of interest.
 
+**Review order:** Start with **product & code** (this file → [`llm.txt`](../llm.txt) → run locally). **Business strategy** is documented separately: [`BUSINESS_MODEL.md`](BUSINESS_MODEL.md) · [`MARKETING_PLAN.md`](MARKETING_PLAN.md).
+
 ---
 
 ## How Fieldmark answers the challenge
@@ -13,12 +15,13 @@
 | **Independent cost benchmarks** | Official **MU Extension 2026** crop budgets seeded into `benchmark_regions` — university planning defaults, not vendor quotes. See `api/docs/BENCHMARK_DATA.md`. |
 | **Conflict of interest** | **D.A.L.E.** (Data Analytics for Land Economics) — an AI analyst with an explicit independence system prompt: no vendor, co-op, or agronomist relationships. Product copy: `client/src/constants/dale.js`. |
 | **Per-field costs vs anonymized peer data** | Farmers enter **per-field** `input_costs` (seed, fertilizer, chemicals, labor). `POST …/scenarios/:id/compare` runs `PeerComparisonService`: your costs vs MU benchmarks **and** vs **anonymized regional peer cohorts** (median, percentiles, per-field breakdown). Minimum **5 farms** in cohort before peer stats are shown. |
+| **Live regional research (cited)** | **Perplexity Sonar** supplements Claude: `MarketIntelligenceService` fetches USDA / Drought Monitor / MU Extension context into `regional_risk` (12h cache). Dale still analyzes via **Claude only** — Perplexity does not generate chat or reports. Scenario **Risk & downside** shows **Live research** + source links when `PERPLEXITY_API_KEY` is set. |
 
 ### Three layers of comparison (industry + peers + AI)
 
 1. **Industry baseline (independent)** — MU Extension operating costs per acre by region and commodity (`GET /api/v1/benchmarks`, `BenchmarkRegion`).
 2. **Anonymized peer cohort** — Other Fieldmark farmers in the same region and commodity; aggregated medians and percentiles only — **never individual farm identities** (`PeerCohortSelector`, `PeerCohortAggregator`, `FieldPeerAggregator`).
-3. **D.A.L.E. interpretation** — Claude receives a structured snapshot (`ContextSnapshotBuilder`) with benchmarks, peer cohort size, per-field gaps, scenario margins, and USDA NASS yield context so the farmer gets plain-language “ammunition” before March commitments.
+3. **D.A.L.E. interpretation** — Claude receives a structured snapshot (`ContextSnapshotBuilder`) with benchmarks, peer cohort size, per-field gaps, scenario margins, USDA NASS yield context, and optional **live cited regional research** (`regional_risk.live`) so the farmer gets plain-language “ammunition” before March commitments.
 
 **Demo the full loop:** sign in as `demo@fieldmark.app` → open a scenario → **Benchmarks** (`/scenarios/:id/benchmark`) after running **Compare**, or call `POST /api/v1/farms/:farm_id/scenarios/:id/compare`.
 
@@ -143,6 +146,9 @@ flowchart LR
 |------|---------|
 | `api/app/services/yield_context_service.rb` | NASS yield bands for scenarios |
 | `api/db/seeds/usda_yield_data.json` | Seeded yield stats |
+| `api/app/services/market_intelligence_service.rb` | Perplexity Sonar — live cited regional conditions (retrieval) |
+| `api/app/services/perplexity_router.rb` | Perplexity HTTP gateway (not used for Dale voice) |
+| `api/app/services/regional_risk_context_service.rb` | Live intel + static USDA fallback → `regional_risk` in API/snapshot |
 
 ---
 
@@ -184,17 +190,29 @@ Paste these after loading `llm.txt` or cloning the repo:
 
 ---
 
-## Business model
+## Business & go-to-market (optional)
 
-Two-sided revenue: **farmers** ($30–50/mo subscriptions) and **vendors** ($100/mo directory listing, promotional placement, revenue share on attributed sales). D.A.L.E. stays independent of vendor monetization. See [BUSINESS_MODEL.md](BUSINESS_MODEL.md).
+The hackathon submission is judged primarily on **working product and Problem #1 fit**. Business docs explain how Fieldmark sustains and distributes beyond the MVP.
+
+| Doc | What it covers |
+|-----|----------------|
+| [BUSINESS_MODEL.md](BUSINESS_MODEL.md) | Two-sided revenue — farmer subscriptions ($30–50/mo) and vendor directory ($100/mo + promos + rev share). D.A.L.E. stays independent of vendor monetization. |
+| [MARKETING_PLAN.md](MARKETING_PLAN.md) | Year 1 go-to-market — trusted-advisor distribution (co-ops, extension, lenders), organic content, March conversion window, co-op MOU terms, metrics and budget. |
 
 ---
 
 ## Related docs
 
-- [Business model](BUSINESS_MODEL.md) — farmer + vendor revenue
+### Product & code
+
 - [`llm.txt`](../llm.txt) — API flows, endpoints, demo credentials
 - [`README.md`](../README.md) — Run the full stack
 - [`api/docs/API.md`](../api/docs/API.md) — Full API reference
+- [`api/docs/BENCHMARK_DATA.md`](../api/docs/BENCHMARK_DATA.md) — MU Extension data lineage
 - [`CLAUDE.md`](../CLAUDE.md) — D.A.L.E. branding
 - [`tools/fieldmark/README.md`](../tools/fieldmark/README.md) — MCP for live API exploration
+
+### Business & go-to-market
+
+- [BUSINESS_MODEL.md](BUSINESS_MODEL.md) — Revenue model
+- [MARKETING_PLAN.md](MARKETING_PLAN.md) — Year 1 marketing plan

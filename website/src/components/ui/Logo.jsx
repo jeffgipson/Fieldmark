@@ -1,14 +1,14 @@
 import { BRAND, LOGO_SRC } from "../../constants/brand";
 
-/** Horizontal lockup — size by width (brand minimum 120px). */
+/** Horizontal wordmark — size by width. */
 const WIDTH = {
-  sm: "w-32", // 128px — footer
-  md: "w-44", // 176px — header default
-  lg: "w-52", // 208px — hero / prominent
-  xl: "w-56" // 224px
+  sm: "w-32",
+  md: "w-44",
+  lg: "w-52",
+  xl: "w-56"
 };
 
-/** Full lockup (icon + wordmark) — do not add separate text beside it. */
+/** Full lockup — do not add separate text beside it. */
 export default function Logo({ size = "md", onDark = false, className = "" }) {
   return (
     <img

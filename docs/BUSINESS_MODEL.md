@@ -85,6 +85,7 @@ Code references: `api/app/services/billing/`, `api/app/services/admin/mock_strip
 
 ## 5. Related docs
 
-- [Vendor network API](api/docs/VENDORS.md)
+- [Vendor network API](../api/docs/VENDORS.md)
 - [README — subscriptions](../README.md)
-- [Judge review — independence vs. vendor surface](JUDGE_REVIEW.md)
+- [Judge review — product & code](JUDGE_REVIEW.md)
+- [Marketing plan — Year 1 go-to-market](MARKETING_PLAN.md)

@@ -2,6 +2,8 @@
 
 class GenerateAnalystReportJob < ApplicationJob
   queue_as :default
+  # Claude report + optional Perplexity snapshot often exceeds Sidekiq's 25s default.
+  sidekiq_options timeout: 180, retry: 2
 
   discard_on Ai::ConfigurationError
 
@@ -13,11 +15,12 @@ class GenerateAnalystReportJob < ApplicationJob
     report.assign_attributes(payload.merge(status: :completed, error_message: nil))
     report.save!
     notify_report_ready!(report)
-  rescue Ai::ApiError
+  rescue Ai::ApiError => e
     mark_failed(report, AnalystService::AnalystServiceError::FRIENDLY_MESSAGE)
+    Rails.logger.error("[GenerateAnalystReportJob] Ai::ApiError: #{e.message}")
   rescue StandardError => e
     mark_failed(report, AnalystService::AnalystServiceError::FRIENDLY_MESSAGE)
-    Rails.logger.error("[GenerateAnalystReportJob] #{e.class}: #{e.message}")
+    Rails.logger.error("[GenerateAnalystReportJob] #{e.class}: #{e.message}\n#{e.backtrace.first(8).join("\n")}")
     raise
   end
 

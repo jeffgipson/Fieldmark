@@ -5,9 +5,10 @@ import * as vendorsApi from "../api/vendors";
 import VendorLocationMap from "../components/vendors/VendorLocationMap";
 import Card from "../components/ui/Card";
 import LoadingDale from "../components/ui/LoadingDale";
-import PageHeader from "../components/ui/PageHeader";
 import useVendorFavorites from "../hooks/useVendorFavorites";
-import { categoryLabel } from "../constants/vendors";
+import BrandLogo from "../components/ui/BrandLogo";
+import { categoryLabel, vendorCategoryIcon } from "../constants/vendors";
+import { vendorLogoUrl } from "../lib/brandLogos";
 import { friendlyError } from "../utils/errors";
 
 export default function VendorProfilePage() {
@@ -68,12 +69,25 @@ export default function VendorProfilePage() {
         <ArrowLeft size={16} /> All resources
       </Link>
 
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <PageHeader
-          eyebrow={categoryLabel(vendor.category)}
-          title={vendor.name}
-          subtitle={vendor.full_address || `${vendor.city}, ${vendor.state}`}
-        />
+      <header className="mb-10 flex flex-wrap items-start justify-between gap-4 border-b border-fm-gray-light/80 pb-8">
+        <div className="flex min-w-0 flex-1 items-start gap-4">
+          <BrandLogo
+            logoUrl={vendorLogoUrl(vendor)}
+            icon={vendorCategoryIcon(vendor.category)}
+            size="lg"
+          />
+          <div className="min-w-0">
+            <p className="fm-eyebrow mb-2">{categoryLabel(vendor.category)}</p>
+            <h1 className="font-display text-3xl font-bold tracking-tight text-fm-ink md:text-4xl">
+              {vendor.name}
+            </h1>
+            {(vendor.full_address || vendor.city) && (
+              <p className="mt-3 text-lg leading-relaxed text-fm-charcoal/90">
+                {vendor.full_address || `${vendor.city}, ${vendor.state}`}
+              </p>
+            )}
+          </div>
+        </div>
         <div className="flex items-center gap-3">
           {vendor.partner && (
             <span className="rounded-full bg-fm-gold/15 px-3 py-1 text-xs font-bold uppercase tracking-wide text-fm-gold">
@@ -90,7 +104,7 @@ export default function VendorProfilePage() {
             {favorited ? "Favorited" : "Favorite"}
           </button>
         </div>
-      </div>
+      </header>
 
       <p className="mb-8 text-sm text-fm-gray-medium">
         Fieldmark lists local businesses for your research. This is not an endorsement — verify services and pricing

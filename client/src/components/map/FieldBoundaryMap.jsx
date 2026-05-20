@@ -49,9 +49,11 @@ export default function FieldBoundaryMap({
   latitude,
   longitude,
   className = "",
-  mapClassName = "fm-location-map h-[240px] md:h-[280px]"
+  mapClassName = "fm-location-map h-[240px] md:h-[280px]",
+  readOnly = false,
+  defaultBasemap = "satellite"
 }) {
-  const [basemap, setBasemap] = useState("satellite");
+  const [basemap, setBasemap] = useState(defaultBasemap);
 
   const center = useMemo(() => {
     if (latitude != null && longitude != null) {
@@ -76,23 +78,33 @@ export default function FieldBoundaryMap({
 
   return (
     <div className={`fm-location-map-wrap ${className}`}>
-      <div className="fm-basemap-toggle">
-        <button
-          type="button"
-          className={basemap === "street" ? "active" : ""}
-          onClick={() => setBasemap("street")}
-        >
-          Map
-        </button>
-        <button
-          type="button"
-          className={basemap === "satellite" ? "active" : ""}
-          onClick={() => setBasemap("satellite")}
-        >
-          Satellite
-        </button>
-      </div>
-      <MapContainer center={center} zoom={initialZoom} className={mapClassName} scrollWheelZoom>
+      {!readOnly && (
+        <div className="fm-basemap-toggle print:hidden">
+          <button
+            type="button"
+            className={basemap === "street" ? "active" : ""}
+            onClick={() => setBasemap("street")}
+          >
+            Map
+          </button>
+          <button
+            type="button"
+            className={basemap === "satellite" ? "active" : ""}
+            onClick={() => setBasemap("satellite")}
+          >
+            Satellite
+          </button>
+        </div>
+      )}
+      <MapContainer
+        center={center}
+        zoom={initialZoom}
+        className={mapClassName}
+        scrollWheelZoom={!readOnly}
+        dragging={!readOnly}
+        doubleClickZoom={!readOnly}
+        touchZoom={!readOnly}
+      >
         <TileLayer
           key={basemap}
           attribution={BASEMAPS[basemap].attribution}

@@ -16,6 +16,9 @@ export default function DaleBriefingCard({ findings = [], onTalkToDale }) {
           <h3 className="font-display mt-1 text-xl font-semibold text-fm-ink">
             {DALE_COPY.briefingCard.header}
           </h3>
+          {DALE_COPY.briefingCard.subline && (
+            <p className="mt-2 text-sm text-fm-gray-medium">{DALE_COPY.briefingCard.subline}</p>
+          )}
           {bullets.length > 0 ? (
             <ul className="mt-4 space-y-3 border-l-2 border-fm-gray-light pl-4">
               {bullets.map((item, index) => (

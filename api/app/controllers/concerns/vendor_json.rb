@@ -14,7 +14,8 @@ module VendorJson
     fields << :billing_notes << :monthly_listing_cents if admin
     json = vendor.as_json(only: fields).merge(
       "partner" => vendor.partner_badge?,
-      "has_profile" => vendor.profile_page?
+      "has_profile" => vendor.profile_page?,
+      **HunterLogo.payload_for_website(vendor.website)
     )
     json["favorited"] = favorited unless favorited.nil?
     json

@@ -31,13 +31,16 @@ export const DALE_COPY = {
   welcome: {
     title: "Meet D.A.L.E.",
     message:
-      "I'm D.A.L.E. — Data Analytics for Land Economics. I have no relationship with any input vendor, co-op, or agronomist. My only job is to show you what your numbers actually say — before March."
+      "I'm D.A.L.E. — Data Analytics for Land Economics. I have no relationship with any input vendor, co-op, or agronomist. My only job is to show you what your numbers actually say — before March.",
+    liveResearchNote:
+      "When live research is enabled, I also read cited USDA and drought-monitor context for your region — your margin math still comes from your farm data."
   },
-  loading: "Looking at your numbers...",
   briefingCard: {
     header: "Dale has reviewed this scenario",
+    subline: "Your costs, peers, and live regional USDA context when available.",
     cta: "Talk to Dale"
   },
+  loading: "Looking at your numbers...",
   report: {
     header: {
       preparedBy: "Analysis prepared by D.A.L.E.",
