@@ -26,9 +26,6 @@ gem "redis", ">= 5.0"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
 
-# Deploy this application anywhere as a Docker container [https://kamal-deploy.org]
-gem "kamal", require: false
-
 # Add HTTP asset caching/compression and X-Sendfile acceleration to Puma [https://github.com/basecamp/thruster/]
 gem "thruster", require: false
 
@@ -45,6 +42,8 @@ gem 'rack-attack'
 gem "anthropic"
 
 group :development, :test do
+  # Kamal is run from your machine, not the production server (Hatchbox, etc.).
+  gem "kamal", require: false
   gem "dotenv-rails"
   gem "pdf-reader"
   gem "nokogiri"
