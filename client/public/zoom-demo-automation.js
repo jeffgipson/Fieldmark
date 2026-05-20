@@ -15,6 +15,7 @@
     name: 'Fieldmark live demo (~7 min)',
     /** Planned beats (seconds from Play) */
     timeline: [
+      { at: 4, type: 'judge-ring' },
       { at: 6, type: 'event', id: 'benchmark' },
       { at: 14, type: 'chat', sender: 'Waverly Farm Ops', text: 'Where does the benchmark data actually come from?' },
       { at: 20, type: 'chat', sender: COHOST.sender, text: 'MU Extension 2026 crop budgets — same numbers FSA and lenders reference.' },
@@ -30,6 +31,7 @@
       { at: 108, type: 'speak', id: 'mike', duration: 2800 },
       { at: 108, type: 'reaction', id: 'mike', emoji: '🤔' },
       { at: 118, type: 'chat', sender: 'Mike Henderson', text: 'That’s what I needed before my agronomist meeting.' },
+      { at: 115, type: 'judge-ring' },
       { at: 128, type: 'event', id: 'scenario' },
       { at: 142, type: 'chat', sender: 'Waverly Farm Ops', text: 'Can we model a price drop without re-entering every invoice?' },
       { at: 150, type: 'chat', sender: COHOST.sender, text: 'Scenarios sit on the costs you already entered — change corn price or yield and margin updates.' },
@@ -49,6 +51,7 @@
       { at: 280, type: 'speak', id: 'dale', duration: 4000 },
       { at: 280, type: 'reaction', id: 'dale', emoji: '🦉' },
       { at: 280, type: 'chat', sender: 'Dale (AI)', text: 'Remember: show your lender both base case and downside before March commitments.' },
+      { at: 250, type: 'judge-ring' },
       { at: 295, type: 'event', id: 'mike_wow' },
       { at: 305, type: 'chat', sender: 'Mike Henderson', text: 'This is the ammunition we needed. Thank you.' },
     ],
@@ -124,6 +127,9 @@
           if (cue.duration) setTimeout(() => h.raiseHand(cue.id, false), cue.duration);
         }
         break;
+      case 'judge-ring':
+        if (h.ringJudgeCall) h.ringJudgeCall(cue.judgeId);
+        break;
       default:
         break;
     }
@@ -188,6 +194,7 @@
   };
 
   function cueLabel(cue) {
+    if (cue.type === 'judge-ring') return 'vibeathon.us judge calling';
     if (cue.type === 'event') return cue.id;
     if (cue.type === 'chat') {
       const t = cue.text.length > 42 ? `${cue.text.slice(0, 42)}…` : cue.text;

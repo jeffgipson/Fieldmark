@@ -103,6 +103,8 @@
   </div>
 
   <div class="demo-controls">
+      <button type="button" class="demo-btn primary" data-action="judge-ring">📞 Judge calling in</button>
+      <button type="button" class="demo-btn" data-action="judge-accept">✅ Accept call</button>
       <button type="button" class="demo-btn" data-action="webcam-toggle" id="toggle-webcam">📷 Host webcam</button>
       <button type="button" class="demo-btn primary" data-action="present">⛶ Presentation (F)</button>
     <button type="button" class="demo-btn primary" data-action="fullscreen">Fullscreen (⌘⇧F)</button>
@@ -203,6 +205,9 @@
       else if (action === 'present') send('present');
       else if (action === 'fullscreen') send('fullscreen');
       else if (action === 'reload-frame') send('set-path', { path: appUrlInput.value.trim() || '/' });
+      else if (action === 'judge-ring') send('judge-ring');
+      else if (action === 'judge-accept') send('judge-accept');
+      else if (action === 'judge-decline') send('judge-decline');
       else if (action === 'webcam-toggle') send('webcam-toggle');
       else if (action === 'timeline-start') send('timeline-start');
       else if (action === 'timeline-pause') send('timeline-pause');

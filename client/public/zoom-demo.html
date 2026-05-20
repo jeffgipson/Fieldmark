@@ -317,6 +317,93 @@
     cursor: pointer;
   }
   .automation-panel input[type="checkbox"] { accent-color: #1a9e8f; }
+  .participant-name .judge-badge {
+    color: #f39c12;
+    font-size: 8px;
+    font-weight: 600;
+    margin-left: 2px;
+  }
+  .participant-tile.judge-tile { border-color: rgba(243,156,18,0.35); }
+  @keyframes judgeJoin {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .incoming-call {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.55);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s, visibility 0.25s;
+    pointer-events: none;
+  }
+  .incoming-call.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .incoming-call-card {
+    background: #2d2d2d;
+    border: 1px solid #444;
+    border-radius: 14px;
+    padding: 28px 32px 22px;
+    text-align: center;
+    min-width: 280px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    animation: callPulse 1.2s ease-in-out infinite;
+  }
+  @keyframes callPulse {
+    0%, 100% { box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 0 0 rgba(26,158,143,0.35); }
+    50% { box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 0 12px rgba(26,158,143,0); }
+  }
+  .vibeathon-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #1a9e8f, #16a085);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .incoming-label { color: #999; font-size: 12px; margin-bottom: 14px; }
+  .caller-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .incoming-call-card h2 { color: #fff; font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+  .incoming-call-card .caller-role { color: #8ab4b0; font-size: 12px; margin-bottom: 20px; }
+  .incoming-actions { display: flex; gap: 12px; justify-content: center; }
+  .incoming-actions button {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  #decline-call { background: #c0392b; color: #fff; }
+  #accept-call { background: #28c840; color: #fff; }
+  #accept-call:hover { filter: brightness(1.08); }
+  #decline-call:hover { filter: brightness(1.08); }
+  body.incoming-call-active .zoom-window { filter: blur(2px); }
+  body.incoming-call-active .incoming-call { filter: none; }
+  .chat-msg .sender.judge { color: #f39c12; }
 </style>
 </head>
 <body>
@@ -381,6 +468,7 @@
           <div class="participant-icons"><div class="mic-icon" id="mic-cohost">🎤</div></div>
           <div class="reaction-badge" id="react-cohost"></div>
         </div>
+        <div id="judge-participants"></div>
         <div class="participant-tile" id="tile-jeff">
           <div class="hand-raised" id="hand-jeff"></div>
           <video class="participant-video" id="host-webcam" autoplay playsinline muted></video>
@@ -421,6 +509,7 @@
 <div id="presenter-dock" class="presenter-dock">
   <div class="presenter-dock-header">
     <span class="presenter-dock-title">Presenter controls</span>
+    <button type="button" class="demo-btn" id="judge-ring-btn" title="Simulate next vibeathon.us judge calling in">📞 Judge calling in</button>
     <button type="button" class="demo-btn" id="toggle-webcam" title="Uses your browser camera in the Jeff (Host) tile">📷 Host webcam</button>
     <button type="button" class="demo-btn primary" id="detach-controls" title="Open controls in a separate window for your screen only">↗ Detach controls</button>
   </div>
@@ -456,6 +545,21 @@
 
 <button type="button" class="reattach-hint" id="reattach-hint" title="Show controls on this window again">Presenter controls detached — click to re-attach</button>
 
+<div id="incoming-call" class="incoming-call" aria-hidden="true">
+  <div class="incoming-call-card">
+    <div class="vibeathon-badge">vibeathon.us</div>
+    <p class="incoming-label">Incoming video call…</p>
+    <div class="caller-avatar" id="caller-avatar">V</div>
+    <h2 id="caller-name">vibeathon.us</h2>
+    <p class="caller-role" id="caller-role">Official Judge</p>
+    <div class="incoming-actions">
+      <button type="button" id="decline-call">Decline</button>
+      <button type="button" id="accept-call">Accept</button>
+    </div>
+  </div>
+</div>
+
+<script src="/zoom-demo-vibeathon.js"></script>
 <script src="/zoom-demo-automation.js"></script>
 <script>
   const MSG = 'fieldmark-zoom-demo';
@@ -564,6 +668,10 @@
       setSpeaking,
       showReaction,
       raiseHand,
+      ringJudgeCall: (id) => {
+        initJudgeCalls();
+        return judgeCalls?.ringNext(id);
+      },
       resetDemo: () => resetDemo({ keepTimeline: true }),
     });
     director.onTick = updateAutomationStatus;
@@ -686,6 +794,9 @@
     if (action === 'webcam-toggle') toggleHostWebcam();
     if (action === 'webcam-start') startHostWebcam();
     if (action === 'webcam-stop') stopHostWebcam();
+    if (action === 'judge-ring') { initJudgeCalls(); judgeCalls?.ringNext(e.data.judgeId); }
+    if (action === 'judge-accept') { initJudgeCalls(); judgeCalls?.accept(); }
+    if (action === 'judge-decline') { initJudgeCalls(); judgeCalls?.decline(); }
     if (action === 'attach' || action === 'controls-closing') attachControls();
   });
 
@@ -707,7 +818,28 @@
   if (params.get('webcam') === '1') {
     window.addEventListener('load', () => setTimeout(startHostWebcam, 500));
   }
+  if (params.get('vibeathon') === '1') {
+    window.addEventListener('load', () => {
+      initJudgeCalls();
+      judgeCalls?.applyVibeathonBranding();
+      setTimeout(() => judgeCalls?.ringNext(), 2500);
+    });
+  }
 
+  document.getElementById('judge-ring-btn')?.addEventListener('click', () => {
+    initJudgeCalls();
+    if (!judgeCalls?.ringNext()) {
+      alert('All vibeathon.us judges are already in the meeting.');
+    }
+  });
+  document.getElementById('accept-call')?.addEventListener('click', () => {
+    initJudgeCalls();
+    judgeCalls?.accept();
+  });
+  document.getElementById('decline-call')?.addEventListener('click', () => {
+    initJudgeCalls();
+    judgeCalls?.decline();
+  });
   document.getElementById('toggle-webcam')?.addEventListener('click', toggleHostWebcam);
   document.getElementById('zoom-video-btn')?.addEventListener('click', toggleHostWebcam);
   window.addEventListener('beforeunload', stopHostWebcam);
@@ -750,6 +882,11 @@
     }
   });
   document.addEventListener('keydown', (e) => {
+    if (document.body.classList.contains('incoming-call-active')) {
+      if (e.key === 'Enter') { e.preventDefault(); initJudgeCalls(); judgeCalls?.accept(); }
+      if (e.key === 'Escape') { e.preventDefault(); initJudgeCalls(); judgeCalls?.decline(); }
+      return;
+    }
     if (e.key === 'f' || e.key === 'F') {
       if (e.metaKey && e.shiftKey) {
         e.preventDefault();
@@ -768,7 +905,25 @@
     'Waverly Farm Ops': { initials: 'WF', bg: '#8e44ad' },
     'Dale (AI)': { initials: '🦉', bg: '#1a9e8f' },
     'Casey Morgan (Co-host)': { initials: 'CM', bg: 'linear-gradient(135deg,#e67e22,#d35400)', cohost: true },
+    'vibeathon.us': { initials: 'V', bg: '#8e44ad', judge: true },
   };
+
+  let judgeCalls = null;
+
+  function initJudgeCalls() {
+    if (judgeCalls || !window.FieldmarkJudgeCallManager) return;
+    judgeCalls = new FieldmarkJudgeCallManager({
+      addChat,
+      setSpeaking,
+      cohostSender,
+      registerChatSender(name, profile) {
+        CHAT_SENDERS[name] = profile;
+      },
+    });
+    window.ringJudgeCall = (id) => judgeCalls.ringNext(id);
+    window.acceptJudgeCall = () => judgeCalls.accept();
+    window.declineJudgeCall = () => judgeCalls.decline();
+  }
 
   function cohostSender() {
     return window.FieldmarkDemoCohost?.sender || 'Casey Morgan (Co-host)';
@@ -786,7 +941,9 @@
     setTimeout(() => {
       const msgs = document.getElementById('chat-messages');
       const profile = CHAT_SENDERS[sender];
-      const senderClass = profile?.cohost ? 'sender cohost' : 'sender';
+      let senderClass = 'sender';
+      if (profile?.cohost) senderClass = 'sender cohost';
+      if (profile?.judge) senderClass = 'sender judge';
       const div = document.createElement('div');
       div.className = 'chat-msg';
       div.innerHTML = `${chatAvatarHtml(sender)}<div class="chat-msg-body"><div class="${senderClass}">${sender}</div><div class="text">${text}</div></div>`;
@@ -860,6 +1017,8 @@
 
   function resetDemo(opts = {}) {
     if (!opts.keepTimeline) stopTimeline();
+    initJudgeCalls();
+    judgeCalls?.reset();
     document.getElementById('chat-messages').innerHTML = `
       <div class="chat-msg">
         <div class="chat-avatar" style="background:#2980b9">MH</div>
