@@ -99,8 +99,14 @@ Tools: `fieldmark_health`, `fieldmark_benchmarks`, `fieldmark_farms_*`, `fieldma
 
 Regions: `northern`, `central`, `southwest`. Commodities: `corn`, `soybean`, `both`.
 
+## Business model
+
+- **Farmers:** $30/mo Basic, $50/mo Pro (`SubscriptionPlan`)
+- **Vendors:** $100/mo directory inclusion + promotional upgrades + rev share on many attributed sales (`VendorListingPlan`, `docs/BUSINESS_MODEL.md`)
+
 ## Docs
 
+- [Business model](docs/BUSINESS_MODEL.md): farmer subscriptions + vendor listing, promos, revenue share
 - [Judge & AI review guide](docs/JUDGE_REVIEW.md): Problem #1 fit, file map, verification, AI prompts
 - [Interactive API docs & playground](http://fieldmark.local/developer): try endpoints in the browser
 - [API reference](api/docs/API.md): full request/response documentation

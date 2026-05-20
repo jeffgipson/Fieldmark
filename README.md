@@ -112,9 +112,18 @@ bin/rails db:seed
 
 Then refresh the admin dashboard. Expect ~101 users, 100 farms, 41 vendors.
 
-## Subscription plans (mock billing)
+## Business model
 
-Farmer subscriptions use mock Stripe by default (`BILLING_MOCK=true` in `api/.env`):
+Full detail: [docs/BUSINESS_MODEL.md](docs/BUSINESS_MODEL.md).
+
+| Side | How we make money |
+|------|-------------------|
+| **Farmers** | **$30/mo Basic** or **$50/mo Pro** — independent benchmarks, peer compare, D.A.L.E., lender reports |
+| **Vendors** | **$100/mo** directory listing + promotional placement (featured/premium/sponsored) + **revenue share** on many attributed sales |
+
+Farmer billing uses mock Stripe by default (`BILLING_MOCK=true`). Vendor listing pricing: `VendorListingPlan` in `api/app/models/vendor_listing_plan.rb`.
+
+### Farmer subscriptions
 
 | Plan | Price | Farms | Fields |
 |------|-------|-------|--------|

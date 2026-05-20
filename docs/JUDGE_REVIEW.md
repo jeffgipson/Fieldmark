@@ -184,8 +184,15 @@ Paste these after loading `llm.txt` or cloning the repo:
 
 ---
 
+## Business model
+
+Two-sided revenue: **farmers** ($30–50/mo subscriptions) and **vendors** ($100/mo directory listing, promotional placement, revenue share on attributed sales). D.A.L.E. stays independent of vendor monetization. See [BUSINESS_MODEL.md](BUSINESS_MODEL.md).
+
+---
+
 ## Related docs
 
+- [Business model](BUSINESS_MODEL.md) — farmer + vendor revenue
 - [`llm.txt`](../llm.txt) — API flows, endpoints, demo credentials
 - [`README.md`](../README.md) — Run the full stack
 - [`api/docs/API.md`](../api/docs/API.md) — Full API reference
