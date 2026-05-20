@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "faker"
-
 module SampleData
   # Builds db/seeds/cape_girardeau_sample.json with reproducible Cape Girardeau County test data.
   class CapeGirardeauGenerator
@@ -65,6 +63,8 @@ module SampleData
     }.freeze
 
     def self.call(count: 100, output_path: OUTPUT_PATH)
+      require "faker"
+
       new(count:, output_path:).call
     end
 
