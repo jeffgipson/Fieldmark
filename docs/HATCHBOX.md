@@ -92,14 +92,19 @@ RAILS_ENV=production bundle exec rails runner "GenerateAnalystReportJob.perform_
 
 ## After first successful deploy
 
-Rails uses **three DB configs** (primary, cache, cable) on one Postgres URL. Hatchbox `db:migrate` only runs primary migrations unless you also load cache/cable:
+Rails uses **three DB configs** (primary, cache, cable) on one Postgres URL. Hatchbox `db:migrate` runs all three; cache/cable migrations use `if_not_exists` so they succeed if you already ran `db:schema:load:cache` / `db:schema:load:cable` manually.
 
 ```bash
 cd /home/deploy/field_mark/current
 RAILS_ENV=production bundle exec rake db:migrate
-DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=production bundle exec rake db:schema:load:cache db:schema:load:cable
 RAILS_ENV=production bundle exec rake demo:seed
 # demo:seed includes vendors; or run vendors:seed and admin:seed separately
+```
+
+If `solid_cache_entries` / `solid_cable_messages` are missing on an older deploy, load them once:
+
+```bash
+DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=production bundle exec rake db:schema:load:cache db:schema:load:cable
 ```
 
 Without `solid_cache_entries`, auth requests fail (`PG::UndefinedTable`) when Rack::Attack uses Solid Cache.
