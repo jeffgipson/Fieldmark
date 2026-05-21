@@ -1,4 +1,5 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import * as authApi from "../api/auth";
 import * as profileApi from "../api/profile";
 import { setAuthToken, setUnauthorizedHandler } from "../api/http";
@@ -7,6 +8,7 @@ import { getStoredToken } from "../utils/authStorage";
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
+  const navigate = useNavigate();
   const storedToken = getStoredToken();
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(storedToken);
@@ -108,9 +110,9 @@ export function AuthProvider({ children }) {
     setUnauthorizedHandler(() => {
       clearAuth();
       if (bootstrappingRef.current || window.location.pathname === "/login") return;
-      window.location.href = "/login";
+      navigate("/login", { replace: true });
     });
-  }, [clearAuth]);
+  }, [clearAuth, navigate]);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
