@@ -12,7 +12,8 @@ export default function MetricCard({
   value,
   unit = "perAcre",
   sentiment = "neutral",
-  animate = true
+  animate = true,
+  detail
 }) {
   const numeric = unit === "text" ? 0 : Number(value) || 0;
   const animated = useCountUp(numeric, { enabled: animate && unit !== "text" });
@@ -31,6 +32,7 @@ export default function MetricCard({
       <div className={`absolute left-0 top-0 h-full w-1 ${styles.bar} opacity-80`} />
       <p className="text-xs font-bold uppercase tracking-wider text-fm-gray-medium">{label}</p>
       <p className={`fm-stat mt-2 text-3xl font-bold ${styles.value}`}>{display}</p>
+      {detail && <p className="mt-1 text-xs leading-snug text-fm-gray-medium">{detail}</p>}
     </div>
   );
 }

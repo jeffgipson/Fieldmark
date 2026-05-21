@@ -106,8 +106,8 @@ export default function InputCostsPage() {
   if (!field) return <p className="text-fm-alert">Field not found.</p>;
 
   return (
-    <div className="mx-auto max-w-6xl animate-fm-in">
-      <nav className="mb-6 flex flex-wrap items-center gap-1.5 text-sm" aria-label="Breadcrumb">
+    <div className="mx-auto max-w-6xl animate-fm-in max-lg:max-w-none">
+      <nav className="mb-3 flex flex-wrap items-center gap-1.5 text-sm" aria-label="Breadcrumb">
         <Link to="/farm" className="font-medium text-fm-gray-medium transition hover:text-fm-teal">
           My Farm
         </Link>
@@ -119,14 +119,16 @@ export default function InputCostsPage() {
         </span>
       </nav>
 
-      <div className="grid gap-8 xl:grid-cols-[minmax(0,22rem)_1fr] xl:items-start">
-        <FieldProfileCard
-          farmId={farm.id}
-          field={field}
-          farm={farm}
-          onFieldChange={handleFieldChange}
-        />
-        <div>
+      <div className="grid gap-6 max-lg:grid-cols-1 xl:grid-cols-[minmax(0,22rem)_1fr] xl:items-start xl:gap-8">
+        <div className="max-lg:order-2">
+          <FieldProfileCard
+            farmId={farm.id}
+            field={field}
+            farm={farm}
+            onFieldChange={handleFieldChange}
+          />
+        </div>
+        <div className="max-lg:order-1">
           <InputCostsPanel
             categories={INPUT_CATEGORIES}
             costs={costs}

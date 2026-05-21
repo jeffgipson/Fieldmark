@@ -2,6 +2,7 @@ import { BRAND, LOGO_SRC } from "../../constants/brand";
 
 /** Horizontal wordmark — size by width (brand minimum 120px). */
 const WIDTH = {
+  xs: "w-[6.5rem]",
   sm: "w-32",
   md: "w-40",
   lg: "w-48",

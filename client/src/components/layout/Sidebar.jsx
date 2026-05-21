@@ -1,34 +1,11 @@
 import { NavLink, useMatch } from "react-router-dom";
-import {
-  BarChart2,
-  FileText,
-  LayoutDashboard,
-  LifeBuoy,
-  MessageCircle,
-  Sprout,
-  TrendingUp,
-  Handshake,
-  Plug,
-  UserCircle
-} from "lucide-react";
+import { BarChart2, LifeBuoy, MessageCircle, UserCircle } from "lucide-react";
 import { useAuth } from "../../contexts/AuthContext";
+import { MAIN_NAV, TOOLS_NAV } from "../../constants/nav";
 import Logo from "../ui/Logo";
 import { BRAND } from "../../constants/brand";
 import { useDaleChat } from "../../contexts/DaleChatContext";
 import { useFarm } from "../../contexts/FarmContext";
-
-const MAIN_NAV = [
-  { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard, end: true },
-  { to: "/farm", label: "My Farm", icon: Sprout, end: true },
-  { to: "/scenarios", label: "Scenarios", icon: TrendingUp, end: true }
-];
-
-const TOOLS_NAV = [
-  { to: "/reports", label: "Reports", icon: FileText, end: true },
-  { to: "/resources", label: "Resources", icon: Handshake, end: true },
-  { to: "/integrations", label: "Integrations", icon: Plug, end: true }
-];
-
 function NavLinkItem({ to, label, icon: Icon, end = false }) {
   return (
     <NavLink

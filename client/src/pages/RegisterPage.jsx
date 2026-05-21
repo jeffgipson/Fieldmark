@@ -154,7 +154,7 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-fm-cream px-4 py-12">
+    <div className="fm-canvas flex min-h-screen min-h-[100dvh] items-center justify-center px-4 py-8 pb-[max(2rem,env(safe-area-inset-bottom))] pt-[max(2rem,env(safe-area-inset-top))] lg:py-12">
       <Card className="w-full max-w-2xl">
         <div className="mb-8 flex flex-col items-center text-center">
           <DaleAvatar variant="waving" size="lg" />

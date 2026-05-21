@@ -33,7 +33,9 @@ export function BenchmarkGroupedBar({ categories, cohortAvailable }) {
   return (
     <Card className="!p-5">
       <p className="fm-eyebrow">Cost comparison</p>
-      <p className="font-display mt-1 text-lg font-semibold text-fm-ink">You vs peers vs benchmark ($/ac)</p>
+      <p className="font-display mt-1 text-lg font-semibold text-fm-ink">
+        {cohortAvailable ? "You vs regional farms vs Extension ($/ac)" : "You vs MU Extension ($/ac)"}
+      </p>
       <div className="mt-4 w-full min-w-0">
         <ResponsiveContainer width="100%" height={280} minWidth={0}>
           <BarChart data={data} margin={{ top: 8, right: 8, left: 0, bottom: 0 }}>
@@ -47,8 +49,8 @@ export function BenchmarkGroupedBar({ categories, cohortAvailable }) {
             <Tooltip formatter={(v) => formatPerAcre(v)} />
             <Legend />
             <Bar dataKey="you" name="Your farm" fill="#0d8b8b" radius={[4, 4, 0, 0]} />
-            {cohortAvailable && <Bar dataKey="peers" name="Peer median" fill="#5caaa8" radius={[4, 4, 0, 0]} />}
-            <Bar dataKey="mu" name="Extension" fill="#9b9b9b" radius={[4, 4, 0, 0]} />
+            {cohortAvailable && <Bar dataKey="peers" name="Typical regional farm" fill="#5caaa8" radius={[4, 4, 0, 0]} />}
+            <Bar dataKey="mu" name="MU Extension" fill="#9b9b9b" radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>

@@ -3,17 +3,20 @@ import { Check, ChevronRight } from "lucide-react";
 import Card from "../ui/Card";
 import { SCENARIO_COPY } from "../../constants/scenarios";
 
-export default function ScenarioJourneySteps({ steps, nextHref, nextLabel }) {
+export default function ScenarioJourneySteps({ steps, nextHref, nextLabel, meta }) {
   return (
-    <Card variant="dale" className="mb-8 !p-0 overflow-hidden" hover={false}>
-      <div className="border-b border-fm-gray-light/80 bg-fm-teal-subtle/40 px-6 py-4">
+    <Card variant="dale" className="mb-6 !p-0 overflow-hidden lg:mb-8" hover={false}>
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-fm-gray-light/80 bg-fm-teal-subtle/40 px-4 py-3 lg:px-6 lg:py-4">
         <h2 className="font-display text-lg font-semibold text-fm-ink">
           {SCENARIO_COPY.journey.title}
         </h2>
+        {meta && (
+          <p className="text-xs font-semibold text-fm-charcoal/80">{meta}</p>
+        )}
       </div>
       <ol className="divide-y divide-fm-gray-light/80">
         {steps.map((step, index) => (
-          <li key={step.id} className="flex gap-4 px-6 py-4">
+          <li key={step.id} className="flex gap-4 px-4 py-4 lg:px-6">
             <div
               className={`mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-sm font-bold ${
                 step.done
@@ -51,10 +54,10 @@ export default function ScenarioJourneySteps({ steps, nextHref, nextLabel }) {
         ))}
       </ol>
       {nextHref && nextLabel && (
-        <div className="border-t border-fm-gray-light/80 bg-fm-surface px-6 py-4">
+        <div className="border-t border-fm-gray-light/80 bg-fm-surface px-4 py-3 lg:px-6 lg:py-4">
           <Link
             to={nextHref}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-fm-teal px-6 py-3 text-base font-bold text-white shadow-sm shadow-fm-teal/20 transition-all hover:bg-fm-teal-hover sm:w-auto"
+            className="inline-flex items-center justify-center gap-2 rounded-xl bg-fm-teal px-5 py-2.5 text-sm font-bold text-white shadow-sm shadow-fm-teal/20 transition-all hover:bg-fm-teal-hover"
           >
             {nextLabel}
             <ChevronRight className="h-5 w-5" aria-hidden />

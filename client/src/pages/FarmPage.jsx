@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import { Plus } from "lucide-react";
 import * as farmsApi from "../api/farms";
 import * as fieldsApi from "../api/fields";
 import FarmCoverPhoto from "../components/farm/FarmCoverPhoto";
@@ -160,7 +161,7 @@ export default function FarmPage() {
   if (!farm) {
     return (
       <div>
-        <PageHeader title="My Farm" subtitle="Set up your farm to start planning margins." />
+        <p className="mb-4 text-sm text-fm-gray-medium">Set up your farm to start planning margins.</p>
         {loading ? (
           <p className="text-fm-gray-medium">Loading farm…</p>
         ) : (
@@ -260,40 +261,46 @@ export default function FarmPage() {
 
   return (
     <div>
-      <PageHeader
-        title="My Farm"
-        subtitle={`${farm.name} · ${formatRegion(farm.region)} Missouri`}
-        action={
-          <div className="flex flex-wrap items-center gap-2">
-            {canAddField ? (
-              <Button type="button" onClick={openAddFieldModal}>
-                Add field
-              </Button>
-            ) : (
-              <Button type="button" variant="secondary" disabled>
-                Field limit reached
-              </Button>
-            )}
-            {showAddFarm && (
-              <Button type="button" variant="secondary" onClick={() => setAddFarmModalOpen(true)}>
-                Add farm
-              </Button>
-            )}
-            <Button variant="ghost" onClick={() => { setProfile(farm); setEditing(!editing); }}>
-              {editing ? "Cancel" : "Edit profile"}
-            </Button>
-          </div>
-        }
-      />
-
-      <Card className="mb-8 !p-0 overflow-hidden" hover={false}>
+      <div className="max-lg:-mx-4 max-lg:mb-4">
         <FarmCoverPhoto
           farm={farm}
+          className="[&_button]:max-lg:h-48 [&_button]:max-lg:rounded-none [&_button]:lg:h-44 [&_button]:lg:rounded-xl"
           onUpdated={(updated) => {
             setFarm(updated);
             refresh();
           }}
         />
+      </div>
+
+      <PageHeader
+        title={farm.name}
+        subtitle={`${formatRegion(farm.region)} Missouri`}
+        action={
+          <div className="flex flex-col items-end gap-1.5">
+            <button
+              type="button"
+              onClick={() => {
+                setProfile(farm);
+                setEditing(!editing);
+              }}
+              className="text-sm font-semibold text-fm-teal hover:underline"
+            >
+              {editing ? "Cancel" : "Edit profile"}
+            </button>
+            {showAddFarm && (
+              <button
+                type="button"
+                onClick={() => setAddFarmModalOpen(true)}
+                className="text-sm font-semibold text-fm-gray-medium hover:text-fm-charcoal"
+              >
+                Add farm
+              </button>
+            )}
+          </div>
+        }
+      />
+
+      <Card className="mb-8" hover={false}>
         <div className="p-6">
         {editing ? (
           <form onSubmit={saveProfile} className="grid gap-4 sm:grid-cols-2">
@@ -344,7 +351,23 @@ export default function FarmPage() {
 
       <FarmFinancialSummary summary={summary} primaryScenarioId={primaryScenario?.id} />
 
-      <h2 className="font-display mb-4 text-xl font-semibold">Fields</h2>
+      <div className="mb-4 flex items-center justify-between gap-3">
+        <h2 className="font-display text-xl font-semibold text-fm-ink">Fields</h2>
+        {canAddField ? (
+          <Button
+            type="button"
+            className="!px-4 !py-2 !text-sm"
+            onClick={openAddFieldModal}
+          >
+            <Plus size={16} aria-hidden />
+            Add field
+          </Button>
+        ) : (
+          <Button type="button" variant="secondary" className="!px-3 !py-2 !text-sm" disabled>
+            Field limit
+          </Button>
+        )}
+      </div>
       <div className="mb-6 space-y-3">
         {fields.length === 0 && (
           <p className="text-sm text-fm-gray-medium">

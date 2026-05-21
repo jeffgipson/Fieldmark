@@ -67,9 +67,15 @@ export const DASHBOARD_WIDGETS = {
   },
   "dashboard-peer-widget": {
     id: "dashboard-peer-widget",
-    label: "Peer Snapshot",
-    description: "A snapshot of your costs compared to your peers",
+    label: "Regional comparison",
+    description: "Where your costs and margins sit among farms like yours",
     span: "full"
+  },
+  "metrics-peer-position": {
+    id: "metrics-peer-position",
+    label: "Regional position",
+    description: "Margin percentile vs farms in your region",
+    span: "metric"
   }
 };
 
@@ -85,10 +91,11 @@ export function defaultWidgetOrder({ hasFields, hasFindings, hasMetrics, hasPrio
       "metrics-operating-cost",
       "metrics-base-margin",
       "metrics-downside-margin",
+      "metrics-peer-position",
       "metrics-farm-acres",
+      "dashboard-peer-widget",
       "dashboard-margin-chart",
-      "dashboard-cost-chart",
-      "dashboard-peer-widget"
+      "dashboard-cost-chart"
     );
   }
    order.push("quick-actions");

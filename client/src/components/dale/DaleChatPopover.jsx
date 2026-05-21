@@ -52,7 +52,7 @@ export default function DaleChatPopover() {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed z-50 animate-fm-in rounded-xl border border-fm-gray-light bg-fm-surface shadow-[var(--shadow-fm-panel)] max-lg:inset-x-3 max-lg:bottom-[calc(4.25rem+env(safe-area-inset-bottom,0px))] max-lg:top-3 max-lg:h-auto max-lg:w-auto lg:bottom-24 lg:right-6 lg:h-[640px] lg:w-[min(520px,calc(100vw-1.5rem))]">
+    <div className="fixed inset-0 z-[65] flex animate-fm-in flex-col bg-fm-surface lg:inset-auto lg:bottom-24 lg:right-6 lg:z-50 lg:h-[640px] lg:w-[min(520px,calc(100vw-1.5rem))] lg:rounded-xl lg:border lg:border-fm-gray-light lg:shadow-[var(--shadow-fm-panel)] lg:pt-0 pt-[env(safe-area-inset-top,0px)]">
       <div className="flex h-full flex-col">
         <header className="relative flex items-center gap-3 border-b border-fm-gray-light px-4 py-3">
           <DaleAvatar variant="avatar" size="sm" />
@@ -122,7 +122,7 @@ export default function DaleChatPopover() {
         )}
 
         <form
-          className="flex items-center gap-2 border-t border-fm-gray-light bg-white p-3"
+          className="flex items-center gap-2 border-t border-fm-gray-light bg-white p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] lg:pb-3"
           onSubmit={(e) => {
             e.preventDefault();
             handleSend(input);

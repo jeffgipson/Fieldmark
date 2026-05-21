@@ -4,7 +4,6 @@ import * as integrationsApi from "../api/integrations";
 import IntegrationCard from "../components/integrations/IntegrationCard";
 import Card from "../components/ui/Card";
 import LoadingDale from "../components/ui/LoadingDale";
-import PageHeader from "../components/ui/PageHeader";
 import { DEFAULT_CATEGORY_LABEL, STATUS_FILTER_OPTIONS } from "../constants/integrations";
 import { friendlyError } from "../utils/errors";
 
@@ -63,7 +62,6 @@ export default function IntegrationsPage() {
   if (error) {
     return (
       <div>
-        <PageHeader eyebrow="Connections" title="Integration center" />
         <Card variant="danger">
           <p className="text-sm text-fm-charcoal">{error}</p>
         </Card>
@@ -73,13 +71,7 @@ export default function IntegrationsPage() {
 
   return (
     <div>
-      <PageHeader
-        eyebrow="Connections"
-        title="Integration center"
-        subtitle="Data sources and tools that power your margins. Active integrations work today; others are on the roadmap."
-      />
-
-      <div className="mb-8 grid gap-4 sm:grid-cols-3">
+      <div className="mb-6 grid gap-4 grid-cols-3 max-lg:grid-cols-3">
         <Card hover={false} className="border-l-[3px] border-l-fm-teal">
           <p className="text-2xl font-bold text-fm-ink">{counts.active}</p>
           <p className="text-sm text-fm-charcoal">Active today</p>

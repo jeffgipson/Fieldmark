@@ -4,10 +4,10 @@ import DaleDisclaimer from "./DaleDisclaimer";
 
 export default function DaleWelcome({ onContinue }) {
   return (
-    <div className="mx-auto flex max-w-lg flex-col items-center px-6 py-10 text-center">
+    <div className="mx-auto flex max-w-lg flex-col items-center max-lg:px-0 max-lg:py-4 lg:px-6 lg:py-10 text-center">
       <DaleAvatar variant="waving" size="xl" showName />
-      <h1 className="font-display mt-4 text-4xl font-bold">{DALE_COPY.welcome.title}</h1>
-      <p className="mt-4 text-lg leading-relaxed text-fm-charcoal">{DALE_COPY.welcome.message}</p>
+      <h1 className="font-display mt-4 text-2xl font-bold lg:text-4xl">{DALE_COPY.welcome.title}</h1>
+      <p className="mt-4 text-base leading-relaxed text-fm-charcoal lg:text-lg">{DALE_COPY.welcome.message}</p>
       {DALE_COPY.welcome.liveResearchNote && (
         <p className="mt-3 text-sm text-fm-gray-medium">{DALE_COPY.welcome.liveResearchNote}</p>
       )}

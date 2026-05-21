@@ -5,21 +5,22 @@ export function buildDashboardFindings(scenario) {
   const summary = scenario?.peer_comparison?.summary;
   const pc = summary?.categories;
   const cohortAvailable = summary?.cohort?.available;
+  const cohortSize = summary?.cohort?.size;
   if (!pc) return [];
   const items = [];
+
+  const margin = summary?.margin_comparison;
+  if (margin?.available && margin.user_base_margin_per_acre != null && cohortAvailable) {
+    items.push(
+      `Among ${cohortSize} farms like yours, base margin ${formatPerAcre(margin.user_base_margin_per_acre)} vs typical ${formatPerAcre(margin.peer_median_base_margin_per_acre)} (${Math.round(margin.base_margin_peer_percentile || 0)}th percentile).`
+    );
+  }
 
   const fert = pc.fertilizer;
   const fertDiff = primaryCategoryDiff(fert, cohortAvailable);
   if (fertDiff && fertDiff.diff > 0) {
     items.push(
       `Fertilizer runs $${Math.abs(fertDiff.diff).toFixed(0)}/ac above the ${fertDiff.reference} — about $${Math.abs(fertDiff.impact || 0).toLocaleString()} across the farm.`
-    );
-  }
-
-  const margin = summary?.margin_comparison;
-  if (margin?.available && margin.user_base_margin_per_acre != null) {
-    items.push(
-      `Base margin ${formatPerAcre(margin.user_base_margin_per_acre)} vs peer median ${formatPerAcre(margin.peer_median_base_margin_per_acre)} (${Math.round(margin.base_margin_peer_percentile || 0)}th percentile).`
     );
   }
 

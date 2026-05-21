@@ -11,7 +11,6 @@ import DaleAvatar from "../components/dale/DaleAvatar";
 import Card from "../components/ui/Card";
 import CostStatusBadge from "../components/ui/CostStatusBadge";
 import LoadingDale from "../components/ui/LoadingDale";
-import PageHeader from "../components/ui/PageHeader";
 import { useFarm } from "../contexts/FarmContext";
 import {
   cohortSizeLabel,
@@ -31,6 +30,8 @@ import {
 } from "../utils/format";
 import { friendlyError } from "../utils/errors";
 import RecommendationsPanel from "../components/vendors/RecommendationsPanel";
+import PeerCohortBanner from "../components/peers/PeerCohortBanner";
+import PageHeader from "../components/ui/PageHeader";
 
 const ROWS = ["seed", "fertilizer", "chemicals", "labor", "total"];
 
@@ -90,20 +91,23 @@ export default function BenchmarkPage() {
   const worstDiff = worst ? primaryCategoryDiff(worst[1], cohortAvailable) : null;
   const cohortLabel = cohortSizeLabel(cohort);
 
+  const contextLine = [
+    `${formatRegion(farm?.region)} Missouri`,
+    formatCommodity(farm?.primary_commodity),
+    "2026",
+    cohortLabel
+  ]
+    .filter(Boolean)
+    .join(" · ");
+
   return (
     <div>
       <PageHeader
-        title="Your Cost Position"
-        subtitle={`${formatRegion(farm?.region)} Missouri | ${formatCommodity(farm?.primary_commodity)} | 2026${cohortLabel ? ` | ${cohortLabel}` : ""}`}
+        title="Your cost position"
+        subtitle={contextLine}
       />
 
-      {!cohortAvailable && (
-        <Card variant="alert" className="mb-6">
-          <p className="text-sm text-fm-charcoal">
-            Not enough peer farms in your region yet for anonymized comparison — showing Extension benchmarks only.
-          </p>
-        </Card>
-      )}
+      <PeerCohortBanner cohort={cohort} region={farm?.region} commodity={farm?.primary_commodity} />
 
       {!acreage.reconciled && (
         <Card variant="alert" className="mb-6">
@@ -115,6 +119,12 @@ export default function BenchmarkPage() {
         </Card>
       )}
 
+      {cohortAvailable && margin?.available && (
+        <div className="mb-6">
+          <MarginRangeChart margin={margin} />
+        </div>
+      )}
+
       <BenchmarkGroupedBar categories={categories} cohortAvailable={cohortAvailable} />
 
       {costTrends?.years?.length > 0 && (
@@ -123,19 +133,17 @@ export default function BenchmarkPage() {
         </div>
       )}
 
-      {margin?.available && (
-        <div className="mt-6">
-          <MarginRangeChart margin={margin} />
-        </div>
-      )}
-
-      <Card className="mt-6 overflow-x-auto">
-        <table className="w-full text-sm">
+      <Card className="mt-6 overflow-x-auto -mx-1 max-lg:rounded-lg lg:mx-0">
+        <p className="fm-eyebrow mb-3">Detail</p>
+        <p className="font-display mb-4 text-lg font-semibold text-fm-ink">
+          {cohortAvailable ? "Your farm vs regional farms vs Extension" : "Your farm vs MU Extension"}
+        </p>
+        <table className="w-full min-w-[32rem] text-sm">
           <thead>
             <tr className="border-b text-left text-xs font-bold uppercase text-fm-gray-medium">
               <th className="py-2">Category</th>
               <th className="py-2">Your Farm</th>
-              {cohortAvailable && <th className="py-2">Peer Median</th>}
+              {cohortAvailable && <th className="py-2">Typical farm</th>}
               <th className="py-2">Extension</th>
               <th className="py-2">Difference</th>
               <th className="py-2">Status</th>
@@ -177,7 +185,7 @@ export default function BenchmarkPage() {
         </Card>
       )}
 
-      {margin?.available && (
+      {margin?.available && !cohortAvailable && (
         <Card className="mt-6">
           <p className="fm-eyebrow">Margin position</p>
           <p className="font-display mt-1 text-lg font-semibold text-fm-ink">Base case vs peer farms</p>
@@ -205,28 +213,31 @@ export default function BenchmarkPage() {
         </Card>
       )}
 
-      {(fieldComparisons.length > 0 || fields.length > 0) && (
-        <Card className="mt-6 overflow-x-auto">
+      {(fieldComparisons.length > 0 || fields.length > 0) && cohortAvailable && (
+        <Card className="mt-6 overflow-x-auto -mx-1 max-lg:rounded-lg lg:mx-0">
           <p className="fm-eyebrow">Field breakdown</p>
-          <p className="font-display mt-1 text-lg font-semibold text-fm-ink">Per-field vs peer fields</p>
+          <p className="font-display mt-1 text-lg font-semibold text-fm-ink">Per-field vs regional fields</p>
           <table className="mt-4 w-full text-sm">
             <thead>
               <tr className="border-b text-left text-xs font-bold uppercase text-fm-gray-medium">
                 <th className="py-2">Field</th>
                 <th className="py-2">Category</th>
                 <th className="py-2">Your cost</th>
-                <th className="py-2">Peer median</th>
+                <th className="py-2">Typical field</th>
                 <th className="py-2">Percentile</th>
               </tr>
             </thead>
             <tbody>
               {fieldComparisons.flatMap((field) => {
                 if (field.excluded_reason === "no_cost_data") {
+                  const message = cohortAvailable
+                    ? "No cost data entered — add costs to include this field."
+                    : "Regional field comparison available once your peer group is large enough.";
                   return (
                     <tr key={field.field_id} className="border-b border-fm-gray-light">
                       <td className="py-2 font-medium">{field.field_name}</td>
                       <td colSpan={4} className="py-2 italic text-fm-gray-medium">
-                        No cost data entered — add costs to include this field in peer comparison.
+                        {message}
                       </td>
                     </tr>
                   );

@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import LocalDevBar from "./components/dev/LocalDevBar";
 import AppShell from "./components/layout/AppShell";
 import ProtectedRoute from "./components/layout/ProtectedRoute";
+import InstallBanner from "./components/pwa/InstallBanner";
 import { AuthProvider } from "./contexts/AuthContext";
 import { DaleChatProvider } from "./contexts/DaleChatContext";
 import { FarmProvider } from "./contexts/FarmContext";
@@ -27,6 +28,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <LocalDevBar />
+      <InstallBanner />
       <AuthProvider>
         <FarmProvider>
           <DaleChatProvider>

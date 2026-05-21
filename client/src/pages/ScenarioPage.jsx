@@ -9,11 +9,11 @@ import { MarginWaterfallChart } from "../components/charts/MarginWaterfallChart"
 import { CashTimelineChart } from "../components/charts/CashTimelineChart";
 import { SensitivityHeatmap } from "../components/charts/SensitivityHeatmap";
 import DaleBriefingCard from "../components/dale/DaleBriefingCard";
+import { PeerSnapshot } from "../components/charts/PeerSnapshot";
 import Button from "../components/ui/Button";
 import Card from "../components/ui/Card";
 import Input, { Label } from "../components/ui/Input";
 import LoadingDale from "../components/ui/LoadingDale";
-import PageHeader from "../components/ui/PageHeader";
 import { useFarm } from "../contexts/FarmContext";
 import { formatCurrency, formatPerAcre } from "../utils/format";
 import { friendlyError } from "../utils/errors";
@@ -218,7 +218,12 @@ export default function ScenarioPage() {
 
   return (
     <div>
-      <PageHeader title="Scenario modeling" subtitle={scenario?.name} />
+      <Link
+        to="/scenarios"
+        className="mb-3 inline-flex items-center gap-1 text-sm font-bold text-fm-teal hover:underline"
+      >
+        ← Scenarios
+      </Link>
       <div className="grid gap-8 lg:grid-cols-2">
         <Card>
           <form onSubmit={handleCalculate} className="space-y-4">
@@ -228,10 +233,10 @@ export default function ScenarioPage() {
             </div>
             <div>
               <Label>How do you want to plan?</Label>
-              <div className="flex">
+              <div className="flex max-lg:flex-col lg:flex-row">
                 <button
                   type="button"
-                  className={`rounded-l-lg border px-3 py-2 text-sm font-bold ${
+                  className={`max-lg:rounded-lg lg:rounded-l-lg border px-3 py-2.5 text-sm font-bold ${
                     form.planning_mode !== "goal"
                       ? "border-fm-teal bg-fm-teal text-white"
                       : "border-fm-gray-light bg-white text-fm-charcoal"
@@ -242,7 +247,7 @@ export default function ScenarioPage() {
                 </button>
                 <button
                   type="button"
-                  className={`rounded-r-lg border border-l-0 px-3 py-2 text-sm font-bold ${
+                  className={`max-lg:rounded-lg max-lg:border-t-0 lg:rounded-r-lg border lg:border-l-0 px-3 py-2.5 text-sm font-bold ${
                     form.planning_mode === "goal"
                       ? "border-fm-teal bg-fm-teal text-white"
                       : "border-fm-gray-light bg-white text-fm-charcoal"
@@ -387,9 +392,23 @@ export default function ScenarioPage() {
       {results && (
         <DecisionLogForm scenarioId={scenarioId} fields={fields} fieldRows={results.by_field} />
       )}
-      <Link to={`/scenarios/${scenarioId}/benchmark`} className="mt-6 inline-block font-bold text-fm-teal">
-        View benchmark comparison →
-      </Link>
+      {scenario?.peer_comparison?.summary && (
+        <div className="mt-8">
+          <PeerSnapshot
+            categories={scenario.peer_comparison.summary.categories}
+            cohort={scenario.peer_comparison.summary.cohort}
+            margin={scenario.peer_comparison.summary.margin_comparison}
+            region={farm?.region}
+            commodity={farm?.primary_commodity}
+            scenarioId={scenarioId}
+          />
+        </div>
+      )}
+      {!scenario?.peer_comparison?.summary && results && (
+        <Link to={`/scenarios/${scenarioId}/benchmark`} className="mt-6 inline-block font-bold text-fm-teal">
+          Compare to regional farms →
+        </Link>
+      )}
     </div>
   );
 }

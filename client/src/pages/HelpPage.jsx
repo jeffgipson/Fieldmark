@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import Card from "../components/ui/Card";
-import PageHeader from "../components/ui/PageHeader";
 import { BRAND } from "../constants/brand";
 
 const FAQ = [
@@ -29,12 +28,7 @@ const FAQ = [
 export default function HelpPage() {
   return (
     <div className="mx-auto max-w-2xl">
-      <PageHeader
-        eyebrow="Support"
-        title="Help & support"
-        subtitle="Quick answers before you talk to us"
-      />
-
+      <h1 className="sr-only">Help and support</h1>
       <div className="space-y-4">
         {FAQ.map((item) => (
           <Card key={item.q}>

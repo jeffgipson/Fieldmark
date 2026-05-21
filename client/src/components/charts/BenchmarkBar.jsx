@@ -26,14 +26,14 @@ export default function BenchmarkBar({
   }, [farmPct, delayMs]);
 
   const labelParts = [`You ${formatPerAcre(farm)}`];
-  if (peer != null) labelParts.push(`Peers ${formatPerAcre(peer)}`);
-  if (bench) labelParts.push(`Benchmark ${formatPerAcre(bench)}`);
+  if (peer != null) labelParts.push(`Regional ${formatPerAcre(peer)}`);
+  if (bench) labelParts.push(`Extension ${formatPerAcre(bench)}`);
 
   return (
     <div className="space-y-2">
-      <div className="flex justify-between gap-2 text-sm">
+      <div className="flex flex-col gap-1 text-sm max-lg:items-start lg:flex-row lg:justify-between lg:gap-2">
         <span className="font-bold text-fm-charcoal">{label}</span>
-        <span className="text-right text-fm-gray-medium">{labelParts.join(" · ")}</span>
+        <span className="text-fm-gray-medium max-lg:text-xs lg:text-right">{labelParts.join(" · ")}</span>
       </div>
       <div className="relative h-2 overflow-hidden rounded bg-fm-gray-light">
         {bench > 0 && (
@@ -47,7 +47,7 @@ export default function BenchmarkBar({
           <div
             className="absolute top-0 h-2 rounded bg-fm-teal/30 transition-all duration-600 ease-out"
             style={{ width: `${peerPct}%` }}
-            title={`Peer median ${formatPerAcre(peer)}`}
+            title={`Typical regional farm ${formatPerAcre(peer)}`}
           />
         )}
         <div

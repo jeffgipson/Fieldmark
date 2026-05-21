@@ -6,14 +6,14 @@ import Sidebar from "./Sidebar";
 
 export default function AppShell() {
   return (
-    <div className="fm-canvas min-h-screen">
+    <div className="fm-canvas min-h-screen min-h-[100dvh]">
       <Sidebar />
-      <MobileNav />
-      <main className="min-h-screen px-4 pb-[calc(4.5rem+env(safe-area-inset-bottom,0px))] pt-4 lg:ml-60 lg:px-10 lg:py-8 lg:pb-8">
-        <div className="app-shell-panel mx-auto max-w-[960px] animate-fm-in">
+      <main className="min-h-screen max-lg:px-4 max-lg:pt-[max(0.75rem,env(safe-area-inset-top,0px))] max-lg:pb-[calc(4.25rem+env(safe-area-inset-bottom,0px))] lg:ml-60 lg:px-10 lg:py-8">
+        <div className="fm-app-content mx-auto max-w-[960px] animate-fm-in lg:min-h-[calc(100vh-4rem)] lg:px-10 lg:py-10">
           <Outlet />
         </div>
       </main>
+      <MobileNav />
       <DaleChatPopover />
       <DaleChatWidget />
     </div>

@@ -47,13 +47,13 @@ export default function PrioritiesOnboarding({ onComplete, onSkip, saving }) {
   const selectedCount = slots.filter((s) => s.selected).length;
 
   return (
-    <div className="mx-auto flex max-w-xl flex-col px-6 py-10">
+    <div className="mx-auto flex max-w-xl flex-col max-lg:px-0 max-lg:py-2 lg:px-6 lg:py-10">
       <div className="mb-6 flex flex-col items-center text-center">
         <DaleAvatar variant="avatar" size="lg" />
-        <h1 className="font-display mt-4 text-3xl font-bold text-fm-ink">
+        <h1 className="font-display mt-4 text-2xl font-bold text-fm-ink lg:text-3xl">
           What is on your mind this season?
         </h1>
-        <p className="mt-3 text-lg leading-relaxed text-fm-charcoal">
+        <p className="mt-3 text-base leading-relaxed text-fm-charcoal lg:text-lg">
           Pick up to three. Dale will focus here first — margins, benchmarks, and local resources when they fit.
         </p>
       </div>
@@ -109,11 +109,11 @@ export default function PrioritiesOnboarding({ onComplete, onSkip, saving }) {
           </div>
         ))}
 
-        <div className="flex flex-wrap gap-3 pt-2">
-          <Button type="submit" disabled={saving || selectedCount === 0}>
+        <div className="flex flex-col gap-3 pt-2 max-lg:[&_button]:w-full sm:flex-row sm:flex-wrap">
+          <Button type="submit" disabled={saving || selectedCount === 0} className="max-lg:w-full">
             {saving ? "Saving..." : "Save priorities"}
           </Button>
-          <Button type="button" variant="ghost" onClick={onSkip} disabled={saving}>
+          <Button type="button" variant="ghost" onClick={onSkip} disabled={saving} className="max-lg:w-full">
             Skip for now
           </Button>
         </div>

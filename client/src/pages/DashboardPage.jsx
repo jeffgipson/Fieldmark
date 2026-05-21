@@ -1,16 +1,17 @@
 import { useMemo, useState } from "react";
 import DaleWelcome from "../components/dale/DaleWelcome";
 import PrioritiesOnboarding from "../components/priorities/PrioritiesOnboarding";
-import DashboardCustomizeBar from "../components/dashboard/DashboardCustomizeBar";
+import DashboardCustomizePanel, {
+  DashboardCustomizeToggle
+} from "../components/dashboard/DashboardCustomizeBar";
+import CompactToolbar from "../components/ui/CompactToolbar";
 import DashboardWidgetGrid from "../components/dashboard/DashboardWidgetGrid";
 import LoadingDale from "../components/ui/LoadingDale";
-import PageHeader from "../components/ui/PageHeader";
 import { useAuth } from "../contexts/AuthContext";
 import { useDaleChat } from "../contexts/DaleChatContext";
 import { useFarm } from "../contexts/FarmContext";
 import useDashboardLayout from "../hooks/useDashboardLayout";
 import { buildDashboardFindings } from "../utils/dashboardFindings";
-import { daysUntilMarch1 } from "../utils/format";
 
 export default function DashboardPage() {
   const { openChat } = useDaleChat();
@@ -28,7 +29,6 @@ export default function DashboardPage() {
     setPriorities
   } = useFarm();
   const [prioritiesSaving, setPrioritiesSaving] = useState(false);
-  const days = daysUntilMarch1();
   const hasData = fields.length > 0 && primaryScenario?.results;
   const findings = buildDashboardFindings(primaryScenario);
 
@@ -104,16 +104,16 @@ export default function DashboardPage() {
   };
 
   return (
-    <div>
-      <PageHeader
-        eyebrow="Dashboard"
-        title={`Good morning, ${user?.first_name || "farmer"}.`}
-        subtitle={`${new Date().toLocaleDateString(undefined, { weekday: "long", month: "long", day: "numeric" })} · ${days} days until March 1`}
-      />
+    <div className="relative">
+      <CompactToolbar>
+        <DashboardCustomizeToggle
+          customizing={customizing}
+          onToggleCustomize={() => setCustomizing((v) => !v)}
+        />
+      </CompactToolbar>
 
-      <DashboardCustomizeBar
+      <DashboardCustomizePanel
         customizing={customizing}
-        onToggleCustomize={() => setCustomizing((v) => !v)}
         availableToAdd={availableToAdd}
         onAddWidget={addWidget}
         onReset={resetLayout}

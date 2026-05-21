@@ -69,26 +69,26 @@ export default function VendorProfilePage() {
         <ArrowLeft size={16} /> All resources
       </Link>
 
-      <header className="mb-10 flex flex-wrap items-start justify-between gap-4 border-b border-fm-gray-light/80 pb-8">
-        <div className="flex min-w-0 flex-1 items-start gap-4">
+      <Card className="mb-6 !p-4" hover={false}>
+        <div className="flex items-start gap-3">
           <BrandLogo
             logoUrl={vendorLogoUrl(vendor)}
             icon={vendorCategoryIcon(vendor.category)}
             size="lg"
           />
-          <div className="min-w-0">
-            <p className="fm-eyebrow mb-2">{categoryLabel(vendor.category)}</p>
-            <h1 className="font-display text-3xl font-bold tracking-tight text-fm-ink md:text-4xl">
+          <div className="min-w-0 flex-1">
+            <p className="fm-eyebrow mb-1">{categoryLabel(vendor.category)}</p>
+            <h1 className="font-display text-xl font-bold tracking-tight text-fm-ink lg:text-2xl">
               {vendor.name}
             </h1>
             {(vendor.full_address || vendor.city) && (
-              <p className="mt-3 text-lg leading-relaxed text-fm-charcoal/90">
+              <p className="mt-1.5 text-sm text-fm-gray-medium">
                 {vendor.full_address || `${vendor.city}, ${vendor.state}`}
               </p>
             )}
           </div>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="mt-3 flex flex-wrap items-center gap-2">
           {vendor.partner && (
             <span className="rounded-full bg-fm-gold/15 px-3 py-1 text-xs font-bold uppercase tracking-wide text-fm-gold">
               Partner
@@ -98,15 +98,15 @@ export default function VendorProfilePage() {
             type="button"
             onClick={() => toggleFavorite(vendor.id)}
             aria-label={favorited ? "Remove from favorites" : "Add to favorites"}
-            className="inline-flex items-center gap-2 rounded-full border border-fm-gray-light px-4 py-2 text-sm font-bold text-fm-teal"
+            className="inline-flex items-center gap-1.5 rounded-full border border-fm-gray-light px-3 py-1.5 text-xs font-bold text-fm-teal"
           >
-            <Heart size={18} className={favorited ? "fill-fm-alert text-fm-alert" : ""} />
+            <Heart size={16} className={favorited ? "fill-fm-alert text-fm-alert" : ""} />
             {favorited ? "Favorited" : "Favorite"}
           </button>
         </div>
-      </header>
+      </Card>
 
-      <p className="mb-8 text-sm text-fm-gray-medium">
+      <p className="mb-6 text-xs text-fm-gray-medium">
         Fieldmark lists local businesses for your research. This is not an endorsement — verify services and pricing
         directly.
       </p>

@@ -10,7 +10,6 @@ import Button from "../components/ui/Button";
 import Card from "../components/ui/Card";
 import Input, { Label } from "../components/ui/Input";
 import LoadingDale from "../components/ui/LoadingDale";
-import PageHeader from "../components/ui/PageHeader";
 import { SCENARIO_COPY } from "../constants/scenarios";
 import { useFarm } from "../contexts/FarmContext";
 import { buildJourneySteps } from "../utils/scenarioProgress";
@@ -88,21 +87,11 @@ export default function ScenariosPage() {
 
   return (
     <div className="mx-auto max-w-4xl animate-fm-in">
-      <PageHeader
-        eyebrow={SCENARIO_COPY.page.eyebrow}
-        title={SCENARIO_COPY.page.title}
-        subtitle={SCENARIO_COPY.page.subtitle}
-        action={
-          <p className="rounded-xl border border-fm-gold/40 bg-fm-gold-muted px-4 py-2 text-sm font-semibold text-fm-charcoal">
-            {daysToMarch} days until March 1
-          </p>
-        }
-      />
-
       <ScenarioJourneySteps
         steps={journey.steps}
         nextHref={journey.nextHref}
         nextLabel={journey.nextLabel}
+        meta={`${daysToMarch} days until March 1`}
       />
 
       {!hasScenarios ? (

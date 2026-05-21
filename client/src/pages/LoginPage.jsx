@@ -81,7 +81,7 @@ export default function LoginPage() {
   if (isAuthenticated) return <Navigate to="/dashboard" replace />;
 
   return (
-    <div className="fm-canvas flex min-h-screen items-center justify-center px-4 py-12">
+    <div className="fm-canvas flex min-h-screen min-h-[100dvh] items-center justify-center px-4 py-8 pb-[max(2rem,env(safe-area-inset-bottom))] pt-[max(2rem,env(safe-area-inset-top))] lg:py-12">
       <Card className="w-full max-w-md !shadow-[var(--shadow-fm-panel)]" hover={false}>
         <div className="mb-8 flex flex-col items-center text-center">
           <Logo size="md" />

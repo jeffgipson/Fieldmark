@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import * as reportsApi from "../api/reports";
 import * as scenariosApi from "../api/scenarios";
 import { DALE_COPY } from "../constants/dale";
@@ -11,7 +11,6 @@ import Button from "../components/ui/Button";
 import Card from "../components/ui/Card";
 import ReportGeneratingState from "../components/dale/ReportGeneratingState";
 import LoadingDale from "../components/ui/LoadingDale";
-import PageHeader from "../components/ui/PageHeader";
 import { BRAND } from "../constants/brand";
 import Logo from "../components/ui/Logo";
 import { useFarm } from "../contexts/FarmContext";
@@ -142,7 +141,14 @@ export default function ReportPage() {
   }, [loadReport]);
 
   if (!scenarioId) {
-    return <PageHeader title="Reports" subtitle="Create a scenario first to generate a lender report." />;
+    return (
+      <Card>
+        <p className="text-fm-charcoal">Create a scenario first to generate a lender report.</p>
+        <Link to="/scenarios" className="mt-3 inline-block text-sm font-bold text-fm-teal hover:underline">
+          Go to scenarios →
+        </Link>
+      </Card>
+    );
   }
 
   if (loading && !report) {
@@ -152,7 +158,7 @@ export default function ReportPage() {
   if (generating) {
     return (
       <div>
-        <PageHeader title="Lender report" subtitle="Dale is working on this in the background." />
+        <p className="mb-4 text-sm text-fm-gray-medium">Dale is preparing your lender report…</p>
         <ReportGeneratingState status={jobStatus} pollCount={pollCount} />
       </div>
     );
@@ -166,37 +172,26 @@ export default function ReportPage() {
   const riskFlags = formatReportList(report?.risk_flags);
   const recommendations = formatReportList(report?.recommendations);
 
+  const reportBtnClass = "!shrink-0 !px-3 !py-2 !text-sm whitespace-nowrap";
+
+  function ReportActionsBar() {
+    return (
+      <div className="flex gap-2 overflow-x-auto pb-0.5 print:hidden max-lg:-mx-1 lg:flex-col lg:overflow-visible lg:min-w-[11rem]">
+        <Button variant="secondary" className={reportBtnClass} onClick={handleGenerate}>
+          {generateLabel}
+        </Button>
+        <Button variant="secondary" className={reportBtnClass} onClick={handleEmailReport} disabled={emailing}>
+          {emailing ? "Sending…" : emailStatus ? "Sent ✓" : "Email"}
+        </Button>
+        <Button className={reportBtnClass} onClick={() => window.print()}>
+          Print / PDF
+        </Button>
+      </div>
+    );
+  }
+
   return (
     <div className="print:bg-white">
-      <PageHeader
-        title="Lender report"
-        action={
-          reportComplete ? (
-            <div className="flex flex-col items-end gap-2 print:hidden">
-              <div className="flex flex-wrap justify-end gap-2">
-                <Button variant="secondary" onClick={handleGenerate}>
-                  {generateLabel}
-                </Button>
-                <Button variant="secondary" onClick={handleEmailReport} disabled={emailing}>
-                  {emailing ? "Sending…" : emailStatus ? "Sent ✓" : "Email me this report"}
-                </Button>
-                <Button onClick={() => window.print()}>Print / PDF</Button>
-              </div>
-              {emailStatus && (
-                <p className="text-sm font-medium text-fm-success" role="status">
-                  {emailStatus}
-                </p>
-              )}
-              {error && (
-                <p className="text-sm text-fm-alert" role="alert">
-                  {error}
-                </p>
-              )}
-            </div>
-          ) : null
-        }
-      />
-
       {emailStatus && reportComplete && (
         <Card className="mb-4 border-fm-success/30 bg-fm-success/5 print:hidden">
           <p className="text-sm font-medium text-fm-success" role="status">
@@ -205,33 +200,57 @@ export default function ReportPage() {
         </Card>
       )}
 
+      {error && reportComplete && (
+        <p className="mb-4 text-sm text-fm-alert print:hidden" role="alert">
+          {error}
+        </p>
+      )}
+
       {reportComplete ? (
-        <Card className="print:shadow-none">
-          <header className="flex items-start gap-4 border-b border-fm-gray-light pb-6">
-            <Logo size="lg" />
-            <div>
-              <div className="flex items-center gap-2">
-                <DaleAvatar variant="avatar" size="sm" />
-                <div>
-                  <p className="text-sm font-bold text-fm-teal">{DALE_COPY.report.header.preparedBy}</p>
-                  <p className="text-xs text-fm-gray-medium">{DALE_COPY.report.header.subtitle}</p>
-                  <p className="text-xs text-fm-gray-medium">{DALE_COPY.report.header.attribution}</p>
+        <Card className="print:shadow-none max-lg:p-4">
+          <header className="border-b border-fm-gray-light pb-4 max-lg:pt-0 lg:pb-5">
+            <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between lg:gap-8">
+              <div className="flex min-w-0 flex-1 flex-col gap-3 lg:flex-row lg:items-start lg:gap-5">
+                <Logo
+                  size="sm"
+                  className="hidden w-36 shrink-0 print:mb-4 print:block lg:mb-0 lg:block lg:w-48"
+                />
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-2.5">
+                    <DaleAvatar variant="avatar" size="sm" className="!items-start shrink-0" />
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs font-bold leading-snug text-fm-teal">
+                        {DALE_COPY.report.header.preparedBy}
+                      </p>
+                      <p className="text-[0.65rem] leading-snug text-fm-gray-medium sm:text-xs">
+                        {DALE_COPY.report.header.subtitle}
+                      </p>
+                      <p className="mt-0.5 text-[0.65rem] leading-snug text-fm-gray-medium sm:text-xs">
+                        {DALE_COPY.report.header.attribution}
+                      </p>
+                    </div>
+                  </div>
+                  <h1 className="font-display mt-2 text-xl font-bold text-fm-ink lg:mt-3 lg:text-2xl">
+                    {farm?.name}
+                  </h1>
+                  <p className="mt-1 text-sm leading-snug text-fm-gray-medium">
+                    {formatAcres(farm?.total_acres)} · {farm?.county} · {formatRegion(farm?.region)} ·{" "}
+                    {formatCommodity(farm?.primary_commodity)} · Season 2026
+                  </p>
+                  {report.generated_at && (
+                    <p className="mt-0.5 text-xs text-fm-gray-medium">
+                      Generated {new Date(report.generated_at).toLocaleDateString()}
+                    </p>
+                  )}
                 </div>
               </div>
-              <p className="mt-2 font-display text-xl font-bold">{farm?.name}</p>
-              <p className="text-sm text-fm-gray-medium">
-                {formatAcres(farm?.total_acres)} · {farm?.county} · {formatRegion(farm?.region)} ·{" "}
-                {formatCommodity(farm?.primary_commodity)} · Season 2026
-              </p>
-              {report.generated_at && (
-                <p className="text-xs text-fm-gray-medium mt-1">
-                  Generated {new Date(report.generated_at).toLocaleDateString()}
-                </p>
-              )}
+              <div className="shrink-0 border-t border-fm-gray-light/80 pt-3 max-lg:-mx-1 lg:border-t-0 lg:pt-0">
+                <ReportActionsBar />
+              </div>
             </div>
           </header>
 
-          <div className="mt-6 space-y-8 text-fm-charcoal">
+          <div className="mt-5 space-y-8 text-fm-charcoal lg:mt-6">
             {!scenarioResults?.base_case && (
               <p className="rounded-lg border border-fm-gold/40 bg-fm-gold/10 px-4 py-3 text-sm text-fm-charcoal">
                 Run your scenario calculation to populate the charts and margin tables below. Field maps and

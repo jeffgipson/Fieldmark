@@ -15,7 +15,7 @@ export default function LocalDevBar() {
 
   return (
     <div
-      className="border-b border-amber-200/80 bg-amber-50 px-3 py-2 text-center text-xs text-amber-950"
+      className="hidden border-b border-amber-200/80 bg-amber-50 px-3 py-2 text-center text-xs text-amber-950 lg:block"
       role="navigation"
       aria-label="Local development shortcuts"
     >

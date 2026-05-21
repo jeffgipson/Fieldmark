@@ -41,7 +41,7 @@ export default function DashboardWidgetGrid({
   return (
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
       <SortableContext items={widgetIds} strategy={rectSortingStrategy} disabled={!customizing}>
-        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {widgetIds.map((id) => (
             <SortableDashboardWidget
               key={id}

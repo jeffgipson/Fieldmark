@@ -1,7 +1,13 @@
 import { useNavigate } from "react-router-dom";
 import { Calendar, ChevronRight } from "lucide-react";
 import { DALE_COPY } from "../../constants/dale";
-import { acreageReconciliation, daysUntilMarch1, formatAcres } from "../../utils/format";
+import {
+  acreageReconciliation,
+  daysUntilMarch1,
+  formatAcres,
+  formatMarginPercentile
+} from "../../utils/format";
+import { formatCohortHeadline } from "../../utils/cohort";
 import Button from "../ui/Button";
 import Card from "../ui/Card";
 import MetricCard from "../ui/MetricCard";
@@ -112,6 +118,28 @@ export default function DashboardWidgetContent({
         />
       );
 
+    case "metrics-peer-position": {
+      const margin = primaryScenario?.peer_comparison?.summary?.margin_comparison;
+      const cohort = primaryScenario?.peer_comparison?.summary?.cohort;
+      const percentileLabel = margin?.available
+        ? formatMarginPercentile(margin.base_margin_peer_percentile)
+        : null;
+      const cohortDetail = cohort?.available
+        ? formatCohortHeadline(cohort, { region: farm?.region, commodity: farm?.primary_commodity })
+        : "Compare costs to join your regional group";
+
+      return (
+        <MetricCard
+          label="Regional position"
+          value={percentileLabel || "—"}
+          unit="text"
+          sentiment="neutral"
+          animate={false}
+          detail={cohortDetail}
+        />
+      );
+    }
+
     case "metrics-farm-acres": {
       const { mappedAcres, profileAcres, reconciled } = acreageReconciliation(fields, farm?.total_acres);
       return (
@@ -179,6 +207,9 @@ export default function DashboardWidgetContent({
         <PeerSnapshot
           categories={primaryScenario?.peer_comparison?.summary?.categories}
           cohort={primaryScenario?.peer_comparison?.summary?.cohort}
+          margin={primaryScenario?.peer_comparison?.summary?.margin_comparison}
+          region={farm?.region}
+          commodity={farm?.primary_commodity}
           scenarioId={primaryScenario?.id}
         />
       );

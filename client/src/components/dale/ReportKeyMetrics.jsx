@@ -42,7 +42,7 @@ export default function ReportKeyMetrics({ farm, fields, results, peerSummary })
     <section aria-label="Key financial metrics">
       <p className="fm-eyebrow">At a glance</p>
       <h2 className="font-display mt-1 text-lg font-semibold text-fm-ink">Key numbers for your lender</h2>
-      <dl className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
+      <dl className="mt-4 grid grid-cols-2 gap-3 max-lg:grid-cols-1 lg:grid-cols-3 xl:grid-cols-6">
         <MetricCard
           label="Total acres"
           value={formatAcres(totalAcres)}
@@ -73,9 +73,9 @@ export default function ReportKeyMetrics({ farm, fields, results, peerSummary })
         )}
         {margin?.available && margin.base_margin_peer_percentile != null && (
           <MetricCard
-            label="Peer position"
+            label="Regional position"
             value={formatMarginPercentile(margin.base_margin_peer_percentile)}
-            sub={`Among ${margin.cohort_size || "—"} regional farms`}
+            sub={`Among ${margin.cohort_size || "—"} farms like yours`}
           />
         )}
       </dl>

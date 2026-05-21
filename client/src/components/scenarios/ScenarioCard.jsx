@@ -3,7 +3,8 @@ import { AlertTriangle, ChevronRight, TrendingDown, TrendingUp } from "lucide-re
 import Card from "../ui/Card";
 import { SCENARIO_COPY } from "../../constants/scenarios";
 import { scenarioStatus } from "../../utils/scenarioProgress";
-import { formatCurrency, formatPerAcre } from "../../utils/format";
+import { formatCurrency, formatMarginPercentile, formatPerAcre } from "../../utils/format";
+import { formatCohortHeadline } from "../../utils/cohort";
 
 function StatusPill({ status }) {
   const styles = {
@@ -63,6 +64,14 @@ export default function ScenarioCard({ scenario, farmAcres }) {
   const downMargin = down?.margin_per_acre;
   const baseTotal = base?.total_margin;
   const downTotal = down?.total_margin;
+  const peerSummary = scenario.peer_comparison?.summary;
+  const cohort = peerSummary?.cohort;
+  const marginComparison = peerSummary?.margin_comparison;
+  const percentileLabel =
+    marginComparison?.available && marginComparison.base_margin_peer_percentile != null
+      ? formatMarginPercentile(marginComparison.base_margin_peer_percentile)
+      : null;
+  const cohortHeadline = cohort?.available ? formatCohortHeadline(cohort) : null;
 
   const primaryCta =
     status === "needs_calculation" ? copy.needsCalculation.cta : copy.ready.ctaMargins;
@@ -71,7 +80,7 @@ export default function ScenarioCard({ scenario, farmAcres }) {
 
   return (
     <Card className="!p-0 overflow-hidden" hover={false}>
-      <div className="flex flex-wrap items-start justify-between gap-3 border-b border-fm-gray-light/80 px-6 py-4">
+      <div className="flex flex-wrap items-start justify-between gap-3 border-b border-fm-gray-light/80 px-4 py-4 max-lg:flex-col max-lg:items-stretch lg:px-6">
         <div className="min-w-0">
           <h3 className="font-display text-xl font-semibold text-fm-ink">{scenario.name}</h3>
           {scenario.commodity_price != null && (
@@ -95,10 +104,17 @@ export default function ScenarioCard({ scenario, farmAcres }) {
         </div>
       )}
 
-      <div className="grid gap-4 p-6 sm:grid-cols-2">
+      <div className="grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 lg:p-6">
         <MarginStat label="Base case margin" value={baseMargin} variant="base" />
         <MarginStat label="Downside margin" value={downMargin} variant="downside" />
       </div>
+
+      {percentileLabel && cohortHeadline && (
+        <p className="border-t border-fm-gray-light/80 px-6 py-3 text-sm text-fm-charcoal">
+          <strong className="text-fm-teal">{percentileLabel}</strong>
+          <span className="text-fm-gray-medium"> · {cohortHeadline}</span>
+        </p>
+      )}
 
       {baseTotal != null && downTotal != null && acres ? (
         <p className="border-t border-fm-gray-light/80 px-6 pb-4 text-sm text-fm-charcoal">

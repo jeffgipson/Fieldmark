@@ -7,7 +7,6 @@ import Button from "../components/ui/Button";
 import Card from "../components/ui/Card";
 import Input, { Label } from "../components/ui/Input";
 import LoadingDale from "../components/ui/LoadingDale";
-import PageHeader from "../components/ui/PageHeader";
 import { INVITATION_STATUS_LABELS, SOCIAL_PLATFORMS } from "../constants/profile";
 import PlanBillingSection from "../components/profile/PlanBillingSection";
 import FarmPrioritiesEditor from "../components/priorities/FarmPrioritiesEditor";
@@ -180,12 +179,6 @@ export default function ProfilePage() {
 
   return (
     <div>
-      <PageHeader
-        eyebrow="Account"
-        title="Your profile"
-        subtitle="Manage how you show up in Fieldmark and who you bring onto the platform."
-      />
-
       {error && (
         <p className="mb-6 rounded-lg bg-[#FFF5F5] px-4 py-3 text-sm text-fm-alert">{error}</p>
       )}

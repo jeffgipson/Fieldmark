@@ -4,7 +4,6 @@ import VendorCard from "../components/vendors/VendorCard";
 import { VENDOR_CATEGORIES, categoryLabel } from "../constants/vendors";
 import Card from "../components/ui/Card";
 import LoadingDale from "../components/ui/LoadingDale";
-import PageHeader from "../components/ui/PageHeader";
 import { useFarm } from "../contexts/FarmContext";
 import useVendorFavorites from "../hooks/useVendorFavorites";
 import { friendlyError } from "../utils/errors";
@@ -55,14 +54,11 @@ export default function ResourcesPage() {
 
   return (
     <div>
-      <PageHeader
-        eyebrow="Support network"
-        title="Local resources"
-        subtitle={county ? `${county} County, Missouri` : "Missouri"}
-      />
-      <p className="mb-6 text-sm text-fm-gray-medium">
-        Directory for lenders, input suppliers, and farm services. Tap the heart to save a vendor to your list.
-        Fieldmark does not endorse vendors; partner listings may be paid.
+      <p className="mb-2 text-sm font-semibold text-fm-ink">
+        {county ? `${county} County, Missouri` : "Missouri"}
+      </p>
+      <p className="mb-4 text-xs text-fm-gray-medium">
+        Tap the heart to save a vendor. Fieldmark does not endorse listings; partners may be paid.
       </p>
 
       <div className="mb-6 flex flex-wrap gap-2">

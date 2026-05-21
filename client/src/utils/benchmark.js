@@ -46,7 +46,7 @@ export function diffLabel(diff) {
 
 export function cohortSizeLabel(cohort) {
   if (!cohort?.available || !cohort?.size) return null;
-  return `${cohort.size} peer farms`;
+  return `${cohort.size} farms like yours`;
 }
 
 export function primaryCategoryDiff(row, cohortAvailable) {
@@ -71,7 +71,7 @@ export function primaryCategoryDiff(row, cohortAvailable) {
       diff: peerDiff,
       impact: row.total_farm_dollar_impact_vs_peer ?? row.total_farm_dollar_impact,
       flag: row.flag_vs_peer ?? row.flag,
-      reference: "peer median"
+      reference: "typical regional farm"
     };
   }
   return {

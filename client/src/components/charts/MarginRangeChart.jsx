@@ -43,7 +43,7 @@ function RangeRow({ label, user, p25, median, p75, color }) {
   );
 }
 
-export function MarginRangeChart({ margin }) {
+export function MarginRangeChart({ margin, compact = false }) {
   if (!margin?.available) return null;
 
   const percentileLabel = formatMarginPercentile(margin.base_margin_peer_percentile);
@@ -51,21 +51,23 @@ export function MarginRangeChart({ margin }) {
     margin.base_margin_peer_percentile != null && margin.base_margin_peer_percentile <= 10;
 
   return (
-    <Card className="!p-5">
+    <Card className={compact ? "!p-4" : "!p-5"}>
       <p className="fm-eyebrow">Margin distribution</p>
-      <p className="font-display mt-1 text-lg font-semibold text-fm-ink">You vs peer farm margins ($/ac)</p>
+      <p className="font-display mt-1 text-lg font-semibold text-fm-ink">
+        You among regional farms ($/ac)
+      </p>
       <p className="mt-1 text-xs text-fm-gray-medium">
-        Among {margin.cohort_size} anonymized farms in your region
+        {margin.cohort_size} anonymized farms in your region
         {percentileLabel && <> · Base case: {percentileLabel}</>}
       </p>
-      {showCoaching && (
+      {showCoaching && !compact && (
         <p className="mt-3 rounded-lg border border-fm-teal/20 bg-fm-teal-subtle/30 px-3 py-2 text-sm text-fm-charcoal">
           A low percentile usually means higher costs, conservative yield assumptions, or incomplete
           field data — not a judgment on your operation. Review your highest cost category, rerun your
           downside scenario, and confirm all fields have costs entered.
         </p>
       )}
-      <div className="mt-6 space-y-8">
+      <div className={compact ? "mt-4 space-y-6" : "mt-6 space-y-8"}>
         <RangeRow
           label="Base case"
           user={margin.user_base_margin_per_acre}
