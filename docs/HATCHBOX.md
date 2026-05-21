@@ -54,6 +54,7 @@ cd /home/deploy/field_mark/current
 RAILS_ENV=production bundle exec rake db:migrate
 DISABLE_DATABASE_ENVIRONMENT_CHECK=1 RAILS_ENV=production bundle exec rake db:schema:load:cache db:schema:load:cable
 RAILS_ENV=production bundle exec rake demo:seed
+# demo:seed includes vendors; or run vendors:seed and admin:seed separately
 ```
 
 Without `solid_cache_entries`, auth requests fail (`PG::UndefinedTable`) when Rack::Attack uses Solid Cache.
