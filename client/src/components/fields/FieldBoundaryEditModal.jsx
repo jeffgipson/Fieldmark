@@ -62,6 +62,7 @@ export default function FieldBoundaryEditModal({ open, onClose, field, onSave, s
             boundary={draft.boundary}
             onLocationChange={handleLocation}
             onInsights={handleInsights}
+            scrollWheelZoom={false}
           />
         </div>
         {polygonAcres != null && (

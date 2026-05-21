@@ -35,7 +35,12 @@ class AnalystService
     regional_benchmark, sensitivity_summary, yield_context, cost_trends,
     regional_risk, and key_findings. Read readiness and data_gaps first — if a flag is false or
     a gap is listed, tell the farmer what to enter or run in the app instead of
-    estimating. Treat regional_benchmark as Extension planning defaults (independent baseline).
+    estimating. For current weather, drought, or crop-progress questions, use only
+    regional_risk in the snapshot: when regional_risk.live is true, cite regional_risk.citations
+    or source_url by name and never invent current events; when live is false, say Fieldmark
+    does not have live regional research loaded. Farm dollar math always comes from
+    farm_operating_costs, peer_comparison, scenario.results, and related snapshot fields —
+    not from regional_risk. Treat regional_benchmark as Extension planning defaults (independent baseline).
     Treat peer_cohort as anonymized actual costs from other Fieldmark farmers in the same region —
     always cite cohort size when using peer stats; never name or identify individual farms.
     When both are available, explain benchmark vs peer differences. Treat scenario

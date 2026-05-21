@@ -52,7 +52,7 @@ export default function DaleChatPopover() {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed bottom-24 right-6 z-50 h-[640px] w-[min(520px,calc(100vw-1.5rem))] animate-fm-in rounded-xl border border-fm-gray-light bg-fm-surface shadow-[var(--shadow-fm-panel)]">
+    <div className="fixed z-50 animate-fm-in rounded-xl border border-fm-gray-light bg-fm-surface shadow-[var(--shadow-fm-panel)] max-lg:inset-x-3 max-lg:bottom-[calc(4.25rem+env(safe-area-inset-bottom,0px))] max-lg:top-3 max-lg:h-auto max-lg:w-auto lg:bottom-24 lg:right-6 lg:h-[640px] lg:w-[min(520px,calc(100vw-1.5rem))]">
       <div className="flex h-full flex-col">
         <header className="relative flex items-center gap-3 border-b border-fm-gray-light px-4 py-3">
           <DaleAvatar variant="avatar" size="sm" />

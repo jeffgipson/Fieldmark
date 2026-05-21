@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fieldmark — Zoom Demo Wrapper</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #1a1a2e;
+    font-family: 'DM Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+    min-height: 100vh;
+    width: 100%;
+    padding: 0;
+  }
+  body.presenting {
+    padding: 0;
+    background: #000;
+    overflow: hidden;
+  }
+  body.presenting .presenter-dock { display: none; }
+  body.controls-detached .presenter-dock { display: none; }
+  body.controls-detached .zoom-window { flex: 1; border-bottom: none; }
+  .reattach-hint {
+    display: none;
+    position: fixed;
+    bottom: 10px;
+    right: 12px;
+    z-index: 100;
+    background: rgba(45,45,45,0.85);
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 11px;
+    color: #999;
+    opacity: 0.35;
+    transition: opacity 0.2s;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  body.controls-detached .reattach-hint { display: block; }
+  body.controls-detached .reattach-hint:hover { opacity: 1; color: #ccc; }
+  body.presenting .zoom-window {
+    max-width: none;
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+    border: none;
+    box-shadow: none;
+  }
+  body.presenting .main-area { flex: 1; height: auto; min-height: 0; }
+  .zoom-window {
+    width: 100%;
+    max-width: none;
+    flex: 1;
+    min-height: 0;
+    background: #1c1c1c;
+    border-radius: 0;
+    overflow: hidden;
+    box-shadow: none;
+    border: none;
+    border-bottom: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+  }
+  .title-bar {
+    background: #2d2d2d;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #3a3a3a;
+    flex-shrink: 0;
+  }
+  .title-bar .meeting-title { color: #fff; font-size: 13px; font-weight: 500; }
+  .title-bar .meeting-info { color: #999; font-size: 12px; }
+  .title-bar .controls { display: flex; gap: 6px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #febc2e; }
+  .dot.green { background: #28c840; }
+  .main-area { display: flex; flex: 1; min-height: 0; height: auto; }
+  .screen-share {
+    flex: 1;
+    background: #000;
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    overflow: hidden;
+    min-width: 0;
+  }
+  .screen-label {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2;
+    background: rgba(26,158,143,0.9);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    pointer-events: none;
+  }
+  .screen-embed {
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: #0f1419;
+  }
+  .screen-embed iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    display: block;
+    background: #fff;
+  }
+  .screen-embed .load-hint {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8ab4b0;
+    font-size: 13px;
+    text-align: center;
+    padding: 24px;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .screen-embed iframe.loaded + .load-hint { display: none; }
+  .sidebar { width: 220px; background: #1c1c1c; border-left: 1px solid #2e2e2e; display: flex; flex-direction: column; flex-shrink: 0; }
+  body.presenting .sidebar { width: 200px; }
+  .participants-panel { flex: 1; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+  .participant-tile {
+    background: #2a2a2a; border-radius: 8px; overflow: hidden; position: relative;
+    aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center;
+    border: 2px solid transparent; transition: border-color 0.3s;
+  }
+  .participant-tile.speaking { border-color: #1a9e8f; animation: speakPulse 0.8s ease-in-out infinite alternate; }
+  @keyframes speakPulse {
+    from { box-shadow: 0 0 0 0 rgba(26,158,143,0.4); }
+    to { box-shadow: 0 0 0 6px rgba(26,158,143,0); }
+  }
+  .participant-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 700; color: #fff;
+    position: relative;
+    z-index: 1;
+  }
+  .participant-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scaleX(-1);
+    z-index: 0;
+    display: none;
+    background: #000;
+  }
+  .participant-tile.has-video .participant-video { display: block; }
+  .participant-tile.has-video .participant-avatar { display: none; }
+  .participant-tile .hand-raised,
+  .participant-tile .participant-name,
+  .participant-tile .participant-icons,
+  .participant-tile .reaction-badge { z-index: 2; }
+  .participant-name {
+    position: absolute; bottom: 5px; left: 6px; color: #fff; font-size: 10px; font-weight: 500;
+    background: rgba(0,0,0,0.6); padding: 2px 5px; border-radius: 3px;
+  }
+  .participant-icons { position: absolute; bottom: 5px; right: 6px; }
+  .mic-icon {
+    width: 16px; height: 16px; background: rgba(0,0,0,0.6); border-radius: 3px;
+    display: flex; align-items: center; justify-content: center; font-size: 9px;
+  }
+  .mic-icon.muted { background: rgba(255,80,80,0.7); }
+  .reaction-badge {
+    position: absolute; top: 4px; right: 4px; font-size: 16px;
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .reaction-badge.show { opacity: 1; animation: reactionPop 0.4s cubic-bezier(0.175,0.885,0.32,1.275) forwards; }
+  @keyframes reactionPop {
+    0% { transform: scale(0); opacity: 0; }
+    60% { transform: scale(1.3); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+  .hand-raised {
+    position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+    border-radius: 8px; border: 2px solid #f39c12; pointer-events: none; opacity: 0; transition: opacity 0.3s;
+  }
+  .hand-raised.show { opacity: 1; }
+  .chat-panel { height: 180px; border-top: 1px solid #2e2e2e; display: flex; flex-direction: column; }
+  .chat-header { padding: 6px 10px; color: #999; font-size: 11px; font-weight: 600; border-bottom: 1px solid #2e2e2e; text-transform: uppercase; letter-spacing: 0.5px; }
+  .chat-messages { flex: 1; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 6px; scroll-behavior: smooth; }
+  .chat-msg {
+    animation: msgSlide 0.3s ease-out;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+  }
+  @keyframes msgSlide { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+  .chat-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .chat-msg-body { flex: 1; min-width: 0; }
+  .chat-msg .sender { color: #1a9e8f; font-size: 10px; font-weight: 600; }
+  .chat-msg .sender.cohost { color: #e67e22; }
+  .chat-msg .text { color: #ccc; font-size: 11px; line-height: 1.4; margin-top: 1px; }
+  .bottom-bar {
+    background: #2d2d2d; padding: 10px 16px; display: flex;
+    align-items: center; justify-content: space-between; border-top: 1px solid #3a3a3a;
+    flex-shrink: 0;
+  }
+  .timer { color: #ff5f57; font-size: 13px; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .controls-row { display: flex; gap: 8px; }
+  .ctrl-btn {
+    background: #3a3a3a; border: none; border-radius: 6px; color: #ccc; font-size: 11px;
+    padding: 6px 12px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: background 0.2s;
+  }
+  .ctrl-btn:hover { background: #4a4a4a; }
+  .ctrl-btn.end { background: #c0392b; color: #fff; }
+  .participant-count { color: #999; font-size: 12px; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #444; border-radius: 2px; }
+  .demo-controls {
+    margin-top: 0;
+    padding: 12px 16px 16px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: none;
+    flex-shrink: 0;
+  }
+  .demo-btn {
+    background: #2d2d2d; border: 1px solid #444; border-radius: 6px; color: #ccc;
+    font-size: 12px; padding: 8px 14px; cursor: pointer; font-family: 'DM Sans', sans-serif; transition: all 0.2s;
+  }
+  .demo-btn:hover { background: #1a9e8f; color: #fff; border-color: #1a9e8f; }
+  .demo-btn.primary { border-color: #1a9e8f; color: #1a9e8f; }
+  .embed-settings {
+    margin-top: 0;
+    padding: 10px 16px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: none;
+    flex-shrink: 0;
+    border-top: 1px solid #2a2a3e;
+  }
+  .embed-settings label { color: #999; font-size: 12px; }
+  .embed-settings input {
+    flex: 1;
+    min-width: 200px;
+    max-width: 420px;
+    background: #2d2d2d;
+    border: 1px solid #444;
+    border-radius: 6px;
+    color: #eee;
+    padding: 8px 10px;
+    font-size: 12px;
+    font-family: inherit;
+  }
+  .presenter-dock-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px 0;
+    gap: 12px;
+    flex-shrink: 0;
+    border-top: 1px solid #2a2a3e;
+  }
+  .presenter-dock-title { color: #666; font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .automation-panel {
+    padding: 10px 16px 0;
+    border-top: 1px solid #2a2a3e;
+    flex-shrink: 0;
+  }
+  .automation-panel .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+  .automation-status {
+    flex: 1;
+    min-width: 200px;
+    font-size: 11px;
+    color: #8ab4b0;
+    line-height: 1.4;
+  }
+  .automation-status strong { color: #1a9e8f; }
+  .automation-panel label.random-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #999;
+    cursor: pointer;
+  }
+  .automation-panel input[type="checkbox"] { accent-color: #1a9e8f; }
+  .participant-name .judge-badge {
+    color: #f39c12;
+    font-size: 8px;
+    font-weight: 600;
+    margin-left: 2px;
+  }
+  .participant-tile.judge-tile { border-color: rgba(243,156,18,0.35); }
+  @keyframes judgeJoin {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  .incoming-call {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.55);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.25s, visibility 0.25s;
+    pointer-events: none;
+  }
+  .incoming-call.show {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .incoming-call-card {
+    background: #2d2d2d;
+    border: 1px solid #444;
+    border-radius: 14px;
+    padding: 28px 32px 22px;
+    text-align: center;
+    min-width: 280px;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+    animation: callPulse 1.2s ease-in-out infinite;
+  }
+  @keyframes callPulse {
+    0%, 100% { box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 0 0 rgba(26,158,143,0.35); }
+    50% { box-shadow: 0 24px 80px rgba(0,0,0,0.5), 0 0 0 12px rgba(26,158,143,0); }
+  }
+  .vibeathon-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #1a9e8f, #16a085);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+  }
+  .incoming-label { color: #999; font-size: 12px; margin-bottom: 14px; }
+  .caller-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+  }
+  .incoming-call-card h2 { color: #fff; font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+  .incoming-call-card .caller-role { color: #8ab4b0; font-size: 12px; margin-bottom: 20px; }
+  .incoming-actions { display: flex; gap: 12px; justify-content: center; }
+  .incoming-actions button {
+    border: none;
+    border-radius: 8px;
+    padding: 10px 22px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  #decline-call { background: #c0392b; color: #fff; }
+  #accept-call { background: #28c840; color: #fff; }
+  #accept-call:hover { filter: brightness(1.08); }
+  #decline-call:hover { filter: brightness(1.08); }
+  body.incoming-call-active .zoom-window { filter: blur(2px); }
+  body.incoming-call-active .incoming-call { filter: none; }
+  .chat-msg .sender.judge { color: #f39c12; }
+</style>
+</head>
+<body>
+
+<div class="zoom-window" id="zoom-window">
+  <div class="title-bar">
+    <div class="controls">
+      <div class="dot red"></div>
+      <div class="dot yellow"></div>
+      <div class="dot green"></div>
+    </div>
+    <div class="meeting-title">Fieldmark Demo — Farm Financial Benchmarking</div>
+    <div class="meeting-info">5 participants · Recorded</div>
+  </div>
+
+  <div class="main-area">
+    <div class="screen-share">
+      <div class="screen-label">Jeff's Screen</div>
+      <div class="screen-embed">
+        <!-- Live app: same origin when served from client/public (localhost:5173) -->
+        <iframe
+          id="app-frame"
+          title="Fieldmark"
+          allow="fullscreen"
+          src="/"
+        ></iframe>
+        <div class="load-hint">
+          Start <code>./bin/dev</code>, open this page at<br>
+          <strong>http://localhost:5173/zoom-demo.html</strong><br>
+          then sign in with <strong>Try demo</strong> inside the frame.
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar">
+      <div class="participants-panel">
+        <div class="participant-tile" id="tile-mike">
+          <div class="hand-raised" id="hand-mike"></div>
+          <div class="participant-avatar" style="background:#2980b9">MH</div>
+          <div class="participant-name">Mike Henderson</div>
+          <div class="participant-icons"><div class="mic-icon" id="mic-mike">🎤</div></div>
+          <div class="reaction-badge" id="react-mike"></div>
+        </div>
+        <div class="participant-tile" id="tile-waverly">
+          <div class="hand-raised" id="hand-waverly"></div>
+          <div class="participant-avatar" style="background:#8e44ad">WF</div>
+          <div class="participant-name">Waverly Farm Ops</div>
+          <div class="participant-icons"><div class="mic-icon muted">🔇</div></div>
+          <div class="reaction-badge" id="react-waverly"></div>
+        </div>
+        <div class="participant-tile" id="tile-dale">
+          <div class="hand-raised" id="hand-dale"></div>
+          <div class="participant-avatar" style="background:#1a9e8f;font-size:22px">🦉</div>
+          <div class="participant-name">Dale (AI Advisor)</div>
+          <div class="participant-icons"><div class="mic-icon" id="mic-dale">🎤</div></div>
+          <div class="reaction-badge" id="react-dale"></div>
+        </div>
+        <div class="participant-tile" id="tile-cohost">
+          <div class="hand-raised" id="hand-cohost"></div>
+          <div class="participant-avatar" style="background:linear-gradient(135deg,#e67e22,#d35400)">CM</div>
+          <div class="participant-name">Casey Morgan (Co-host)</div>
+          <div class="participant-icons"><div class="mic-icon" id="mic-cohost">🎤</div></div>
+          <div class="reaction-badge" id="react-cohost"></div>
+        </div>
+        <div id="judge-participants"></div>
+        <div class="participant-tile" id="tile-jeff">
+          <div class="hand-raised" id="hand-jeff"></div>
+          <video class="participant-video" id="host-webcam" autoplay playsinline muted></video>
+          <div class="participant-avatar" id="host-avatar-fallback" style="background:#27ae60">JG</div>
+          <div class="participant-name">Jeff (Host)</div>
+          <div class="participant-icons"><div class="mic-icon">🎤</div></div>
+          <div class="reaction-badge" id="react-jeff"></div>
+        </div>
+      </div>
+      <div class="chat-panel">
+        <div class="chat-header">💬 Chat</div>
+        <div class="chat-messages" id="chat-messages">
+          <div class="chat-msg">
+            <div class="chat-avatar" style="background:#2980b9">MH</div>
+            <div class="chat-msg-body">
+              <div class="sender">Mike Henderson</div>
+              <div class="text">So this is pulling real farm data?</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <div class="timer" id="timer">● REC 00:00</div>
+    <div class="controls-row">
+      <button class="ctrl-btn">🎤 Mute</button>
+      <button type="button" class="ctrl-btn" id="zoom-video-btn">📷 Video</button>
+      <button class="ctrl-btn">💬 Chat</button>
+      <button class="ctrl-btn">👋 React</button>
+      <button class="ctrl-btn end">End</button>
+    </div>
+    <div class="participant-count">5 participants</div>
+  </div>
+</div>
+
+<div id="presenter-dock" class="presenter-dock">
+  <div class="presenter-dock-header">
+    <span class="presenter-dock-title">Presenter controls</span>
+    <button type="button" class="demo-btn" id="judge-ring-btn" title="Simulate next vibeathon.us judge calling in">📞 Judge calling in</button>
+    <button type="button" class="demo-btn" id="toggle-webcam" title="Uses your browser camera in the Jeff (Host) tile">📷 Host webcam</button>
+    <button type="button" class="demo-btn primary" id="detach-controls" title="Open controls in a separate window for your screen only">↗ Detach controls</button>
+  </div>
+  <div class="automation-panel" id="automation-panel">
+    <div class="row">
+      <button type="button" class="demo-btn primary" id="timeline-play">▶ Play timeline</button>
+      <button type="button" class="demo-btn" id="timeline-pause" disabled>⏸ Pause</button>
+      <button type="button" class="demo-btn" id="timeline-stop" disabled>⏹ Stop</button>
+      <label class="random-toggle">
+        <input type="checkbox" id="random-moments" checked />
+        Random audience moments
+      </label>
+    </div>
+    <p class="automation-status" id="automation-status">Script idle — ~7 min scripted Q&amp;A about benchmarks, peers, Dale, scenarios, and lender reports.</p>
+  </div>
+  <div class="embed-settings">
+    <label for="app-url">App path in frame:</label>
+    <input type="text" id="app-url" value="/" placeholder="/farms/1/benchmarks" />
+    <button type="button" class="demo-btn" id="reload-frame">Reload</button>
+  </div>
+  <div class="demo-controls">
+    <button type="button" class="demo-btn primary" id="toggle-present">⛶ Presentation (F)</button>
+    <button type="button" class="demo-btn primary" id="toggle-fs">Fullscreen browser (⌘⇧F)</button>
+    <button type="button" class="demo-btn" data-event="benchmark">📊 Benchmark Reveal</button>
+    <button type="button" class="demo-btn" data-event="mike_wow">😮 Mike Reacts</button>
+    <button type="button" class="demo-btn" data-event="waverly_hand">✋ Waverly Raises Hand</button>
+    <button type="button" class="demo-btn" data-event="dale_speaks">🦉 Dale Responds</button>
+    <button type="button" class="demo-btn" data-event="chat_flood">💬 Chat Lights Up</button>
+    <button type="button" class="demo-btn" data-event="scenario">📈 Scenario Model</button>
+    <button type="button" class="demo-btn" id="reset-demo">🔄 Reset</button>
+  </div>
+</div>
+
+<button type="button" class="reattach-hint" id="reattach-hint" title="Show controls on this window again">Presenter controls detached — click to re-attach</button>
+
+<div id="incoming-call" class="incoming-call" aria-hidden="true">
+  <div class="incoming-call-card">
+    <div class="vibeathon-badge">vibeathon.us</div>
+    <p class="incoming-label">Incoming video call…</p>
+    <div class="caller-avatar" id="caller-avatar">V</div>
+    <h2 id="caller-name">vibeathon.us</h2>
+    <p class="caller-role" id="caller-role">Official Judge</p>
+    <div class="incoming-actions">
+      <button type="button" id="decline-call">Decline</button>
+      <button type="button" id="accept-call">Accept</button>
+    </div>
+  </div>
+</div>
+
+<script src="/zoom-demo-vibeathon.js"></script>
+<script src="/zoom-demo-automation.js"></script>
+<script>
+  const MSG = 'fieldmark-zoom-demo';
+  const frame = document.getElementById('app-frame');
+  const appUrlInput = document.getElementById('app-url');
+  const origin = window.location.origin;
+  let controlsWindow = null;
+  let controlsPoll = null;
+  let director = null;
+  let hostWebcamStream = null;
+
+  async function startHostWebcam() {
+    const video = document.getElementById('host-webcam');
+    const tile = document.getElementById('tile-jeff');
+    const toggleBtn = document.getElementById('toggle-webcam');
+    const zoomVideoBtn = document.getElementById('zoom-video-btn');
+    if (!video || !tile || hostWebcamStream) return true;
+
+    if (!navigator.mediaDevices?.getUserMedia) {
+      alert('Webcam requires a secure context (use http://localhost, not a file:// URL).');
+      return false;
+    }
+
+    try {
+      hostWebcamStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'user', width: { ideal: 640 }, height: { ideal: 360 } },
+        audio: false,
+      });
+      video.srcObject = hostWebcamStream;
+      await video.play();
+      tile.classList.add('has-video');
+      if (toggleBtn) toggleBtn.textContent = '📷 Webcam on';
+      if (zoomVideoBtn) zoomVideoBtn.textContent = '📷 Stop video';
+      postToControls('webcam-state', { on: true });
+      return true;
+    } catch (err) {
+      hostWebcamStream = null;
+      alert('Could not access webcam. Check browser permissions and try again.');
+      console.warn('getUserMedia failed', err);
+      return false;
+    }
+  }
+
+  function stopHostWebcam() {
+    const video = document.getElementById('host-webcam');
+    const tile = document.getElementById('tile-jeff');
+    const toggleBtn = document.getElementById('toggle-webcam');
+    const zoomVideoBtn = document.getElementById('zoom-video-btn');
+    if (hostWebcamStream) {
+      hostWebcamStream.getTracks().forEach((t) => t.stop());
+      hostWebcamStream = null;
+    }
+    if (video) {
+      video.srcObject = null;
+    }
+    tile?.classList.remove('has-video');
+    if (toggleBtn) toggleBtn.textContent = '📷 Host webcam';
+    if (zoomVideoBtn) zoomVideoBtn.textContent = '📷 Video';
+    postToControls('webcam-state', { on: false });
+  }
+
+  function toggleHostWebcam() {
+    if (hostWebcamStream) stopHostWebcam();
+    else startHostWebcam();
+  }
+
+  function formatElapsed(sec) {
+    const m = String(Math.floor(sec / 60)).padStart(2, '0');
+    const s = String(sec % 60).padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  function updateAutomationStatus(st) {
+    const el = document.getElementById('automation-status');
+    const playBtn = document.getElementById('timeline-play');
+    const pauseBtn = document.getElementById('timeline-pause');
+    const stopBtn = document.getElementById('timeline-stop');
+    if (!el || !st) return;
+    if (!st.running) {
+      el.innerHTML = 'Script idle — ~7 min scripted Q&amp;A about benchmarks, peers, Dale, scenarios, and lender reports.';
+      if (playBtn) { playBtn.disabled = false; playBtn.textContent = '▶ Play timeline'; }
+      if (pauseBtn) { pauseBtn.disabled = true; pauseBtn.textContent = '⏸ Pause'; }
+      if (stopBtn) stopBtn.disabled = true;
+    } else if (st.paused) {
+      el.innerHTML = `<strong>Paused</strong> at ${formatElapsed(st.elapsedSec)}`;
+      if (playBtn) { playBtn.disabled = false; playBtn.textContent = '▶ Resume'; }
+      if (pauseBtn) pauseBtn.disabled = true;
+      if (stopBtn) stopBtn.disabled = false;
+    } else {
+      const next = st.nextCue
+        ? `Next @ ${formatElapsed(st.nextCue.at)}: <em>${st.nextCue.label}</em>`
+        : 'Wrapping up…';
+      el.innerHTML = `<strong>Live</strong> ${formatElapsed(st.elapsedSec)} — ${next}`;
+      if (playBtn) { playBtn.disabled = true; playBtn.textContent = '▶ Playing…'; }
+      if (pauseBtn) { pauseBtn.disabled = false; pauseBtn.textContent = '⏸ Pause'; }
+      if (stopBtn) stopBtn.disabled = false;
+    }
+    postToControls('timeline-status', st);
+  }
+
+  function initDirector() {
+    if (director || !window.FieldmarkDemoDirector) return;
+    director = new FieldmarkDemoDirector({
+      triggerEvent,
+      addChat,
+      setSpeaking,
+      showReaction,
+      raiseHand,
+      ringJudgeCall: (id) => {
+        initJudgeCalls();
+        return judgeCalls?.ringNext(id);
+      },
+      resetDemo: () => resetDemo({ keepTimeline: true }),
+    });
+    director.onTick = updateAutomationStatus;
+  }
+
+  function startTimeline() {
+    initDirector();
+    if (!director) return;
+    if (director.running && director.paused) {
+      director.resume();
+      return;
+    }
+    if (director.running) return;
+    const random = document.getElementById('random-moments')?.checked ?? true;
+    if (window.FieldmarkDemoScript?.random) FieldmarkDemoScript.random.enabled = random;
+    director.start({ random, reset: true });
+  }
+
+  function pauseTimeline() {
+    director?.pause();
+  }
+
+  function stopTimeline() {
+    director?.stop();
+    const playBtn = document.getElementById('timeline-play');
+    if (playBtn) playBtn.textContent = '▶ Play timeline';
+  }
+
+  function appFrameSrc() {
+    const path = (appUrlInput.value || '/').trim();
+    return path.startsWith('http') ? path : origin + (path.startsWith('/') ? path : '/' + path);
+  }
+
+  function reloadFrame() {
+    frame.src = appFrameSrc();
+    frame.classList.remove('loaded');
+  }
+
+  frame.addEventListener('load', () => frame.classList.add('loaded'));
+  document.getElementById('reload-frame').addEventListener('click', reloadFrame);
+  appUrlInput.addEventListener('change', reloadFrame);
+
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('path')) {
+    appUrlInput.value = params.get('path');
+    reloadFrame();
+  }
+
+  function postToControls(action, extra = {}) {
+    if (controlsWindow && !controlsWindow.closed) {
+      controlsWindow.postMessage({ type: MSG, action, ...extra }, origin);
+    }
+  }
+
+  function setControlsDetached(on) {
+    document.body.classList.toggle('controls-detached', on);
+    const btn = document.getElementById('detach-controls');
+    if (btn) btn.textContent = on ? '↗ Controls detached' : '↗ Detach controls';
+  }
+
+  function attachControls() {
+    if (controlsWindow && !controlsWindow.closed) controlsWindow.close();
+    controlsWindow = null;
+    if (controlsPoll) clearInterval(controlsPoll);
+    controlsPoll = null;
+    setControlsDetached(false);
+    postToControls('detached-ended');
+  }
+
+  function detachControls() {
+    if (controlsWindow && !controlsWindow.closed) {
+      controlsWindow.focus();
+      return;
+    }
+    const w = 540;
+    const h = 720;
+    const left = Math.max(0, window.screenX + window.outerWidth - w - 24);
+    const top = Math.max(0, window.screenY + 40);
+    controlsWindow = window.open(
+      '/zoom-demo-controls.html',
+      'fieldmark-zoom-controls',
+      `popup,width=${w},height=${h},left=${left},top=${top}`
+    );
+    if (!controlsWindow) {
+      alert('Allow pop-ups for localhost, then try Detach again.');
+      return;
+    }
+    setControlsDetached(true);
+    postToControls('state', { path: appUrlInput.value });
+    if (controlsPoll) clearInterval(controlsPoll);
+    controlsPoll = setInterval(() => {
+      if (!controlsWindow || controlsWindow.closed) attachControls();
+    }, 400);
+  }
+
+  document.getElementById('detach-controls').addEventListener('click', detachControls);
+  document.getElementById('reattach-hint').addEventListener('click', attachControls);
+
+  window.addEventListener('message', (e) => {
+    if (e.origin !== origin || e.data?.type !== MSG) return;
+    const { action, event, path } = e.data;
+    if (action === 'get-state') postToControls('state', { path: appUrlInput.value });
+    if (action === 'trigger-event') triggerEvent(event);
+    if (action === 'reset') resetDemo();
+    if (action === 'present') togglePresentation();
+    if (action === 'fullscreen') toggleBrowserFullscreen();
+    if (action === 'set-path' && path != null) {
+      appUrlInput.value = path;
+      reloadFrame();
+    }
+    if (action === 'timeline-start') startTimeline();
+    if (action === 'timeline-pause') pauseTimeline();
+    if (action === 'timeline-resume') { initDirector(); director?.resume(); }
+    if (action === 'timeline-stop') stopTimeline();
+    if (action === 'timeline-random') {
+      const cb = document.getElementById('random-moments');
+      if (cb) cb.checked = !!e.data.enabled;
+      if (window.FieldmarkDemoScript?.random) FieldmarkDemoScript.random.enabled = !!e.data.enabled;
+    }
+    if (action === 'webcam-toggle') toggleHostWebcam();
+    if (action === 'webcam-start') startHostWebcam();
+    if (action === 'webcam-stop') stopHostWebcam();
+    if (action === 'judge-ring') { initJudgeCalls(); judgeCalls?.ringNext(e.data.judgeId); }
+    if (action === 'judge-accept') { initJudgeCalls(); judgeCalls?.accept(); }
+    if (action === 'judge-decline') { initJudgeCalls(); judgeCalls?.decline(); }
+    if (action === 'attach' || action === 'controls-closing') attachControls();
+  });
+
+  document.getElementById('timeline-play')?.addEventListener('click', startTimeline);
+  document.getElementById('timeline-pause')?.addEventListener('click', pauseTimeline);
+  document.getElementById('timeline-stop')?.addEventListener('click', stopTimeline);
+  document.getElementById('random-moments')?.addEventListener('change', (e) => {
+    const on = e.target.checked;
+    if (window.FieldmarkDemoScript?.random) FieldmarkDemoScript.random.enabled = on;
+    postToControls('timeline-random', { enabled: on });
+  });
+
+  if (params.get('detach') === '1' || params.get('controls') === 'detached') {
+    window.addEventListener('load', () => setTimeout(detachControls, 300));
+  }
+  if (params.get('autoplay') === '1') {
+    window.addEventListener('load', () => setTimeout(startTimeline, 800));
+  }
+  if (params.get('webcam') === '1') {
+    window.addEventListener('load', () => setTimeout(startHostWebcam, 500));
+  }
+  if (params.get('vibeathon') === '1') {
+    window.addEventListener('load', () => {
+      initJudgeCalls();
+      judgeCalls?.applyVibeathonBranding();
+      setTimeout(() => judgeCalls?.ringNext(), 2500);
+    });
+  }
+
+  document.getElementById('judge-ring-btn')?.addEventListener('click', () => {
+    initJudgeCalls();
+    if (!judgeCalls?.ringNext()) {
+      alert('All vibeathon.us judges are already in the meeting.');
+    }
+  });
+  document.getElementById('accept-call')?.addEventListener('click', () => {
+    initJudgeCalls();
+    judgeCalls?.accept();
+  });
+  document.getElementById('decline-call')?.addEventListener('click', () => {
+    initJudgeCalls();
+    judgeCalls?.decline();
+  });
+  document.getElementById('toggle-webcam')?.addEventListener('click', toggleHostWebcam);
+  document.getElementById('zoom-video-btn')?.addEventListener('click', toggleHostWebcam);
+  window.addEventListener('beforeunload', stopHostWebcam);
+
+  document.querySelectorAll('.demo-controls .demo-btn[data-event]').forEach((btn) => {
+    btn.addEventListener('click', () => triggerEvent(btn.dataset.event));
+  });
+  document.getElementById('reset-demo').addEventListener('click', resetDemo);
+
+  let seconds = 0;
+  setInterval(() => {
+    seconds++;
+    const m = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const s = String(seconds % 60).padStart(2, '0');
+    document.getElementById('timer').textContent = `● REC ${m}:${s}`;
+  }, 1000);
+
+  function setPresenting(on) {
+    document.body.classList.toggle('presenting', on);
+  }
+
+  function togglePresentation() {
+    setPresenting(!document.body.classList.contains('presenting'));
+  }
+
+  async function toggleBrowserFullscreen() {
+    if (!document.fullscreenElement) {
+      await document.documentElement.requestFullscreen();
+      setPresenting(true);
+    } else {
+      await document.exitFullscreen();
+    }
+  }
+
+  document.getElementById('toggle-present').addEventListener('click', togglePresentation);
+  document.getElementById('toggle-fs').addEventListener('click', toggleBrowserFullscreen);
+  document.addEventListener('fullscreenchange', () => {
+    if (!document.fullscreenElement && document.body.classList.contains('presenting')) {
+      /* keep presentation layout until user presses F again */
+    }
+  });
+  document.addEventListener('keydown', (e) => {
+    if (document.body.classList.contains('incoming-call-active')) {
+      if (e.key === 'Enter') { e.preventDefault(); initJudgeCalls(); judgeCalls?.accept(); }
+      if (e.key === 'Escape') { e.preventDefault(); initJudgeCalls(); judgeCalls?.decline(); }
+      return;
+    }
+    if (e.key === 'f' || e.key === 'F') {
+      if (e.metaKey && e.shiftKey) {
+        e.preventDefault();
+        toggleBrowserFullscreen();
+      } else if (!e.metaKey && !e.ctrlKey && !e.altKey) {
+        togglePresentation();
+      }
+    }
+    if (e.key === 'Escape' && document.body.classList.contains('presenting') && !document.fullscreenElement) {
+      setPresenting(false);
+    }
+  });
+
+  const CHAT_SENDERS = {
+    'Mike Henderson': { initials: 'MH', bg: '#2980b9' },
+    'Waverly Farm Ops': { initials: 'WF', bg: '#8e44ad' },
+    'Dale (AI)': { initials: '🦉', bg: '#1a9e8f' },
+    'Casey Morgan (Co-host)': { initials: 'CM', bg: 'linear-gradient(135deg,#e67e22,#d35400)', cohost: true },
+    'vibeathon.us': { initials: 'V', bg: '#8e44ad', judge: true },
+  };
+
+  let judgeCalls = null;
+
+  function initJudgeCalls() {
+    if (judgeCalls || !window.FieldmarkJudgeCallManager) return;
+    judgeCalls = new FieldmarkJudgeCallManager({
+      addChat,
+      setSpeaking,
+      cohostSender,
+      registerChatSender(name, profile) {
+        CHAT_SENDERS[name] = profile;
+      },
+    });
+    window.ringJudgeCall = (id) => judgeCalls.ringNext(id);
+    window.acceptJudgeCall = () => judgeCalls.accept();
+    window.declineJudgeCall = () => judgeCalls.decline();
+  }
+
+  function cohostSender() {
+    return window.FieldmarkDemoCohost?.sender || 'Casey Morgan (Co-host)';
+  }
+
+  function chatAvatarHtml(sender) {
+    const profile = CHAT_SENDERS[sender] || { initials: '?', bg: '#555' };
+    const style = profile.bg.includes('gradient')
+      ? `background:${profile.bg}`
+      : `background:${profile.bg}`;
+    return `<div class="chat-avatar" style="${style}">${profile.initials}</div>`;
+  }
+
+  function addChat(sender, text, delay = 0) {
+    setTimeout(() => {
+      const msgs = document.getElementById('chat-messages');
+      const profile = CHAT_SENDERS[sender];
+      let senderClass = 'sender';
+      if (profile?.cohost) senderClass = 'sender cohost';
+      if (profile?.judge) senderClass = 'sender judge';
+      const div = document.createElement('div');
+      div.className = 'chat-msg';
+      div.innerHTML = `${chatAvatarHtml(sender)}<div class="chat-msg-body"><div class="${senderClass}">${sender}</div><div class="text">${text}</div></div>`;
+      msgs.appendChild(div);
+      msgs.scrollTop = msgs.scrollHeight;
+    }, delay);
+  }
+
+  function showReaction(id, emoji, duration = 2500) {
+    const el = document.getElementById(`react-${id}`);
+    if (!el) return;
+    el.textContent = emoji;
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), duration);
+  }
+
+  function setSpeaking(id, on) {
+    const tile = document.getElementById(`tile-${id}`);
+    if (!tile) return;
+    tile.classList.toggle('speaking', on);
+  }
+
+  function raiseHand(id, on) {
+    const el = document.getElementById(`hand-${id}`);
+    if (!el) return;
+    if (on) { el.classList.add('show'); showReaction(id, '✋', 4000); }
+    else el.classList.remove('show');
+  }
+
+  function triggerEvent(event) {
+    switch (event) {
+      case 'benchmark':
+        setSpeaking('cohost', true);
+        addChat(cohostSender(), "Jeff's walking through the benchmark reveal on screen — watch the bars.");
+        setTimeout(() => setSpeaking('cohost', false), 3000);
+        break;
+      case 'mike_wow':
+        setSpeaking('mike', true);
+        showReaction('mike', '😮');
+        addChat('Mike Henderson', "Wait — 23% above average? That's $35k I'm leaving on the table.", 400);
+        setTimeout(() => setSpeaking('mike', false), 3500);
+        break;
+      case 'waverly_hand':
+        raiseHand('waverly', true);
+        addChat('Waverly Farm Ops', "Can this break down by input type? Like just nitrogen?", 600);
+        setTimeout(() => raiseHand('waverly', false), 4000);
+        break;
+      case 'dale_speaks':
+        setSpeaking('dale', true);
+        showReaction('dale', '🦉');
+        addChat('Dale (AI)', "Great question Waverly. Nitrogen timing vs. regional peers is the primary driver here.", 300);
+        addChat('Dale (AI)', "Mike — closing half this gap at 2,200 acres saves ~$38,500 next season.", 1800);
+        setTimeout(() => setSpeaking('dale', false), 4500);
+        break;
+      case 'chat_flood':
+        addChat('Mike Henderson', "This is exactly what I needed before my meeting with my agronomist.", 0);
+        addChat('Waverly Farm Ops', "👍 We've been trying to solve this for 3 years", 900);
+        addChat('Mike Henderson', "How does scenario modeling work?", 1700);
+        showReaction('mike', '👍', 2000);
+        showReaction('waverly', '🔥', 2500);
+        break;
+      case 'scenario':
+        setSpeaking('cohost', true);
+        addChat(cohostSender(), "Great question Mike — Jeff's pulling up the scenario modeler now...", 0);
+        addChat(cohostSender(), "Let's model what a $0.40 corn drop does to margins with current inputs.", 1400);
+        setTimeout(() => setSpeaking('cohost', false), 3500);
+        showReaction('mike', '👀', 1500);
+        break;
+    }
+  }
+
+  function resetDemo(opts = {}) {
+    if (!opts.keepTimeline) stopTimeline();
+    initJudgeCalls();
+    judgeCalls?.reset();
+    document.getElementById('chat-messages').innerHTML = `
+      <div class="chat-msg">
+        <div class="chat-avatar" style="background:#2980b9">MH</div>
+        <div class="chat-msg-body">
+          <div class="sender">Mike Henderson</div>
+          <div class="text">So this is pulling real farm data?</div>
+        </div>
+      </div>`;
+    ['mike', 'waverly', 'dale', 'cohost', 'jeff'].forEach(id => {
+      setSpeaking(id, false);
+      raiseHand(id, false);
+      const r = document.getElementById(`react-${id}`);
+      if (r) r.classList.remove('show');
+    });
+  }
+</script>
+</body>
+</html>

@@ -49,7 +49,7 @@ See `api/docs/API.md` — **Season snapshots** and **Scenarios** (`forecast` in 
 | Monte Carlo simulation | Deterministic bands only today |
 | Lender report multi-year section | Report remains single-scenario focused |
 | Live BLS PPI fetch | MU trend + seeded `macro_drivers` |
-| Live USDA drought / crop progress | `RegionalRiskContextService` static flags for demo |
+| ~~Live USDA drought / crop progress~~ | **Shipped:** `MarketIntelligenceService` + Perplexity Sonar → `regional_risk` (cached; static fallback) |
 
 ## Related (pre-forecasting demo)
 

@@ -15,6 +15,14 @@ module AppConfig
       ENV.fetch("ANTHROPIC_MODEL", AiRouter::SONNET_STABLE_MODEL)
     end
 
+    def perplexity_api_key
+      ENV.fetch("PERPLEXITY_API_KEY", nil).presence
+    end
+
+    def perplexity_model
+      ENV.fetch("PERPLEXITY_MODEL", "sonar")
+    end
+
     def jwt_secret_key
       ENV.fetch("JWT_SECRET_KEY") do
         Rails.application.credentials.dig(:devise, :jwt_secret_key) ||
@@ -38,7 +46,7 @@ module AppConfig
     end
 
     def demo_password
-      ENV.fetch("DEMO_PASSWORD", "password123")
+      ENV.fetch("DEMO_PASSWORD", "FieldmarkDemo2026!")
     end
 
     def admin_email

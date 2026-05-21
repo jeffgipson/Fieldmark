@@ -358,7 +358,16 @@ Farm financial rollup for the planning season: mapped acres, weighted operating 
     "field_outliers": {}
   },
   "peer_headline": "fertilizer $12.50/ac above vs MU benchmark",
-  "regional_risk": { "region": "central", "message": "...", "note": "..." }
+  "regional_risk": {
+    "region": "central",
+    "message": "...",
+    "source": "USDA Missouri Crop Progress",
+    "source_url": "https://...",
+    "live": true,
+    "researched_at": "2026-05-20T12:00:00Z",
+    "citations": [{ "title": "...", "url": "https://..." }],
+    "note": "..."
+  }
 }
 ```
 

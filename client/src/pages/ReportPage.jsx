@@ -1,8 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import * as reportsApi from "../api/reports";
+import * as scenariosApi from "../api/scenarios";
 import { DALE_COPY } from "../constants/dale";
 import DaleAvatar from "../components/dale/DaleAvatar";
+import ReportChartsRow from "../components/dale/ReportChartsRow";
+import ReportFieldsSection from "../components/dale/ReportFieldsSection";
+import ReportKeyMetrics from "../components/dale/ReportKeyMetrics";
 import Button from "../components/ui/Button";
 import Card from "../components/ui/Card";
 import ReportGeneratingState from "../components/dale/ReportGeneratingState";
@@ -20,8 +24,14 @@ import {
 
 export default function ReportPage() {
   const { id: paramId } = useParams();
-  const { farm, primaryScenario } = useFarm();
+  const { farm, fields, scenarios, primaryScenario } = useFarm();
   const scenarioId = paramId || primaryScenario?.id;
+  const scenario = useMemo(
+    () => scenarios.find((s) => String(s.id) === String(scenarioId)) || primaryScenario,
+    [scenarios, scenarioId, primaryScenario]
+  );
+  const scenarioResults = scenario?.results;
+  const [peerSummary, setPeerSummary] = useState(scenario?.peer_comparison?.summary ?? null);
   const [report, setReport] = useState(null);
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
@@ -32,6 +42,24 @@ export default function ReportPage() {
   const [emailing, setEmailing] = useState(false);
 
   const reportComplete = report?.status === "completed";
+
+  useEffect(() => {
+    setPeerSummary(scenario?.peer_comparison?.summary ?? null);
+  }, [scenario?.id, scenario?.peer_comparison?.summary]);
+
+  useEffect(() => {
+    if (!farm?.id || !scenarioId || peerSummary) return;
+    let cancelled = false;
+    scenariosApi
+      .compareScenario(farm.id, scenarioId)
+      .then((result) => {
+        if (!cancelled) setPeerSummary(result?.peer_comparison?.summary ?? null);
+      })
+      .catch(() => {});
+    return () => {
+      cancelled = true;
+    };
+  }, [farm?.id, scenarioId, peerSummary]);
 
   const loadReport = useCallback(async () => {
     if (!scenarioId) {
@@ -203,7 +231,25 @@ export default function ReportPage() {
             </div>
           </header>
 
-          <div className="mt-6 space-y-6 text-fm-charcoal">
+          <div className="mt-6 space-y-8 text-fm-charcoal">
+            {!scenarioResults?.base_case && (
+              <p className="rounded-lg border border-fm-gold/40 bg-fm-gold/10 px-4 py-3 text-sm text-fm-charcoal">
+                Run your scenario calculation to populate the charts and margin tables below. Field maps and
+                Dale&apos;s narrative are still shown from your farm data.
+              </p>
+            )}
+
+            <ReportKeyMetrics
+              farm={farm}
+              fields={fields}
+              results={scenarioResults}
+              peerSummary={peerSummary}
+            />
+
+            <ReportChartsRow results={scenarioResults} />
+
+            <ReportFieldsSection fields={fields} byField={scenarioResults?.by_field} />
+
             {summary && (
               <section>
                 <h2 className="font-display text-lg font-semibold">Executive Summary</h2>
@@ -213,9 +259,14 @@ export default function ReportPage() {
             {keyFindings.length > 0 && (
               <section>
                 <h2 className="font-display text-lg font-semibold">Key Findings</h2>
-                <ul className="mt-2 list-disc pl-5 space-y-1">
+                <ul className="mt-3 space-y-2">
                   {keyFindings.map((item, i) => (
-                    <li key={i}>{item}</li>
+                    <li
+                      key={i}
+                      className="rounded-lg border border-fm-gray-light/80 bg-fm-cream/40 px-4 py-3 text-sm leading-relaxed"
+                    >
+                      {item}
+                    </li>
                   ))}
                 </ul>
               </section>
@@ -262,6 +313,13 @@ export default function ReportPage() {
                 ? "A report is already being prepared. Click below to try again."
                 : "No report yet. Generate one for your lender conversation."}
           </p>
+          {report?.status === "failed" && (
+            <p className="mt-2 text-sm text-fm-gray-medium">
+              Reports can take 1–2 minutes. In another terminal run{" "}
+              <code className="rounded bg-fm-gray-light/60 px-1">cd api && bin/jobs</code>, then click
+              Generate again.
+            </p>
+          )}
           <Button className="mt-4" onClick={handleGenerate}>
             {generateLabel}
           </Button>

@@ -56,6 +56,16 @@ class IntegrationsCatalogService
       docs_url: nil
     ),
     Entry.new(
+      slug: "perplexity",
+      name: "Perplexity Sonar",
+      category: "ai",
+      status: "active",
+      description: "Live cited USDA drought monitor, crop progress, and MU Extension field conditions — retrieval only; Dale still analyzes with Claude.",
+      used_in: "Farm summary, scenario risk panel, Dale context",
+      connection_key: "perplexity",
+      docs_url: "https://docs.perplexity.ai/"
+    ),
+    Entry.new(
       slug: "google_maps",
       name: "Google Maps",
       category: "maps",
@@ -119,11 +129,21 @@ class IntegrationsCatalogService
       slug: "sendgrid",
       name: "SendGrid",
       category: "platform",
-      status: "in_progress",
-      description: "Branded transactional email — password reset, invites, and report-ready notifications.",
+      status: "active",
+      description: "Branded transactional email — password reset, invites, and report-ready notifications. Enable delivery with SMTP or MAILER_DELIVER.",
       used_in: "Account email and report delivery",
       connection_key: "sendgrid",
       docs_url: "https://docs.sendgrid.com/"
+    ),
+    Entry.new(
+      slug: "hunter",
+      name: "Hunter",
+      category: "platform",
+      status: "active",
+      description: "Company logo lookup for integration cards and the local resources directory — keeps partner listings recognizable.",
+      used_in: "Integrations, local resources",
+      connection_key: nil,
+      docs_url: "https://hunter.io/api/logo"
     ),
     Entry.new(
       slug: "live_bls",
@@ -134,16 +154,6 @@ class IntegrationsCatalogService
       used_in: "Macro cost stress on scenarios",
       connection_key: nil,
       docs_url: "https://www.bls.gov/ppi/"
-    ),
-    Entry.new(
-      slug: "live_usda_risk",
-      name: "Live USDA risk feeds",
-      category: "data",
-      status: "in_progress",
-      description: "Drought monitor and crop progress pulled on a schedule for regional risk context.",
-      used_in: "Farm summary, Dale context, underwriting",
-      connection_key: nil,
-      docs_url: "https://cropprogress.nass.usda.gov/"
     ),
     Entry.new(
       slug: "john_deere",
@@ -187,6 +197,16 @@ class IntegrationsCatalogService
     )
   ].freeze
 
+  # Subdomains from docs_url often work; override when a root brand domain is clearer.
+  LOGO_DOMAIN_OVERRIDES = {
+    "dale" => "anthropic.com",
+    "google_maps" => "google.com",
+    "cme_prices" => "cmegroup.com",
+    "hunter" => "hunter.io"
+  }.freeze
+
+  NO_LOGO_SLUGS = %w[macro_drivers csv_history fieldmark_api].freeze
+
   CATEGORY_LABELS = {
     "data" => "Data & benchmarks",
     "maps" => "Maps & location",
@@ -213,17 +233,35 @@ class IntegrationsCatalogService
 
   def connection_flags
     {
-      anthropic: AppConfig.anthropic_api_key.present?,
-      google_maps: AppConfig.google_maps_api_key.present?,
-      regrid: AppConfig.regrid_api_key.present?,
-      stripe: !AppConfig.billing_mock? && AppConfig.stripe_secret_key.present?,
-      sendgrid: AppConfig.sendgrid_api_key.present? || AppConfig.smtp_settings.present?,
-      mailer: AppConfig.mailer_deliver?
+      anthropic: config_present?(:anthropic_api_key),
+      perplexity: config_present?(:perplexity_api_key),
+      google_maps: config_present?(:google_maps_api_key),
+      regrid: config_present?(:regrid_api_key),
+      stripe: stripe_connected?,
+      sendgrid: sendgrid_connected?,
+      mailer: AppConfig.respond_to?(:mailer_deliver?) && AppConfig.mailer_deliver?
     }
+  end
+
+  def config_present?(method)
+    AppConfig.respond_to?(method) && AppConfig.public_send(method).present?
+  end
+
+  def stripe_connected?
+    return true if AppConfig.respond_to?(:billing_mock?) && AppConfig.billing_mock?
+
+    config_present?(:stripe_secret_key)
+  end
+
+  def sendgrid_connected?
+    return true if AppConfig.respond_to?(:mailer_deliver?) && AppConfig.mailer_deliver?
+
+    config_present?(:sendgrid_api_key) || config_present?(:smtp_settings)
   end
 
   def entry_payload(entry)
     connected = entry.connection_key ? connection_flags[entry.connection_key.to_sym] : nil
+    logo_domain = resolve_logo_domain(entry)
 
     {
       slug: entry.slug,
@@ -233,7 +271,19 @@ class IntegrationsCatalogService
       description: entry.description,
       used_in: entry.used_in,
       docs_url: entry.docs_url,
+      logo_domain: logo_domain,
+      logo_url: HunterLogo.url_for_domain(logo_domain),
       connected: connected
     }
+  end
+
+  def resolve_logo_domain(entry)
+    return nil if NO_LOGO_SLUGS.include?(entry.slug)
+
+    override = LOGO_DOMAIN_OVERRIDES[entry.slug]
+    return override if override.present?
+    return nil if entry.docs_url.blank?
+
+    HunterLogo.domain_from_url(entry.docs_url)
   end
 end

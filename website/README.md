@@ -13,6 +13,7 @@ npm run dev
 ```
 
 - **Website:** http://localhost:5174
+- **Blog:** http://localhost:5174/blog
 - **API docs & playground:** http://localhost:5174/developer
 - **App (sign up / sign in):** http://localhost:5173 — set via `VITE_APP_URL`
 - **Playground API target:** `VITE_API_URL` (default `http://localhost:3000`)
@@ -20,6 +21,12 @@ npm run dev
 ## Brand
 
 Uses Fieldmark tokens from `docs/BRAND.md`. Dale and logo images live in `public/images/` (copied from `client/public/images/`).
+
+## Blog (content marketing)
+
+Seed content lives in `src/data/blog/` — categories, tags, and 10 posts aligned with `docs/MARKETING_PLAN.md` SEO targets. Edit `src/data/blog/posts.js` to add or update articles. Cover images: `public/images/blog/` (AI-generated PNG heroes, 1200px wide).
+
+Routes: `/blog` (listing with category/tag filters) · `/blog/:slug` (single post)
 
 ## Build
 

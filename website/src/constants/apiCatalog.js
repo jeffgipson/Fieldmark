@@ -48,7 +48,7 @@ export const API_GROUPS = [
         auth: false,
         description: "Exchange email and password for a JWT. Rate limited to 10 requests/min per IP.",
         sampleBody: {
-          user: { email: "demo@fieldmark.app", password: "password123" }
+          user: { email: "you@example.com", password: "your-secure-password" }
         }
       },
       {

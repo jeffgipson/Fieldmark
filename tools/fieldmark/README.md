@@ -2,6 +2,8 @@
 
 TypeScript tools for the [Fieldmark API](../../api/docs/API.md): a command-line client and an [MCP](https://modelcontextprotocol.io) server for Cursor and other AI assistants.
 
+**Full setup docs (website):** `/developer/MCP` on the Fieldmark marketing site (e.g. `http://fieldmark.local/developer/MCP` locally).
+
 ## Prerequisites
 
 - Node.js 20+

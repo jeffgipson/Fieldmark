@@ -52,4 +52,7 @@ export const BRAND = {
   }
 };
 
+/** Original horizontal lockup — sidebar, nav, auth, reports. */
 export const LOGO_SRC = "/images/fieldmark-logo.png";
+/** Square/stacked lockup — Fieldmark API card on Integrations only. */
+export const LOGO_STACKED_SRC = "/images/fieldmark-logo-stacked.png";

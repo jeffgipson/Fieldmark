@@ -139,7 +139,8 @@ class VendorRecommendationService
       counties serves_statewide listing_tier sponsored featured_until
     ]).merge(
       "partner" => vendor.partner_badge?,
-      "has_profile" => vendor.profile_page?
+      "has_profile" => vendor.profile_page?,
+      **HunterLogo.payload_for_website(vendor.website)
     )
   end
 end

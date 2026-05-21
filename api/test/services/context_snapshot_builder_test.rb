@@ -24,6 +24,7 @@ class ContextSnapshotBuilderTest < ActiveSupport::TestCase
     assert snapshot[:key_findings].is_a?(Array)
     assert snapshot[:yield_context].present?
     assert snapshot[:regional_risk].present?
+    assert_includes snapshot[:regional_risk].keys, :live
     assert snapshot[:sensitivity_summary].nil? || snapshot[:sensitivity_summary].key?(:breakeven_price_at_base_yield)
     assert snapshot[:app_guide].present?
     assert snapshot[:app_guide][:common_tasks].any? { |t| t[:id] == "import_csv_margin_history" }

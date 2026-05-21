@@ -56,8 +56,12 @@ module Api
         permitted = raw.permit(
           :name, :acres, :soil_type, :primary_commodity, :description, :latitude, :longitude
         )
-        permitted[:boundary] = raw[:boundary] if raw.key?(:boundary)
-        permitted[:location_meta] = raw[:location_meta] if raw.key?(:location_meta)
+        if raw.key?(:boundary)
+          permitted[:boundary] = json_param_to_hash(raw[:boundary])
+        end
+        if raw.key?(:location_meta)
+          permitted[:location_meta] = json_param_to_hash(raw[:location_meta])
+        end
         permitted
       end
 

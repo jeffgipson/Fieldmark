@@ -3,12 +3,10 @@ import GoogleAddressInput from "./GoogleAddressInput";
 import { GeoJSON, MapContainer, Marker, TileLayer, useMap, useMapEvents } from "react-leaflet";
 import BoundaryOverlay from "./BoundaryOverlay";
 import QuickFieldBox from "./QuickFieldBox";
-import RegridDemoMap from "./RegridDemoMap";
 import "leaflet-draw";
 import { Search } from "lucide-react";
 import * as locationsApi from "../../api/locations";
 import { fetchMapConfig } from "../../api/mapConfig";
-import { useAuth } from "../../contexts/AuthContext";
 import useLocationLookup from "../../hooks/useLocationLookup";
 import Input from "../ui/Input";
 import { configureDrawLocale, configureLeafletIcons, L } from "./leafletSetup";
@@ -29,8 +27,12 @@ const FIELD_SHAPE_OPTIONS = {
 
 const DEFAULT_CENTER = [37.3059, -89.5181];
 const DEFAULT_ZOOM = 8;
-/** Parcel / field scale — search and fly-to use this for drawing boundaries. */
-const FIELD_PROPERTY_ZOOM = 19;
+/** Wider context to find the parcel before marking corners. */
+const FIELD_PICKER_ZOOM = 14;
+/** Closer after address search, still below post-mark fitBounds. */
+const FIELD_SEARCH_ZOOM = 16;
+const FIELD_BOUNDARY_MAX_ZOOM = 18;
+const FIELD_BOUNDARY_FIT_PADDING = [32, 32];
 const FARM_POINT_ZOOM = 12;
 const BASEMAPS = {
   street: {
@@ -43,18 +45,31 @@ const BASEMAPS = {
   }
 };
 
-function MapController({ center, zoom, syncKey }) {
+function MapViewController({ center, zoom, boundary, syncKey }) {
   const map = useMap();
   const lastSync = useRef(null);
 
   useEffect(() => {
-    if (!center || zoom == null || syncKey == null) return;
-    const token = `${syncKey}@${zoom}`;
-    if (lastSync.current === token) return;
-    lastSync.current = token;
+    if (syncKey == null) return;
+    if (lastSync.current === syncKey) return;
+    lastSync.current = syncKey;
+
+    const ring = boundary?.coordinates?.[0];
+    if (ring?.length >= 3) {
+      const latLngs = ring.map(([lng, lat]) => [lat, lng]);
+      mapDebug("map:fit_bounds", { syncKey, points: latLngs.length });
+      map.fitBounds(latLngs, {
+        padding: FIELD_BOUNDARY_FIT_PADDING,
+        maxZoom: FIELD_BOUNDARY_MAX_ZOOM,
+        animate: false
+      });
+      return;
+    }
+
+    if (!center || zoom == null) return;
     mapDebug("map:fly_to", { syncKey, center, zoom });
     map.setView(center, zoom, { animate: false });
-  }, [center, zoom, syncKey, map]);
+  }, [center, zoom, boundary, syncKey, map]);
 
   return null;
 }
@@ -85,7 +100,7 @@ function DrawControl({ onBoundaryRef, initialBoundary }) {
     }
 
     const control = new L.Control.Draw({
-      position: "topright",
+      position: "bottomright",
       draw: {
         polygon: {
           allowIntersection: true,
@@ -165,7 +180,8 @@ export default function LocationMapPicker({
   boundary,
   onLocationChange,
   onInsights,
-  className = ""
+  className = "",
+  scrollWheelZoom = true
 }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -178,11 +194,10 @@ export default function LocationMapPicker({
   const googleSearch = Boolean(googleApiKey);
   const [fieldInputMode, setFieldInputMode] = useState("box");
   const prevFieldInputMode = useRef(fieldInputMode);
+  const [selectedBoundaryId, setSelectedBoundaryId] = useState(null);
   const [mapFocusNonce, setMapFocusNonce] = useState(0);
   const [regridAppUrl, setRegridAppUrl] = useState(null);
   const [basemap, setBasemap] = useState("satellite");
-
-  const showRegridDemoMap = mode === "polygon" && fieldInputMode === "select";
 
   // Re-apply property zoom when switching Mark field / Draw shape / Auto outlines.
   useEffect(() => {
@@ -192,14 +207,11 @@ export default function LocationMapPicker({
     setMapFocusNonce((n) => n + 1);
   }, [fieldInputMode, mode, latitude, longitude]);
 
-  const { token } = useAuth();
   const [mapConfigLoaded, setMapConfigLoaded] = useState(false);
   const [mapConfigError, setMapConfigError] = useState(null);
   const [mapConfigHasGoogleKey, setMapConfigHasGoogleKey] = useState(false);
 
   useEffect(() => {
-    if (!token) return;
-
     let cancelled = false;
     setMapConfigLoaded(false);
     setMapConfigError(null);
@@ -228,7 +240,7 @@ export default function LocationMapPicker({
     return () => {
       cancelled = true;
     };
-  }, [token]);
+  }, []);
   const position = useMemo(() => {
     if (latitude != null && longitude != null) return [Number(latitude), Number(longitude)];
     return DEFAULT_CENTER;
@@ -267,6 +279,26 @@ export default function LocationMapPicker({
     [onLocationChange]
   );
 
+  const handleBoundaryCandidate = useCallback(
+    (candidate) => {
+      if (!candidate?.boundary) return;
+      setSelectedBoundaryId(candidate.id);
+      const ring = candidate.boundary.coordinates?.[0];
+      if (!ring?.length) return;
+      let latSum = 0;
+      let lngSum = 0;
+      ring.forEach(([lng, lat]) => {
+        latSum += lat;
+        lngSum += lng;
+      });
+      handleBoundary(candidate.boundary, {
+        lat: latSum / ring.length,
+        lng: lngSum / ring.length
+      });
+    },
+    [handleBoundary]
+  );
+
   const onBoundaryRef = useRef(handleBoundary);
   onBoundaryRef.current = handleBoundary;
 
@@ -277,22 +309,30 @@ export default function LocationMapPicker({
     [handleBoundary]
   );
 
+  const boundarySyncKey = useMemo(() => {
+    const ring = boundary?.coordinates?.[0];
+    if (!ring?.length) return "";
+    return ring.map(([lng, lat]) => `${Number(lng).toFixed(5)},${Number(lat).toFixed(5)}`).join(";");
+  }, [boundary]);
+
   const mapSyncKey = useMemo(() => {
     if (latitude == null || longitude == null) return null;
     return [
       Number(latitude).toFixed(5),
       Number(longitude).toFixed(5),
+      boundarySyncKey,
       searchFlyNonce,
       mapFocusNonce,
       mode,
       mode === "polygon" ? fieldInputMode : "point"
     ].join(":");
-  }, [latitude, longitude, searchFlyNonce, mapFocusNonce, mode, fieldInputMode]);
+  }, [latitude, longitude, boundarySyncKey, searchFlyNonce, mapFocusNonce, mode, fieldInputMode]);
 
   const mapTargetZoom = useMemo(() => {
     if (latitude == null || longitude == null) return DEFAULT_ZOOM;
-    return mode === "polygon" ? FIELD_PROPERTY_ZOOM : FARM_POINT_ZOOM;
-  }, [latitude, longitude, mode]);
+    if (mode !== "polygon") return FARM_POINT_ZOOM;
+    return searchFlyNonce > 0 ? FIELD_SEARCH_ZOOM : FIELD_PICKER_ZOOM;
+  }, [latitude, longitude, mode, searchFlyNonce]);
 
   const mapInitialZoom = latitude != null && longitude != null ? mapTargetZoom : DEFAULT_ZOOM;
 
@@ -306,7 +346,7 @@ export default function LocationMapPicker({
         lat: hit.latitude,
         lng: hit.longitude,
         name: hit.display_name,
-        zoom: mode === "polygon" ? FIELD_PROPERTY_ZOOM : FARM_POINT_ZOOM
+        zoom: mode === "polygon" ? FIELD_SEARCH_ZOOM : FARM_POINT_ZOOM
       });
       onLocationChange?.({
         latitude: hit.latitude,
@@ -481,7 +521,7 @@ export default function LocationMapPicker({
         </p>
       )}
 
-      {mode === "polygon" && !showRegridDemoMap && regridAppUrl && latitude != null && longitude != null && (
+      {mode === "polygon" && regridAppUrl && latitude != null && longitude != null && (
         <p className="mb-2 text-sm">
           <a
             href={`${regridAppUrl}?lat=${latitude}&lon=${longitude}`}
@@ -494,19 +534,16 @@ export default function LocationMapPicker({
         </p>
       )}
 
-      {showRegridDemoMap ? (
-        <RegridDemoMap />
-      ) : (
-        <div className="fm-location-map-wrap">
-          <div className="fm-basemap-toggle">
-            <button
-              type="button"
-              className={basemap === "street" ? "active" : ""}
-              onClick={() => setBasemap("street")}
-            >
-              Map
-            </button>
-            <button
+      <div className="fm-location-map-wrap">
+        <div className="fm-basemap-toggle">
+          <button
+            type="button"
+            className={basemap === "street" ? "active" : ""}
+            onClick={() => setBasemap("street")}
+          >
+            Map
+          </button>
+          <button
             type="button"
             className={basemap === "satellite" ? "active" : ""}
             onClick={() => setBasemap("satellite")}
@@ -515,13 +552,23 @@ export default function LocationMapPicker({
           </button>
         </div>
 
-        <MapContainer center={position} zoom={mapInitialZoom} className="fm-location-map" scrollWheelZoom>
+        <MapContainer
+          center={position}
+          zoom={mapInitialZoom}
+          className="fm-location-map"
+          scrollWheelZoom={scrollWheelZoom}
+        >
           <TileLayer
             key={basemap}
             attribution={BASEMAPS[basemap].attribution}
             url={BASEMAPS[basemap].url}
           />
-          <MapController center={position} zoom={mapTargetZoom} syncKey={mapSyncKey} />
+          <MapViewController
+            center={position}
+            zoom={mapTargetZoom}
+            boundary={boundary}
+            syncKey={mapSyncKey}
+          />
           {mode === "point" ? (
             <>
               <PointSelector onSelect={handlePoint} />
@@ -537,15 +584,29 @@ export default function LocationMapPicker({
                 />
               )}
             </>
+          ) : fieldInputMode === "select" ? (
+            <>
+              <BoundaryOverlay
+                enabled
+                selectedId={selectedBoundaryId}
+                onSelect={handleBoundaryCandidate}
+              />
+              {boundary && (
+                <GeoJSON
+                  data={{ type: "Feature", geometry: boundary }}
+                  style={{ color: "#0a7474", weight: 3, fillOpacity: 0.25 }}
+                />
+              )}
+              {latitude != null && <Marker position={position} />}
+            </>
           ) : (
             <>
               <DrawControl onBoundaryRef={onBoundaryRef} initialBoundary={boundary} />
               {latitude != null && <Marker position={position} />}
             </>
           )}
-          </MapContainer>
-        </div>
-      )}
+        </MapContainer>
+      </div>
 
       <LocationInsights insights={insights} loading={loading} error={error} />
     </div>

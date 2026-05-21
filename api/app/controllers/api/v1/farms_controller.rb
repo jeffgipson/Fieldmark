@@ -77,9 +77,17 @@ module Api
       end
 
       def farm_params
-        params.require(:farm).permit(
-          :name, :total_acres, :county, :region, :primary_commodity
+        raw = params.require(:farm)
+        permitted = raw.permit(
+          :name, :total_acres, :county, :region, :primary_commodity, :latitude, :longitude
         )
+        if raw.key?(:boundary)
+          permitted[:boundary] = json_param_to_hash(raw[:boundary])
+        end
+        if raw.key?(:location_meta)
+          permitted[:location_meta] = json_param_to_hash(raw[:location_meta])
+        end
+        permitted
       end
 
     end

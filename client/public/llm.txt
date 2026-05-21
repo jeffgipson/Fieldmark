@@ -10,9 +10,10 @@
 |-------|------------|
 | Industry data | MU Extension 2026 crop budgets (`benchmark_regions`) — independent university planning defaults |
 | Peer data | Anonymized aggregates from other Fieldmark farms in your region (min 5 farms; medians/percentiles only) |
-| AI | D.A.L.E. explains gaps using both baselines + scenario margins; never recommends vendors |
+| AI | D.A.L.E. (Claude) explains gaps using both baselines + scenario margins; never recommends vendors |
+| Live research | Perplexity Sonar fetches cited USDA/drought/MU context into `regional_risk` (retrieval only — not Dale's voice) |
 
-**Full judge guide:** [docs/JUDGE_REVIEW.md](docs/JUDGE_REVIEW.md) · **Agent entry:** [AGENTS.md](AGENTS.md)
+**Full judge guide:** [docs/JUDGE_REVIEW.md](docs/JUDGE_REVIEW.md) (start here — code & verification) · **Agent entry:** [AGENTS.md](AGENTS.md) · **Strategy:** [docs/BUSINESS_MODEL.md](docs/BUSINESS_MODEL.md) · [docs/MARKETING_PLAN.md](docs/MARKETING_PLAN.md)
 
 **Showcase API:** `POST /api/v1/farms/:farm_id/scenarios/:id/compare` — peer + benchmark comparison after per-field costs are entered.
 
@@ -70,9 +71,9 @@ Setup for custom domains: `npm run setup:local-domains` — see `docs/LOCAL_DOMA
 
 ## Demo account
 
-- Email: `demo@fieldmark.app` (or `POST /api/v1/auth/demo` with no body)
-- Password: `password123`
-- Seed: `cd api && bin/rails demo:seed`
+- In the farmer app: sign in → **Try demo — no password needed** (`POST /api/v1/auth/demo`)
+- API only: `POST /api/v1/auth/demo` with no body (no credentials in the client)
+- Seed: `cd api && bin/rails demo:seed` (password from `DEMO_PASSWORD` in `api/.env`, not shown in UI)
 - Smoke test: `api/bin/test_api` · full AI: `RUN_AI_SMOKE=1 api/bin/test_api`
 
 ## MCP (live API access)
@@ -106,7 +107,8 @@ Regions: `northern`, `central`, `southwest`. Commodities: `corn`, `soybean`, `bo
 
 ## Docs
 
-- [Business model](docs/BUSINESS_MODEL.md): farmer subscriptions + vendor listing, promos, revenue share
+### Product & code (start here)
+
 - [Judge & AI review guide](docs/JUDGE_REVIEW.md): Problem #1 fit, file map, verification, AI prompts
 - [Interactive API docs & playground](http://fieldmark.local/developer): try endpoints in the browser
 - [API reference](api/docs/API.md): full request/response documentation
@@ -114,6 +116,18 @@ Regions: `northern`, `central`, `southwest`. Commodities: `corn`, `soybean`, `bo
 - [Local domains](docs/LOCAL_DOMAINS.md): `fieldmark.local` setup
 - [MCP setup](tools/fieldmark/README.md): Cursor configuration
 - [README](README.md): running the stack
+
+### Business & go-to-market (optional)
+
+- [Business model](docs/BUSINESS_MODEL.md): farmer subscriptions + vendor listing, promos, revenue share
+- [Marketing plan](docs/MARKETING_PLAN.md): Year 1 distribution, co-op partnerships, March conversion window
+
+## Environment (AI stack)
+
+- `ANTHROPIC_API_KEY` — required for Dale chat and lender reports (Claude via `Ai` / `AiRouter`)
+- `PERPLEXITY_API_KEY` — optional; enables live `regional_risk` on farm summary, scenario risk panel, and Dale snapshot (`MarketIntelligenceService`). Omit in CI/tests.
+
+`regional_risk` when live: `live`, `researched_at`, `citations` (array of `{ title, url }`), plus `message`, `source`, `source_url`.
 
 ## Optional
 

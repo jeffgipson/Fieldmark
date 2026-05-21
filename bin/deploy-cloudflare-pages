@@ -1,0 +1,118 @@
+#!/usr/bin/env bash
+# Deploy Fieldmark frontends to Cloudflare Pages (static Vite builds).
+# Requires: wrangler logged in (wrangler whoami), Node/npm in each app dir.
+set -euo pipefail
+
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+ENV_FILE="${CLOUDFLARE_PAGES_ENV:-$ROOT/config/cloudflare-pages.env}"
+
+if [[ -f "$ENV_FILE" ]]; then
+  # shellcheck disable=SC1090
+  set -a && source "$ENV_FILE" && set +a
+fi
+
+API_URL="${API_URL:-}"
+WEBSITE_URL="${WEBSITE_URL:-}"
+APP_URL="${APP_URL:-}"
+ADMIN_URL="${ADMIN_URL:-}"
+CLOUDFLARE_ACCOUNT_ID="${CLOUDFLARE_ACCOUNT_ID:-}"
+
+if [[ -z "$CLOUDFLARE_ACCOUNT_ID" ]]; then
+  echo "Set CLOUDFLARE_ACCOUNT_ID in $ENV_FILE (or export it)."
+  echo "Run: wrangler whoami"
+  exit 1
+fi
+
+if [[ -z "$API_URL" ]]; then
+  echo "Set API_URL in $ENV_FILE (your Rails API origin, e.g. https://api.fieldmark.app)."
+  exit 1
+fi
+
+export CLOUDFLARE_ACCOUNT_ID
+WRANGLER=(wrangler)
+
+ensure_pages_project() {
+  local name="$1"
+  if ! "${WRANGLER[@]}" pages project list --json 2>/dev/null | grep -q "\"name\":\"$name\""; then
+    echo "==> Creating Cloudflare Pages project: $name"
+    "${WRANGLER[@]}" pages project create "$name" --production-branch=main
+  fi
+}
+
+usage() {
+  cat <<EOF
+Usage: $(basename "$0") [website|app|admin|all]
+
+  website  — marketing site + /developer docs (website/)
+  app      — farmer app (client/)
+  admin    — admin dashboard (frontend/admin/)
+  all      — deploy all three (default)
+
+Config: copy config/cloudflare-pages.env.example → config/cloudflare-pages.env
+
+EOF
+}
+
+deploy_website() {
+  echo "==> Building website..."
+  (
+    cd "$ROOT/website"
+    VITE_API_URL="$API_URL" \
+    VITE_API_BASE_URL="$API_URL" \
+    VITE_WEBSITE_URL="${WEBSITE_URL:-}" \
+    VITE_APP_URL="${APP_URL:-}" \
+    VITE_ADMIN_URL="${ADMIN_URL:-}" \
+      npm run build
+  )
+  ensure_pages_project fieldmark-website
+  echo "==> Deploying website → Cloudflare Pages (fieldmark-website)..."
+  "${WRANGLER[@]}" pages deploy "$ROOT/website/dist" --project-name=fieldmark-website --branch=main --commit-dirty=true
+}
+
+deploy_app() {
+  echo "==> Building farmer app (client)..."
+  (
+    cd "$ROOT/client"
+    VITE_API_BASE_URL="$API_URL" \
+    VITE_WEBSITE_URL="${WEBSITE_URL:-}" \
+    VITE_ADMIN_URL="${ADMIN_URL:-}" \
+    VITE_GOOGLE_MAPS_API_KEY="${VITE_GOOGLE_MAPS_API_KEY:-}" \
+      npm run build
+  )
+  ensure_pages_project fieldmark-app
+  echo "==> Deploying app → Cloudflare Pages (fieldmark-app)..."
+  "${WRANGLER[@]}" pages deploy "$ROOT/client/dist" --project-name=fieldmark-app --branch=main --commit-dirty=true
+}
+
+deploy_admin() {
+  echo "==> Building admin..."
+  (
+    cd "$ROOT/frontend/admin"
+    VITE_API_BASE_URL="$API_URL" \
+    VITE_APP_URL="${APP_URL:-}" \
+    VITE_WEBSITE_URL="${WEBSITE_URL:-}" \
+      npm run build
+  )
+  ensure_pages_project fieldmark-admin
+  echo "==> Deploying admin → Cloudflare Pages (fieldmark-admin)..."
+  "${WRANGLER[@]}" pages deploy "$ROOT/frontend/admin/dist" --project-name=fieldmark-admin --branch=main --commit-dirty=true
+}
+
+TARGET="${1:-all}"
+
+case "$TARGET" in
+  website) deploy_website ;;
+  app) deploy_app ;;
+  admin) deploy_admin ;;
+  all)
+    deploy_website
+    deploy_app
+    deploy_admin
+    echo ""
+    echo "Done. Set custom domains in Cloudflare → Workers & Pages → each project."
+    echo "Update config/cloudflare-pages.env with final *.pages.dev or custom URLs, then redeploy."
+    echo "Add API CORS: CORS_ORIGINS on Rails must include these front-end origins."
+    ;;
+  -h|--help) usage; exit 0 ;;
+  *) usage; exit 1 ;;
+esac

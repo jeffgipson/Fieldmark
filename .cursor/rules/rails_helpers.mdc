@@ -27,6 +27,8 @@ Use these instead of ad-hoc `ENV.fetch`, raw Anthropic calls, or one-off demo sc
 | `DemoSeed` | `api/app/services/demo_seed.rb` | Repeatable Vibeathon / local demo data |
 | `ApiTestHelpers` | `api/test/support/api_test_helpers.rb` | Integration tests against JSON API |
 | `GenerateAnalystReportJob` | `api/app/jobs/generate_analyst_report_job.rb` | Async lender report generation |
+| `PerplexityRouter` | `api/app/services/perplexity_router.rb` | **Never** from feature code except `MarketIntelligenceService` |
+| `MarketIntelligenceService` | `api/app/services/market_intelligence_service.rb` | Live cited `regional_risk` (Perplexity retrieval; Claude interprets) |
 
 ---
 
@@ -37,11 +39,13 @@ Use these instead of ad-hoc `ENV.fetch`, raw Anthropic calls, or one-off demo sc
 ```ruby
 AppConfig.anthropic_api_key   # nil if missing
 AppConfig.anthropic_model     # default: claude-sonnet-4-6 (AiRouter::SONNET_STABLE_MODEL)
+AppConfig.perplexity_api_key  # nil if missing — live regional_risk only
+AppConfig.perplexity_model    # default: sonar
 AppConfig.jwt_secret_key
 AppConfig.cors_origins        # array of strings
 AppConfig.redis_url
 AppConfig.demo_email          # default: demo@fieldmark.app
-AppConfig.demo_password       # default: password123
+AppConfig.demo_password       # default: FieldmarkDemo2026! (set DEMO_PASSWORD in .env)
 ```
 
 Loaded early via `require_relative` in `api/config/application.rb` (before Devise initializer).
@@ -181,7 +185,7 @@ Edit farmers/fields in `api/db/seeds/cape_girardeau_sample.json`. `db:seed` in d
 | ENV | Default |
 |-----|---------|
 | `DEMO_EMAIL` | `demo@fieldmark.app` |
-| `DEMO_PASSWORD` | `password123` |
+| `DEMO_PASSWORD` | `FieldmarkDemo2026!` |
 
 Each farmer: farm (lat/lng in county), multiple fields with boundaries, input costs, Base Case scenario + peer comparison. Benchmarks loaded if missing.
 

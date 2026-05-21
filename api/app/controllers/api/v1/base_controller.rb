@@ -40,6 +40,14 @@ module Api
           total: collection.total_count
         }
       end
+
+      # GeoJSON / location_meta arrive as nested params — must convert before assign (Rails 8 UnfilteredParameters).
+      def json_param_to_hash(value)
+        return value.as_json if value.is_a?(ActionController::Parameters)
+        return value if value.is_a?(Hash)
+
+        value
+      end
     end
   end
 end

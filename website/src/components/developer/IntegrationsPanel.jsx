@@ -1,4 +1,5 @@
-import { Bot, ExternalLink, FileText, Terminal } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Bot, ChevronRight, ExternalLink, FileText, Terminal } from "lucide-react";
 import { MCP_CONFIG_EXAMPLE, MCP_TOOLS } from "../../constants/mcpTools";
 import CodeBlock from "./CodeBlock";
 
@@ -53,14 +54,12 @@ export default function IntegrationsPanel() {
           <p className="mt-4 text-sm leading-relaxed text-fm-charcoal">
             {MCP_TOOLS.length} tools: farms, benchmarks, scenarios, analyst Q&amp;A, reports, decisions.
           </p>
-          <a
-            href="https://github.com/jeffgipson/Fieldmark/blob/main/tools/fieldmark/README.md"
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            to="/developer/MCP"
             className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-fm-teal-dark hover:underline"
           >
-            MCP setup guide <ExternalLink size={14} />
-          </a>
+            MCP setup guide <ChevronRight size={14} />
+          </Link>
           <ul className="mt-4 grid max-h-36 gap-1 overflow-y-auto font-mono text-[11px] text-fm-charcoal sm:grid-cols-2">
             {MCP_TOOLS.map((t) => (
               <li key={t.name} className="truncate rounded bg-fm-cream/80 px-2 py-1" title={t.description}>

@@ -4,16 +4,27 @@ import { Menu, X } from "lucide-react";
 import { appPath } from "../../lib/links";
 import Logo from "../ui/Logo";
 
-const SECTIONS = [
+const API_SECTIONS = [
   { label: "Overview", href: "#overview" },
   { label: "Playground", href: "#playground" },
   { label: "Reference", href: "#reference" },
   { label: "MCP & llm.txt", href: "#integrations" }
 ];
 
-export default function DocsHeader() {
+const MCP_SECTIONS = [
+  { label: "Overview", href: "#overview" },
+  { label: "Install", href: "#install" },
+  { label: "Configuration", href: "#configuration" },
+  { label: "Cursor setup", href: "#cursor" },
+  { label: "MCP tools", href: "#tools" },
+  { label: "CLI", href: "#cli" }
+];
+
+export default function DocsHeader({ variant = "api" }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const { pathname } = useLocation();
+  const isMcp = variant === "mcp" || pathname === "/developer/MCP";
+  const sections = isMcp ? MCP_SECTIONS : API_SECTIONS;
 
   return (
     <header className="sticky top-0 z-50 border-b border-fm-gray-medium/15 bg-white/95 backdrop-blur-md">
@@ -23,7 +34,7 @@ export default function DocsHeader() {
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
-          {SECTIONS.map((item) => (
+          {sections.map((item) => (
             <a
               key={item.href}
               href={item.href}
@@ -42,6 +53,14 @@ export default function DocsHeader() {
             }`}
           >
             API
+          </Link>
+          <Link
+            to="/developer/MCP"
+            className={`rounded-lg px-3 py-2 text-sm font-bold ${
+              pathname === "/developer/MCP" ? "text-fm-teal-dark" : "text-fm-charcoal hover:text-fm-teal-dark"
+            }`}
+          >
+            MCP
           </Link>
           <Link
             to={appPath("/login")}
@@ -69,7 +88,7 @@ export default function DocsHeader() {
 
       {menuOpen && (
         <nav className="border-t border-fm-gray-medium/15 px-4 py-3 md:hidden">
-          {SECTIONS.map((item) => (
+          {sections.map((item) => (
             <a
               key={item.href}
               href={item.href}
@@ -79,6 +98,21 @@ export default function DocsHeader() {
               {item.label}
             </a>
           ))}
+          <hr className="my-2 border-fm-gray-medium/15" />
+          <Link
+            to="/developer"
+            className="block rounded-lg px-3 py-2.5 text-sm font-bold text-fm-charcoal hover:bg-fm-gray-light"
+            onClick={() => setMenuOpen(false)}
+          >
+            API docs
+          </Link>
+          <Link
+            to="/developer/MCP"
+            className="block rounded-lg px-3 py-2.5 text-sm font-bold text-fm-charcoal hover:bg-fm-gray-light"
+            onClick={() => setMenuOpen(false)}
+          >
+            MCP docs
+          </Link>
           <hr className="my-2 border-fm-gray-medium/15" />
           <Link
             to={appPath("/login")}

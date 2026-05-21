@@ -28,3 +28,45 @@ export const MCP_CONFIG_EXAMPLE = `{
     }
   }
 }`;
+
+export const MCP_ENV_VARS = [
+  { name: "FIELDMARK_API_URL", description: "API base URL", default: "http://localhost:3000" },
+  { name: "FIELDMARK_TOKEN", description: "JWT bearer token (required for most tools)" },
+  { name: "FIELDMARK_EMAIL", description: "User email (informational, optional)" }
+];
+
+export const MCP_INSTALL_STEPS = [
+  "cd tools/fieldmark",
+  "npm install",
+  "npm run build"
+];
+
+export const MCP_CLI_EXAMPLES = `# Health
+fieldmark health
+
+# Auth
+fieldmark auth register -e you@example.com -p password123 --first-name Mike --last-name Henderson
+fieldmark auth login -e you@example.com -p password123
+fieldmark auth whoami
+fieldmark auth logout
+
+# Benchmarks
+fieldmark benchmarks -r central -c corn -y 2026
+
+# Farms & fields
+fieldmark farms list
+fieldmark farms create -n "Henderson Farm" -a 1200 --county "Cape Girardeau" --region central --commodity corn
+fieldmark fields list 1
+fieldmark fields create 1 -n "North 80" -a 80 --soil "Silt loam" --commodity corn
+
+# Scenarios
+fieldmark scenarios create 1 -n "Base 2026" --price 4.33 --yield 176 --downside-price 3.80 --downside-yield 160
+fieldmark scenarios calculate 1 1
+fieldmark scenarios compare 1 1
+
+# AI analyst
+fieldmark ask --farm-id 1 --scenario-id 1 "How do my seed costs compare to peers?"
+fieldmark report 1
+
+# Decision
+fieldmark decide 1 -t proceed --notes "Margins acceptable"`;

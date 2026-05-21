@@ -1,3 +1,5 @@
+import { forwardRef } from "react";
+
 export function Label({ children, htmlFor }) {
   return (
     <label
@@ -9,19 +11,65 @@ export function Label({ children, htmlFor }) {
   );
 }
 
-import { forwardRef } from "react";
+export function FieldError({ id, children }) {
+  if (!children) return null;
+  return (
+    <p id={id} role="alert" className="mt-1 text-sm text-fm-alert">
+      {children}
+    </p>
+  );
+}
 
-const Input = forwardRef(function Input({ className = "", ...props }, ref) {
+const Input = forwardRef(function Input({ className = "", error, id, ...props }, ref) {
+  const errorClass = error
+    ? "border-fm-alert focus:border-fm-alert focus:ring-fm-alert/15"
+    : "border-fm-input-border focus:border-fm-teal focus:ring-fm-teal/15";
+
   return (
     <input
       ref={ref}
-      className={`w-full rounded-lg border-[1.5px] border-fm-input-border bg-white px-4 py-3 text-base text-fm-charcoal placeholder:text-fm-gray-medium focus:border-fm-teal focus:outline-none focus:ring-[3px] focus:ring-fm-teal/15 ${className}`}
+      id={id}
+      aria-invalid={error ? true : undefined}
+      aria-describedby={error && id ? `${id}-error` : undefined}
+      className={`w-full rounded-lg border-[1.5px] bg-white px-4 py-3 text-base text-fm-charcoal placeholder:text-fm-gray-medium focus:outline-none focus:ring-[3px] ${errorClass} ${className}`}
       {...props}
     />
   );
 });
 
 export default Input;
+
+export const Select = forwardRef(function Select({ className = "", error, id, children, ...props }, ref) {
+  const errorClass = error
+    ? "border-fm-alert focus:border-fm-alert focus:ring-fm-alert/15"
+    : "border-fm-input-border focus:border-fm-teal focus:ring-fm-teal/15";
+
+  return (
+    <select
+      ref={ref}
+      id={id}
+      aria-invalid={error ? true : undefined}
+      aria-describedby={error && id ? `${id}-error` : undefined}
+      className={`w-full rounded-lg border-[1.5px] bg-white px-4 py-3 text-base text-fm-charcoal focus:outline-none focus:ring-[3px] ${errorClass} ${className}`}
+      {...props}
+    >
+      {children}
+    </select>
+  );
+});
+
+export function FormSection({ title, children, className = "" }) {
+  return (
+    <div className={`sm:col-span-2 ${className}`}>
+      {title ? (
+        <p className="mb-3 border-t border-fm-gray-light/80 pt-5 text-sm font-semibold text-fm-charcoal">
+          {title}
+        </p>
+      ) : null}
+      {children}
+    </div>
+  );
+}
 
 export function DollarInput({
   value,

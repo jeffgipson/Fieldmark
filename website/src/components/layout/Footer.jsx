@@ -5,19 +5,16 @@ import Logo from "../ui/Logo";
 
 const FOOTER_LINKS = {
   Product: [
-    { label: "Solutions", href: "#solutions" },
-    { label: "How It Works", href: "#how-it-works" },
-    { label: "Pricing", href: "#pricing" },
-    { label: "Analyst", href: "#dale" }
+    { label: "Solutions", href: "/#solutions" },
+    { label: "How It Works", href: "/#how-it-works" },
+    { label: "Pricing", href: "/#pricing" },
+    { label: "Blog", to: "/blog" },
+    { label: "Analyst", href: "/#dale" }
   ],
   Developers: [
     { label: "API docs & playground", to: "/developer" },
     { label: "llm.txt", href: "/llm.txt", external: true },
-    {
-      label: "MCP server",
-      href: "https://github.com/jeffgipson/Fieldmark/blob/main/tools/fieldmark/README.md",
-      external: true
-    }
+    { label: "MCP server", to: "/developer/MCP" }
   ],
   Account: [
     { label: "Sign In", href: appPath("/login") },

@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { ExternalLink, Heart, Phone } from "lucide-react";
-import { categoryLabel } from "../../constants/vendors";
+import BrandLogo from "../ui/BrandLogo";
+import { categoryLabel, vendorCategoryIcon } from "../../constants/vendors";
+import { vendorLogoUrl } from "../../lib/brandLogos";
 
 export default function VendorCard({
   vendor,
@@ -9,10 +11,16 @@ export default function VendorCard({
   compact = false
 }) {
   const showFavorite = Boolean(onToggleFavorite);
+  const CategoryIcon = vendorCategoryIcon(vendor.category);
 
   return (
     <article className={`rounded-xl border border-fm-gray-light bg-fm-surface p-4 ${compact ? "" : "shadow-sm"}`}>
-      <div className="flex items-start justify-between gap-2">
+      <div className="flex items-start justify-between gap-3">
+        <BrandLogo
+          logoUrl={vendorLogoUrl(vendor)}
+          icon={CategoryIcon}
+          size={compact ? "sm" : "md"}
+        />
         <div className="min-w-0 flex-1">
           <h3 className="font-display font-semibold text-fm-charcoal">
             {vendor.has_profile && vendor.slug ? (

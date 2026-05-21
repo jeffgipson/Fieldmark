@@ -4,9 +4,11 @@ import { INTEGRATION_UI, STATUS_LABELS } from "../../constants/integrations";
 import { useDaleChat } from "../../contexts/DaleChatContext";
 import Button from "../ui/Button";
 import Card from "../ui/Card";
+import BrandLogo from "../ui/BrandLogo";
+import { integrationLogoUrl } from "../../lib/brandLogos";
 
 function StatusBadge({ status, connected }) {
-  if (status === "active" && connected === true) {
+  if (connected === true) {
     return (
       <span className="inline-flex items-center gap-1.5 rounded-full bg-emerald-100 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wide text-emerald-800">
         <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" aria-hidden />
@@ -82,9 +84,7 @@ export default function IntegrationCard({ integration, categoryLabel }) {
   return (
     <Card hover={false} className="flex h-full flex-col">
       <div className="flex items-start justify-between gap-3">
-        <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-fm-teal/10 text-fm-teal">
-          <Icon size={22} strokeWidth={1.75} />
-        </div>
+        <BrandLogo logoUrl={integrationLogoUrl(integration)} icon={Icon} fit={ui.logoFit} />
         <StatusBadge status={integration.status} connected={integration.connected} />
       </div>
 
