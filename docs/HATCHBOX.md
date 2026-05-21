@@ -9,7 +9,7 @@ Set these in **Hatchbox → field_mark app → Environment** (applies to **all s
 | Variable | Purpose |
 |----------|---------|
 | `DATABASE_URL` | Managed Postgres connection string. **Attach a PostgreSQL database** to the app in Hatchbox so this is set automatically. Without it, deploy fails on `db:migrate` with a local socket error. |
-| `REDIS_URL` | Sidekiq + Action Cable (`redis://…`) |
+| `REDIS_URL` | Sidekiq + Action Cable (`redis://…`) — attach **Redis** in Hatchbox or paste URL |
 | `JWT_SECRET_KEY` | Devise JWT signing |
 | `RAILS_MASTER_KEY` | Decrypt `config/credentials.yml.enc` |
 | `ANTHROPIC_API_KEY` | D.A.L.E. / analyst reports |
@@ -44,6 +44,33 @@ If `DATABASE_URL` is empty, link Postgres to the app or paste the connection URL
 | `cannot load such file -- faker` | Deploy latest `main` (lazy sample_data require). |
 | `connection to server on socket "/var/run/postgresql/..."` | Set `DATABASE_URL` on **every** server; attach Hatchbox Postgres to the app. |
 | One server deploys, others fail | Environment not synced — set app-level env in Hatchbox, redeploy all. |
+| Lender report stuck on **pending** / never completes | **Sidekiq worker not running.** API enqueues jobs; something must run `bin/jobs`. See [Background worker](#background-worker-sidekiq) below. |
+
+## Background worker (Sidekiq)
+
+Async features (lender reports, `deliver_later` mail) use **Sidekiq** + **Redis**. The web process (`field_mark-server`) does **not** run jobs.
+
+1. Attach **Redis** to the app in Hatchbox (sets `REDIS_URL`) or set `REDIS_URL` in Environment.
+2. Hatchbox → **field_mark** → **Processes** → **Add process**
+3. **Command:** `bin/jobs` (runs `bundle exec sidekiq -C config/sidekiq.yml`)
+4. Enable **Restart on deploy**
+5. Deploy (or start the process)
+
+Verify on the server:
+
+```bash
+# Should show a sidekiq process for field_mark (not just field_mark-server)
+ps aux | grep sidekiq | grep field_mark
+
+cd /home/deploy/field_mark/current
+RAILS_ENV=production bundle exec rails runner "puts Sidekiq::Queue.new('default').size"
+```
+
+Stuck reports in `pending` after the worker starts will be picked up automatically. To replay one job immediately:
+
+```bash
+RAILS_ENV=production bundle exec rails runner "GenerateAnalystReportJob.perform_now(REPORT_ID)"
+```
 
 ## After first successful deploy
 
