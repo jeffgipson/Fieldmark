@@ -59,6 +59,21 @@ curl -sf -X POST "$BASE/api/v1/scenarios/$SCENARIO_ID/decision" -H "$AUTH" -H "C
   -d '{"decision":{"decision_type":"proceed","notes":"Margins acceptable at base case."}}' > /dev/null
 pass "POST decision"
 
+echo "=== Integrations (Hunter logo URLs) ==="
+INTEGRATIONS=$(curl -sf "$BASE/api/v1/integrations" -H "$AUTH")
+echo "$INTEGRATIONS" | python3 -c "
+import sys, json
+data = json.load(sys.stdin)['data']
+stripe = next(i for i in data['integrations'] if i['slug'] == 'stripe')
+if not stripe.get('logo_url', '').startswith('https://logos.hunter.io/'):
+    raise SystemExit(f\"missing Hunter logo_url on stripe: {stripe.get('logo_url')}\")
+hunter = next(i for i in data['integrations'] if i['slug'] == 'hunter')
+if hunter.get('logo_domain') != 'hunter.io':
+    raise SystemExit(f\"unexpected hunter logo_domain: {hunter.get('logo_domain')}\")
+print('  stripe logo:', stripe['logo_url'])
+" || fail "GET /api/v1/integrations (logo_url fields missing — redeploy API from main)"
+pass "GET /api/v1/integrations (Hunter logo fields present)"
+
 if [[ -n "${RUN_AI_SMOKE:-}" ]]; then
   echo "=== Analyst report (async) ==="
   REPORT=$(curl -s -X POST "$BASE/api/v1/scenarios/$SCENARIO_ID/report" -H "$AUTH" -H "Content-Type: application/json")
