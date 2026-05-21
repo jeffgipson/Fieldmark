@@ -33,7 +33,7 @@ WRANGLER=(wrangler)
 
 ensure_pages_project() {
   local name="$1"
-  if ! "${WRANGLER[@]}" pages project list 2>/dev/null | grep -qE "name[[:space:]]*[=:][[:space:]]*[\"']?${name}[\"']?"; then
+  if ! "${WRANGLER[@]}" pages project list 2>/dev/null | grep -qF "│ ${name} "; then
     echo "==> Creating Cloudflare Pages project: $name"
     "${WRANGLER[@]}" pages project create "$name" --production-branch=main
   fi
