@@ -1,4 +1,4 @@
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Plug } from "lucide-react";
 import { Link } from "react-router-dom";
 import { INTEGRATION_UI, STATUS_LABELS } from "../../constants/integrations";
 import { useDaleChat } from "../../contexts/DaleChatContext";
