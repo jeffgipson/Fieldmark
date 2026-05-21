@@ -20,7 +20,7 @@ export default function DaleChatWidget() {
     <button
       type="button"
       onClick={toggleChat}
-      className={`group fixed bottom-6 right-6 z-50 flex h-14 w-14 shrink-0 items-center justify-center rounded-full transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-fm-teal/50 focus:ring-offset-2 focus:ring-offset-fm-cream ${
+      className={`group fixed bottom-6 right-6 z-50 hidden h-14 w-14 shrink-0 items-center justify-center rounded-full transition-all duration-300 ease-out focus:outline-none focus:ring-2 focus:ring-fm-teal/50 focus:ring-offset-2 focus:ring-offset-fm-cream lg:flex ${
         isOpen
           ? "bg-fm-gray-dark shadow-lg hover:bg-fm-ink"
           : "overflow-hidden shadow-[0_4px_16px_rgba(13,139,139,0.28)] ring-2 ring-white hover:scale-[1.03] hover:shadow-[0_6px_22px_rgba(13,139,139,0.38)]"

@@ -72,7 +72,7 @@ export default function Sidebar() {
       : user?.email?.split("@")[0] || "Profile";
 
   return (
-    <aside className="fixed left-0 top-0 z-40 flex h-screen w-20 flex-col border-r border-white/5 bg-fm-sidebar lg:w-60">
+    <aside className="fixed left-0 top-0 z-40 hidden h-screen w-60 flex-col border-r border-white/5 bg-fm-sidebar lg:flex">
       <div className="px-5 py-6">
         <Logo size="md" onDark />
       </div>

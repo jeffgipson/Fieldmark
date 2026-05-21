@@ -177,8 +177,24 @@ h4 {
   animation: fm-skeleton-flash 2s ease-in-out infinite;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1023px) {
   .sidebar-label {
     display: none;
+  }
+}
+
+/* Desktop: floating content panel. Mobile: full-width on canvas; cards supply surfaces. */
+.app-shell-panel {
+  min-height: 0;
+}
+
+@media (min-width: 1024px) {
+  .app-shell-panel {
+    background: var(--color-fm-surface);
+    border-radius: var(--radius-fm-xl);
+    box-shadow: var(--shadow-fm-panel);
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    min-height: calc(100vh - 4rem);
+    padding: 2.5rem 2.5rem;
   }
 }
